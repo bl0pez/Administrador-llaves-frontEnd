@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+input[type="text"] {
+  @apply border-b border-indigo-500 w-full outline-none px-2 py-1 bg-transparent text-gray-700 text-xl focus:bg-indigo-100 transition duration-500 ease-in-out;
+}
+
+label {
+  @apply text-gray-700 text-xl uppercase font-bold;
+}
