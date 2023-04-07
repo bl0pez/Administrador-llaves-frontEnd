@@ -59,7 +59,7 @@ export const Sidebars: FC = () => {
             </nav>
 
             <button
-                className='flex-initial flex items-center justify-between px-3 py-4 uppercase text-red-700 border-t border-red-700  font-bold'
+                className='flex-initial flex items-center justify-between px-3 py-4 uppercase bg-red-700  font-bold hover:bg-red-800 transition-all duration-500 ease-in-out'
             >
                 <span>Salir</span>
                 <i className='fas fa-sign-out-alt'></i>

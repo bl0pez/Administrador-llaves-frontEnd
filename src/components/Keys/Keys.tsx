@@ -3,11 +3,14 @@ import React from 'react'
 export const Keys = () => {
   return (
     <section
-      className='text-black flex flex-col justify-center items-center h-full bg-slate-200'
+      className='text-black flex flex-col gap-5 justify-center items-center h-full bg-slate-200'
     >
 
       {/* buscador */}
       
+        <label htmlFor='search' className='text-2xl'>Buscar llave</label>
+        <input type="text" className='w-3/5 block' placeholder='Buscar llave' />
+   
 
 
       {/* diseñame una tabla con tailwinds para las llaves */}
@@ -35,10 +38,10 @@ export const Keys = () => {
             <td className='border px-4 py-2'>Juan</td>
             <td className='border px-4 py-2'>04/04/2021</td>
             <td className='border px-4 py-2 text-center'>
-              <button className='bg-indigo-600 p-3 rounded-md text-white mr-2'>
+              <button className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'>
                 <i className='fas fa-edit'></i>
               </button>
-              <button className='bg-red-600 p-3 rounded-md text-white'>
+              <button className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
                 <i className='fas fa-trash'></i>
               </button>
 

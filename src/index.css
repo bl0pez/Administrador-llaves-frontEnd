@@ -4,7 +4,7 @@
 
 
 input[type="text"] {
-  @apply border-b border-indigo-500 w-full outline-none px-2 py-1 bg-transparent text-gray-700 text-xl focus:bg-indigo-100 transition duration-500 ease-in-out;
+  @apply border-b border-indigo-500 outline-none px-2 py-1 text-gray-700 text-xl focus:bg-indigo-100 transition duration-500 ease-in-out;
 }
 
 label {
