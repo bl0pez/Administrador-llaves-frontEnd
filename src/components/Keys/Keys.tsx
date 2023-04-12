@@ -1,16 +1,31 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { useKeys } from "../hooks/useKeys"
 
 export const Keys = () => {
+
+  const { keys, isLoading, error, filterKeys } = useKeys();
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    filterKeys(search);
+  }, [search]);
+
   return (
     <section
       className='text-black flex flex-col gap-5 justify-center items-center h-full bg-slate-200'
     >
 
       {/* buscador */}
-      
-        <label htmlFor='search' className='text-2xl'>Buscar llave</label>
-        <input type="text" className='w-3/5 block' placeholder='Buscar llave' />
-   
+
+      <label htmlFor='search' className='text-2xl'>Buscar llave</label>
+      <input 
+        type="text" 
+        className='w-3/5 block' 
+        placeholder='Buscar llave' 
+        value={search}
+        onChange={e => setSearch(e.target.value)}  
+      />
+
 
 
       {/* diseñame una tabla con tailwinds para las llaves */}
@@ -26,14 +41,13 @@ export const Keys = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className='border px-4 py-2'>
+          {/* <td className='border px-4 py-2'>
               <img 
                 src='https://picsum.photos/200/300' 
                 className='w-14 h-14 object-cover rounded-md' 
                 alt='imagen' />
-            </td>
-            <td className='border px-4 py-2'>Llave 1</td>
+            </td> */}
+          {/* <td className='border px-4 py-2'>Llave 1</td>
             <td className='border px-4 py-2'>Llave de la puerta de la casa</td>
             <td className='border px-4 py-2'>Juan</td>
             <td className='border px-4 py-2'>04/04/2021</td>
@@ -44,18 +58,35 @@ export const Keys = () => {
               <button className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
                 <i className='fas fa-trash'></i>
               </button>
+            
+
+            </td> */}
+          {
+            keys.map(key => ((
+              <tr key={key._id}>
+                <td className='border px-4 py-2'>
+                  <img
+                    src='https://picsum.photos/200/300'
+                    className='w-14 h-14 object-cover rounded-md'
+                    alt='imagen' />
+                </td>
+                <td className='border px-4 py-2'>{key.name}</td>
+                <td className='border px-4 py-2'>{key.description}</td>
+                <td className='border px-4 py-2'>{key.receivedBy}</td>
+                <td className='border px-4 py-2'>{key.createdAt.slice(0, 10)}</td>
+                <td className='border px-4 py-2 text-center'>
+                  <button className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'>
+                    <i className='fas fa-edit'></i>
+                  </button>
+                  <button className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
+                    <i className='fas fa-trash'></i>
+                  </button>
 
 
-            </td>
-          </tr>
-          <tr className=''>
-            <td className='border px-4 py-2'>Llave 2</td>
-            <td className='border px-4 py-2'>Llave de la puerta de la casa</td>
-            <td className='border px-4 py-2'>Juan</td>
-            <td className='border px-4 py-2'>Imagen</td>
-            <td className='border px-4 py-2'>Acciones</td>
-          </tr>
-
+                </td>
+              </tr>
+            )))
+          }
         </tbody>
       </table>
 
