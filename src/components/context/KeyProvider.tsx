@@ -1,11 +1,12 @@
 import { useEffect, useReducer } from 'react';
 import { KeyContext } from './KeyContext';
 import { keyReducer } from './KeyReducer';
-import { Key, KeyState } from '../../interfaces/interfaces';
+import { KeyState } from '../../interfaces/interfaces';
 import { keyApi } from '../../api/keyApi';
 
 const INITIAL_STATE: KeyState = {
     keys: [],
+    keysFiltered: [],
     isLoading: false,
     error: "",
 }
@@ -36,12 +37,7 @@ export const KeyProvider = ({ children }: Props) => {
     }
 
     const filterKeys = (name: string) => {
-        if (name.length === 0) {
-            onGetKeys();
-        }else{
-            dispatch({ type: 'filterKeys', payload: name });
-        }
-        
+        dispatch({ type: 'filterKeys', payload: {name} });
     }
 
     useEffect(() => {

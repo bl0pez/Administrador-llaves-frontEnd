@@ -9,6 +9,7 @@ export interface Key {
 
 export interface KeyState{
     keys: Key[];
+    keysFiltered: Key[];
     isLoading: boolean;
     error: string;
 }

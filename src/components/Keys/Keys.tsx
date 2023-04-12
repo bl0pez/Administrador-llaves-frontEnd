@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useKeys } from "../hooks/useKeys"
+import { KeyItem } from "./KeyItem";
 
 export const Keys = () => {
 
-  const { keys, isLoading, error, filterKeys } = useKeys();
+  const { keys, isLoading, error, filterKeys, keysFiltered } = useKeys();
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     filterKeys(search);
-  }, [search]);
+  }, [search, keys])
 
   return (
     <section
@@ -62,29 +63,8 @@ export const Keys = () => {
 
             </td> */}
           {
-            keys.map(key => ((
-              <tr key={key._id}>
-                <td className='border px-4 py-2'>
-                  <img
-                    src='https://picsum.photos/200/300'
-                    className='w-14 h-14 object-cover rounded-md'
-                    alt='imagen' />
-                </td>
-                <td className='border px-4 py-2'>{key.name}</td>
-                <td className='border px-4 py-2'>{key.description}</td>
-                <td className='border px-4 py-2'>{key.receivedBy}</td>
-                <td className='border px-4 py-2'>{key.createdAt.slice(0, 10)}</td>
-                <td className='border px-4 py-2 text-center'>
-                  <button className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'>
-                    <i className='fas fa-edit'></i>
-                  </button>
-                  <button className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
-                    <i className='fas fa-trash'></i>
-                  </button>
-
-
-                </td>
-              </tr>
+            keysFiltered.map(item => ((
+              <KeyItem key={item._id} item={item} />
             )))
           }
         </tbody>

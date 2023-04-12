@@ -9,6 +9,7 @@ export const useKeys = () => {
         keys: keyState.keys,
         isLoading: keyState.isLoading,
         error: keyState.error,
+        keysFiltered: keyState.keysFiltered,
         filterKeys
     }
 

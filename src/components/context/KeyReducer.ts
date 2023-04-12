@@ -3,7 +3,7 @@ import { Key, KeyState } from "../../interfaces/interfaces";
 type KeyAction = 
 //Carga las llaves
     | { type: 'loadKeys', payload: Key[]}
-    | { type: 'filterKeys', payload: string}
+    | { type: 'filterKeys', payload: { name: string } }
 //Agrega una llave
     | { type: 'addKey', payload: Key }
     | { type: 'setError', payload: string }
@@ -22,7 +22,7 @@ export const keyReducer = ( state: KeyState, action: KeyAction ): KeyState => {
         case "filterKeys":
             return {
                 ...state,
-                keys: state.keys.filter( key => key.name.toLowerCase().includes( action.payload.toLocaleLowerCase() ) ),
+                keysFiltered: state.keys.filter( key => key.name.startsWith( action.payload.name.toLocaleLowerCase() ) ),
                 isLoading: true
             }
         case "addKey":
