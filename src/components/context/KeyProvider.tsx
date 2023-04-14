@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import { KeyContext } from './KeyContext';
 import { keyReducer } from './KeyReducer';
-import { KeyState } from '../../interfaces/interfaces';
+import { Key, KeyState } from '../../interfaces/interfaces';
 import { keyApi } from '../../api/keyApi';
 
 const INITIAL_STATE: KeyState = {
@@ -40,6 +40,10 @@ export const KeyProvider = ({ children }: Props) => {
         dispatch({ type: 'filterKeys', payload: {name} });
     }
 
+    const newKey = (key: Key) => {
+        dispatch({ type: 'addKey', payload: key} });
+    }
+
     useEffect(() => {
         onGetKeys();
     }, []);
@@ -47,7 +51,8 @@ export const KeyProvider = ({ children }: Props) => {
     return (
         <KeyContext.Provider value={{
             keyState,
-            filterKeys
+            filterKeys,
+            newKey
         }}>
             {children}
         </KeyContext.Provider>

@@ -13,6 +13,8 @@ export const Keys = () => {
 
     const totalItems = keysFiltered.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    
     
 
 
@@ -29,6 +31,10 @@ export const Keys = () => {
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
     const nextPage = () => setCurrentPage(currentPage + 1);
     const prevPage = () => setCurrentPage(currentPage - 1);
+
+  useEffect(() => {
+    filterKeys(search);
+  }, [search, keys])
 
   return (
     <section

@@ -3,14 +3,16 @@ import { KeyContext } from "../context/KeyContext";
 
 export const useKeys = () => {
  
-    const { keyState, filterKeys } = useContext(KeyContext);
+    const { keyState, filterKeys, newKey } = useContext(KeyContext);
 
     return {
         keys: keyState.keys,
         isLoading: keyState.isLoading,
         error: keyState.error,
         keysFiltered: keyState.keysFiltered,
-        filterKeys
+        //Metodos
+        filterKeys,
+        newKey
     }
 
 }

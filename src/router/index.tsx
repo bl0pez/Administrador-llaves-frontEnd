@@ -1,11 +1,12 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { Admin } from '../pages';
-import { History, Keys, New } from '../components';
+import { History, New } from '../components';
+import { Layouts } from '../keys/pages/Layouts';
+import { KeysPage } from '../keys/pages/KeysPage';
 
 export const router = createBrowserRouter([
     { 
         path: '/admin',
-        element: <Admin />,
+        element: <Layouts />,
         children: [
             {
                 path: 'new',
@@ -17,7 +18,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'keys',
-                element: <Keys />
+                element: <KeysPage />
             }
         ] 
     }

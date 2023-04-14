@@ -1,41 +1,37 @@
 import { useState } from 'react';
 import { keyApi } from '../../api/keyApi';
-import { Key, Keys } from '../../interfaces/Key.inteface';
+import { useKeys } from '../hooks/useKeys';
+import Swal from 'sweetalert2';
 
 export const New = () => {
+
+  const { newKey } = useKeys();
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [receivedBy, setReceivedBy] = useState('')
   const [image, setImage] = useState('')
 
-  const [keys, setKeys] = useState<Keys[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     try {
       
-      const newKey = {
+      const state = {
         name,
         description,
         receivedBy,
         image
       }
 
-      const resp = await keyApi.post('/key', newKey)
-      console.log(resp.data)
+      const resp = await keyApi.post('/keys', state);
 
-      setKeys([...keys, resp.data]);
+      newKey(resp.data.responseItem);
 
-      window.alert('Llave creada con éxito');
+      Swal.fire('Llave creada', 'La llave se creo correctamente', 'success');
 
     } catch (error) {
-      
-      window.alert('Error al crear la llave');
-
+      Swal.fire('Error', 'Hubo un error al crear la llave', 'error');
     }
     
 

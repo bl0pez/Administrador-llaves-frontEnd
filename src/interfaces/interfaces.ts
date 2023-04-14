@@ -13,3 +13,7 @@ export interface KeyState{
     isLoading: boolean;
     error: string;
 }
+
+export interface ModalState{
+    showModal: boolean;
+}
