@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import Swal from 'sweetalert2';
-
-
+import { useContext, useState } from 'react';
+import { KeyContext } from '../context/KeyContext';
 import { keyApi } from '../../api/keyApi';
-import { useKeys } from '../hooks/useKeys';
+import { FetchPostCreateKey } from '../interfaces/fetchAllKeys';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export const CreateKeyPage = () => {
+
+    
+    const { keyState, createKey } = useContext(KeyContext);
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [receivedBy, setReceivedBy] = useState('');
     const [image, setImage] = useState('');
 
-    const { createKey } = useKeys();
-
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
         try {
 
@@ -26,23 +27,23 @@ export const CreateKeyPage = () => {
                 image
             }
 
-            const resp = await keyApi.post('/keys', state);
-            
-            console.log(resp);
+            const { data } = await keyApi.post<FetchPostCreateKey>('/keys', state);
             
 
-            createKey(resp.data.responseItem);
+            createKey( data.responseItem );
+
+            Swal.fire('Exito', 'Llave creada', 'success');
 
 
         } catch (error) {
             
+            Swal.fire('Error', 'No se pudo crear la llave', 'error');
+
         }
-
-
     }
 
-    return (
-        <section className="text-black mx-auto flex justify-center items-center h-screen container">
+  return (
+    <section className="text-black mx-auto flex justify-center items-center h-screen container">
 
 
 
@@ -87,5 +88,5 @@ export const CreateKeyPage = () => {
 
 
         </section>
-    )
+  )
 }
