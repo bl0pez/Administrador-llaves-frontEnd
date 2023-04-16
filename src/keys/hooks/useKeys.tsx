@@ -22,15 +22,18 @@ export const useKeys = () => {
         dispatch({type: 'newKey', payload: key });
     }
 
-
-
+    //Elimina una key
+    const deleteKey = (id: string) => {
+        dispatch({type: 'deleteKey', payload: {id} });
+    }
 
 return {
     keyState,
 
     //Metodos
     createKey,
-    loadKeys
+    loadKeys,
+    deleteKey
 }
 
 }

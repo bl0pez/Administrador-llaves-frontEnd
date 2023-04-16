@@ -4,6 +4,7 @@ import { KeyState } from "../interfaces/interfaces"
 type KeyAction =
     | { type: 'loadKeys', payload: Key[] }
     | { type: 'newKey', payload: Key }
+    | { type: 'deleteKey', payload: { id: string}}
     | { type: 'setError', payload: string }
     | { type: 'toggleKey', payload: { id: string } }
 
@@ -24,6 +25,12 @@ export const keyReducer = (stateKeys: KeyState, action: KeyAction): KeyState => 
                 keys: [action.payload, ...stateKeys.keys],
                 isLoading: true,
                 error: ""
+            }
+        }
+        case "deleteKey": {
+            return {
+                ...stateKeys,
+                keys: stateKeys.keys.filter(key => key._id !== action.payload.id),
             }
         }
         case "setError": {

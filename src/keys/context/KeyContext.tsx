@@ -7,6 +7,7 @@ import { Key } from "../interfaces/fetchAllKeys";
 export type KeyContextProps = {
     keyState : KeyState;
     createKey: (key: Key) => void;
+    deleteKey: (id: string) => void;
 }
 
 export const KeyContext = createContext({} as KeyContextProps);
@@ -18,7 +19,7 @@ interface Props {
 
 export const KeyProvider = ({ children }: Props) => {
 
-    const { keyState, loadKeys, createKey } = useKeys();
+    const { keyState, loadKeys, createKey, deleteKey } = useKeys();
     
     useEffect(() => {
         fetchAllKeys()
@@ -28,7 +29,8 @@ export const KeyProvider = ({ children }: Props) => {
     return (
         <KeyContext.Provider value={{
             keyState,
-            createKey
+            createKey,
+            deleteKey,
         }}>
             {children}
         </KeyContext.Provider>

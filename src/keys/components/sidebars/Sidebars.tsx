@@ -1,20 +1,42 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { menu } from './routes';
 
 export const Sidebars = () => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    const handleMenuClose = () => {
+        setIsSidebarOpen(false);
+    }
 
     const { pathname } = useLocation();
+
+    useEffect(() => {
+        const handleOutsideClick = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setIsSidebarOpen(false);
+            }
+        }
+
+        document.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        }
+
+    }, [handleMenuClose])
 
 
     const handleSidebarOpen = () => {
         return setIsSidebarOpen(!isSidebarOpen);
     }
+    
 
     return (
         <aside
+            ref={menuRef}
             className={`h-screen w-72 text-white bg-indigo-700 flex flex-col absolute text-2xl shadow-lg z-10 transform transition-all duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
 
