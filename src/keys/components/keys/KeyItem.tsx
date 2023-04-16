@@ -1,4 +1,4 @@
-import { Key } from "../../interfaces/fetchAllKeys";
+import { Key } from '../../interfaces/fetchAllKeys';
 
 interface props {
     item: Key;

@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { History, New } from '../components';
 import { Layouts } from '../keys/pages/Layouts';
 import { KeysPage } from '../keys/pages/KeysPage';
+import { CreateKeyPage } from '../keys/pages/CreateKeyPage';
 
 export const router = createBrowserRouter([
     { 
@@ -10,16 +10,16 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'new',
-                element: <New />
+                element: <CreateKeyPage />
             },
             {
                 path: 'history',
-                element: <History />
+                element: <div>a</div>
             },
-            {
-                path: 'keys',
-                element: <KeysPage />
-            }
+            // {
+            //     path: 'keys',
+            //     element: <KeysPage />
+            // }
         ] 
     }
 ]);

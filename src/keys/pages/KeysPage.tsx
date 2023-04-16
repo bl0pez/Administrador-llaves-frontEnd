@@ -12,20 +12,20 @@ export const KeysPage = () => {
 
     const [currentPages, setCurrentPages] = useState(0);
 
-    const filteredKeys = ():Key[] => {
-        if(search === '') return keys.slice(currentPages, currentPages + 5);
+    const filteredKeys = (): Key[] => {
+        if (search === '') return keys.slice(currentPages, currentPages + 5);
 
-        const filtered = keys.filter(key => key.name.startsWith( search.toLocaleLowerCase() ))
+        const filtered = keys.filter(key => key.name.startsWith(search.toLocaleLowerCase()))
         return filtered.slice(currentPages, currentPages + 5);
     }
 
     const nextPage = () => {
-        if(currentPages + 5 < keys.length)
+        if (currentPages + 5 < keys.length)
             return setCurrentPages(currentPages + 5);
     }
 
     const prevPage = () => {
-        if(currentPages > 0)
+        if (currentPages > 0)
             return setCurrentPages(currentPages - 5);
     }
 
@@ -33,22 +33,20 @@ export const KeysPage = () => {
         setCurrentPages(0);
         setSearch(target.value);
     }
-    
-    
 
     return (
         <section
-            className='text-black flex flex-col gap-5 justify-center items-center h-full bg-slate-200'
+            className='text-black flex flex-col gap-5 justify-center items-center mx-auto py-5 container'
         >
 
-                <label htmlFor='search' className='text-2xl'>Buscar llave</label>
-                <input
-                    type="text"
-                    className='w-3/5 block'
-                    placeholder='Buscar llave'
-                    value={search}
-                    onChange={onSearchChange}
-                />
+            <label htmlFor='search' className='text-2xl'>Buscar llave</label>
+            <input
+                type="text"
+                className='w-3/5 block'
+                placeholder='Buscar llave'
+                value={search}
+                onChange={onSearchChange}
+            />
 
                 <TableKeys>
                     {
@@ -58,22 +56,21 @@ export const KeysPage = () => {
                     }
                 </TableKeys>
 
-                {/* paginación */}
-                <div className='flex gap-5'>
-                    <button
-                        className='bg-indigo-600 py-3 px-5 rounded-md text-white mr-2 hover:bg-indigo-700'
-                        onClick={prevPage}
+            {/* paginación */}
+            <div className='flex gap-5'>
+                <button
+                    className='bg-indigo-600 py-3 px-5 rounded-md text-white  hover:bg-indigo-700'
+                    onClick={prevPage}
                     >
-                        <i className='fas fa-arrow-left'></i>
-                    </button>
-                    <button
-                        className='bg-indigo-600 py-3 px-5 rounded-md text-white mr-2 hover:bg-indigo-700'
-                        onClick={nextPage}
-                    >
-                        <i className='fas fa-arrow-right'></i>
-                    </button>
-                </div>
-
+                    <i className='fas fa-arrow-left'></i>
+                </button>
+                <button
+                    className='bg-indigo-600 py-3 px-5 rounded-md text-white hover:bg-indigo-700'
+                    onClick={nextPage}
+                >
+                    <i className='fas fa-arrow-right'></i>
+                </button>
+            </div>
 
         </section>
     )

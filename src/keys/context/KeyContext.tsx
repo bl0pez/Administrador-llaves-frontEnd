@@ -1,10 +1,10 @@
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { KeyState } from "../interfaces/interfaces";
 import { useKeys } from "../hooks/useKeys";
+import { fetchAllKeys } from "../helpers/fetchAllKeys";
 
 export type KeyContextProps = {
     keyState : KeyState,
-    filterKeys: (name: string) => void,
 }
 
 export const KeyContext = createContext({} as KeyContextProps);
@@ -16,13 +16,16 @@ interface Props {
 
 export const KeyProvider = ({ children }: Props) => {
 
-    const { keyState, filterKeys } = useKeys();
+    const { keyState, loadKeys } = useKeys();
     
+    useEffect(() => {
+        fetchAllKeys()
+            .then(keys => loadKeys(keys));
+    }, []);
 
     return (
         <KeyContext.Provider value={{
             keyState,
-            filterKeys,
         }}>
             {children}
         </KeyContext.Provider>
