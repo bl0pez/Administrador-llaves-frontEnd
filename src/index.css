@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* w-10/12 */
+
 
 input[type="text"] {
   @apply border-b border-indigo-500 outline-none px-2 py-1 text-gray-700 text-xl shadow-md transition duration-500 ease-in-out;
@@ -23,4 +23,50 @@ th{
 
 td{
   @apply px-6 py-2 whitespace-nowrap;
+}
+
+.ReactModalPortal > div{
+  opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  transition: opacity .2s ease-in-out;
+  z-index: 999;
+}
+
+.modal-fondo {
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: fixed;
+  overflow: hidden;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+
+
+/* modal */
+
+.modal {
+  /* background: white;
+  border-radius: 5px;
+  color: rgb(51, 51, 51);
+  display: inline;
+  max-height: 620px;
+  max-width: 500px;
+  outline: none;
+  padding: 10px; */
+  @apply bg-white container mx-auto rounded-lg shadow-lg overflow-y-auto h-4/5;
 }

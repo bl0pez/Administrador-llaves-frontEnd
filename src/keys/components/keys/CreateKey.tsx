@@ -1,12 +1,11 @@
-import { useContext, useState } from 'react';
-import { KeyContext } from '../context/KeyContext';
-import { keyApi } from '../../api/keyApi';
-import { FetchPostCreateKey } from '../interfaces/fetchAllKeys';
+import React, { useContext, useState } from 'react'
+import Dropzone from 'react-dropzone';
 import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
-import { Dropzone } from '../components/dropzone/Dropzone';
+import { FetchPostCreateKey } from '../../interfaces/fetchAllKeys';
+import { keyApi } from '../../../api/keyApi';
+import { KeyContext } from '../../context/KeyContext';
 
-export const CreateKeyPage = () => {
+export const CreateKey = () => {
 
     
     const { keyState, createKey } = useContext(KeyContext);
@@ -50,7 +49,7 @@ export const CreateKeyPage = () => {
 
             <form
                 onSubmit={onSubmit}
-                className="flex flex-col gap-4 shadow-2xl p-4 w-full lg:w-1/2 border-t-4 border-indigo-600">
+                className="flex flex-col gap-4 shadow-2xl p-4 w-full border-t-4 border-indigo-600">
                 <h1 className="text-4xl font-bold text-center">Crear llave</h1>
                     <label htmlFor="name">Nombre:</label>
                     <input

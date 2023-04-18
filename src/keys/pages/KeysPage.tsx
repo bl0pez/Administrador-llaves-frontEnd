@@ -3,12 +3,16 @@ import { TableKeys } from '../components/table/TableKeys';
 import { KeyContext } from '../context/KeyContext';
 import { KeyItem } from '../components/keys/KeyItem';
 import { Key } from '../interfaces/fetchAllKeys';
+import { CreateKeyModal } from '../components/keys/CreateKeyModal';
 
 export const KeysPage = () => {
 
     const [search, setSearch] = useState<string>('');
     const { keyState } = useContext(KeyContext);
     const { isLoading, error, keys } = keyState;
+
+    // para abrir el modal
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const [currentPages, setCurrentPages] = useState(0);
 
@@ -35,18 +39,19 @@ export const KeysPage = () => {
     }
 
     return (
-        <section
-            className='text-black flex flex-col gap-5 justify-center items-center mx-auto py-5 container'
-        >
+        <>
+            <section
+                className='text-black flex flex-col gap-5 justify-center items-center mx-auto py-5 container'
+            >
 
-            <label htmlFor='search' className='text-2xl'>Buscar llave</label>
-            <input
-                type="text"
-                className='w-3/5 block'
-                placeholder='Buscar llave'
-                value={search}
-                onChange={onSearchChange}
-            />
+                <label htmlFor='search' className='text-2xl'>Buscar llave</label>
+                <input
+                    type="text"
+                    className='w-3/5 block'
+                    placeholder='Buscar llave'
+                    value={search}
+                    onChange={onSearchChange}
+                />
 
                 <TableKeys>
                     {
@@ -56,22 +61,36 @@ export const KeysPage = () => {
                     }
                 </TableKeys>
 
-            {/* paginación */}
-            <div className='flex gap-5'>
-                <button
-                    className='bg-indigo-600 py-3 px-5 rounded-md text-white  hover:bg-indigo-700'
-                    onClick={prevPage}
+                {/* paginación */}
+                <div className='flex gap-5'>
+                    <button
+                        className='bg-indigo-600 py-3 px-5 rounded-md text-white  hover:bg-indigo-700'
+                        onClick={prevPage}
                     >
-                    <i className='fas fa-arrow-left'></i>
-                </button>
-                <button
-                    className='bg-indigo-600 py-3 px-5 rounded-md text-white hover:bg-indigo-700'
-                    onClick={nextPage}
-                >
-                    <i className='fas fa-arrow-right'></i>
-                </button>
-            </div>
+                        <i className='fas fa-arrow-left'></i>
+                    </button>
+                    <button
+                        className='bg-indigo-600 py-3 px-5 rounded-md text-white hover:bg-indigo-700'
+                        onClick={nextPage}
+                    >
+                        <i className='fas fa-arrow-right'></i>
+                    </button>
+                </div>
 
-        </section>
+                {/* Boton para crear nueva llave */}
+                <button
+                    className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
+                    onClick={() => setIsOpen(true)}
+                >
+                    <i className='fas fa-plus'></i>
+                </button>
+
+
+            </section>
+            <CreateKeyModal
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+            />
+        </>
     )
 }
