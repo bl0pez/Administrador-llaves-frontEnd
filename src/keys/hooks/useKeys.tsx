@@ -19,6 +19,8 @@ export const useKeys = () => {
 
     //Crea una nueva key
     const createKey = (key: Key) => {
+        console.log(key);
+        
         dispatch({type: 'newKey', payload: key });
     }
 

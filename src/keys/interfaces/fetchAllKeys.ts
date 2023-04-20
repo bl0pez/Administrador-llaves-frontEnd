@@ -7,7 +7,7 @@ export interface FetchAllkeysResponse {
 export interface FetchPostCreateKey {
     ok:           boolean;
     msg:          string;
-    responseItem: Key;
+    key: Key;
 }
 
 

@@ -27,21 +27,20 @@ export const CreateKeyModal = ({ isOpen, setIsOpen }: Props) => {
     e.preventDefault();
 
     try {
-
-      console.log(image);
       
 
-      const state = {
-        name,
-        description,
-        receivedBy,
-        image
-      }
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('receivedBy', receivedBy);
+      formData.append('image', image!);
 
-      const { data } = await keyApi.post<FetchPostCreateKey>('/keys', state);
+      const { data } = await keyApi.post<FetchPostCreateKey>('/keys', 
+      formData
+      );
 
 
-      createKey(data.responseItem);
+      createKey(data.key);
 
       Swal.fire('Exito', 'Llave creada', 'success');
 

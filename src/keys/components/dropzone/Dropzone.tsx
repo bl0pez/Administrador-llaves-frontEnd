@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 interface Props {
     image: File | null;
@@ -7,6 +7,7 @@ interface Props {
 
 export const Dropzone = ({ image, setImage }:Props) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const [preview, setPreview] = useState<string>('');
     const imgRef = useRef<HTMLImageElement>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,12 +19,18 @@ export const Dropzone = ({ image, setImage }:Props) => {
             setImage(selectedFile);
 
             //Renderizamos la imagen cargada con el useref
-            const url:string = URL.createObjectURL(selectedFile);
-            const revoker = () => URL.revokeObjectURL(url);
-            if (imgRef.current) {
-                imgRef.current.src = url;
-                revoker();
+            if(selectedFile){
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setPreview(reader.result as string);
+                }
+
+                reader.readAsDataURL(selectedFile);
+
+            }else {
+                setPreview('');
             }
+            
 
             // const file:File = e.target.files[0];
             // setImage(file);
@@ -36,13 +43,8 @@ export const Dropzone = ({ image, setImage }:Props) => {
 
     const removeImage = () => {
         setImage(null);
-
-        /* Limpiamos el input file */
-        if (inputRef.current) {
-            inputRef.current.value = '';
-        }
-
-
+        setPreview('');
+        inputRef.current!.value = '';
     }
 
       return (
@@ -61,7 +63,8 @@ export const Dropzone = ({ image, setImage }:Props) => {
                     <div className='relative w-32 h-32 lg:w-64 lg:h-64'>
                     <img
                         className='relative w-full h-full'
-                        ref={imgRef}
+                        src={preview}
+                        alt="Imagen de la llave"
                         />
                     <button
                         onClick={removeImage}

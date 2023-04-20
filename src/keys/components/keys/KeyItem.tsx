@@ -41,7 +41,7 @@ export const KeyItem = ({ item }: props) => {
         <tr>
             <td className='border px-4 py-2'>
                 <img
-                    src='https://picsum.photos/200/300'
+                    src={`${import.meta.env.VITE_BACKEND_URL}/${item.image}`}
                     className='w-14 h-14 object-cover rounded-md'
                     alt='imagen' />
             </td>
