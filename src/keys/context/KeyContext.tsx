@@ -1,13 +1,14 @@
 import { createContext, useEffect } from "react";
 import { KeyState } from "../interfaces/interfaces";
 import { useKeys } from "../hooks/useKeys";
-import { fetchAllKeys } from "../helpers/fetchAllKeys";
+import { getKeys } from "../helpers/fetchKeys";
 import { Key } from "../interfaces/fetchAllKeys";
 
 export type KeyContextProps = {
     keyState : KeyState;
     createKey: (key: Key) => void;
     deleteKey: (id: string) => void;
+    onSelectKey: (key: Key) => void;
 }
 
 export const KeyContext = createContext({} as KeyContextProps);
@@ -19,10 +20,13 @@ interface Props {
 
 export const KeyProvider = ({ children }: Props) => {
 
-    const { keyState, loadKeys, createKey, deleteKey } = useKeys();
+    const { keyState, loadKeys, createKey, deleteKey, onSelectKey } = useKeys();
     
+    /**
+     * Carga las llaves de la base de datos al iniciar la aplicación
+     */
     useEffect(() => {
-        fetchAllKeys()
+        getKeys()
             .then(keys => loadKeys(keys));
     }, []);
 
@@ -31,6 +35,7 @@ export const KeyProvider = ({ children }: Props) => {
             keyState,
             createKey,
             deleteKey,
+            onSelectKey,
         }}>
             {children}
         </KeyContext.Provider>

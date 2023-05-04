@@ -1,42 +1,22 @@
 import { useContext, useState } from 'react'
+
+import { UiContext, KeyContext } from '../context';
 import { TableKeys } from '../components/table/TableKeys';
-import { KeyContext } from '../context/KeyContext';
 import { KeyItem } from '../components/keys/KeyItem';
-import { Key } from '../interfaces/fetchAllKeys';
 import { CreateKeyModal } from '../components/keys/CreateKeyModal';
+import { usePagination } from '../hooks/usePagination';
+import { Pagination } from '../components/pagination/Pagination';
 
 export const KeysPage = () => {
 
-    const [search, setSearch] = useState<string>('');
     const { keyState } = useContext(KeyContext);
     const { isLoading, error, keys } = keyState;
 
-    // para abrir el modal
+    const { filteredKeys, nextPage, prevPage, onSearchChange, search } = usePagination(keys);
+
+    // modal
+    const  { isOpenModal, onCloseModal, onOpenModal } = useContext(UiContext);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
-    const [currentPages, setCurrentPages] = useState(0);
-
-    const filteredKeys = (): Key[] => {
-        if (search === '') return keys.slice(currentPages, currentPages + 5);
-
-        const filtered = keys.filter(key => key.name.startsWith(search.toLocaleLowerCase()))
-        return filtered.slice(currentPages, currentPages + 5);
-    }
-
-    const nextPage = () => {
-        if (currentPages + 5 < keys.length)
-            return setCurrentPages(currentPages + 5);
-    }
-
-    const prevPage = () => {
-        if (currentPages > 0)
-            return setCurrentPages(currentPages - 5);
-    }
-
-    const onSearchChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentPages(0);
-        setSearch(target.value);
-    }
 
     return (
         <>
@@ -56,31 +36,24 @@ export const KeysPage = () => {
                 <TableKeys>
                     {
                         filteredKeys().map(key => (
-                            <KeyItem key={key._id} item={key} />
+                            <KeyItem 
+                                key={key._id} 
+                                item={key}
+                            />
                         ))
                     }
                 </TableKeys>
 
                 {/* paginación */}
-                <div className='flex gap-5'>
-                    <button
-                        className='bg-indigo-600 py-3 px-5 rounded-md text-white  hover:bg-indigo-700'
-                        onClick={prevPage}
-                    >
-                        <i className='fas fa-arrow-left'></i>
-                    </button>
-                    <button
-                        className='bg-indigo-600 py-3 px-5 rounded-md text-white hover:bg-indigo-700'
-                        onClick={nextPage}
-                    >
-                        <i className='fas fa-arrow-right'></i>
-                    </button>
-                </div>
+                <Pagination 
+                    nextPage={nextPage}
+                    prevPage={prevPage}
+                />
 
                 {/* Boton para crear nueva llave */}
                 <button
                     className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
-                    onClick={() => setIsOpen(true)}
+                    onClick={onOpenModal}
                 >
                     <i className='fas fa-plus'></i>
                 </button>
@@ -88,8 +61,8 @@ export const KeysPage = () => {
 
             </section>
             <CreateKeyModal
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
+                isOpenModal={isOpenModal}
+                onCloseModal={onCloseModal}
             />
         </>
     )

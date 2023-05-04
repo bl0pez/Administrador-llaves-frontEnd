@@ -4,4 +4,5 @@ export interface KeyState {
     keys: Key[];
     isLoading: boolean;
     error: string;
+    activeKey: null | Key;
 }

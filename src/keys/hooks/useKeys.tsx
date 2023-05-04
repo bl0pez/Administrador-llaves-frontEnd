@@ -3,10 +3,14 @@ import { KeyState } from "../interfaces/interfaces"
 import { keyReducer } from "../context/KeyReducer";
 import { Key } from '../interfaces/fetchAllKeys';
 
+/**
+ * Estado inicial del reducer que administra las llaves
+ */
 const INITIAL_STATE: KeyState = {
     keys: [],
     isLoading: false,
     error: "",
+    activeKey: null,
 }
 
 export const useKeys = () => {
@@ -19,8 +23,6 @@ export const useKeys = () => {
 
     //Crea una nueva key
     const createKey = (key: Key) => {
-        console.log(key);
-        
         dispatch({type: 'newKey', payload: key });
     }
 
@@ -29,13 +31,24 @@ export const useKeys = () => {
         dispatch({type: 'deleteKey', payload: {id} });
     }
 
+    const onSelectKey = (key: Key) => {
+        dispatch({ type: 'onSetActiveKey', payload: key });
+    }
+
+    const updateKey = (key: Key) => {
+        dispatch({type: 'updateKey', payload: key });
+    }
+
 return {
+    //State
     keyState,
 
     //Metodos
     createKey,
     loadKeys,
-    deleteKey
+    onSelectKey,
+    deleteKey,
+    updateKey,
 }
 
 }

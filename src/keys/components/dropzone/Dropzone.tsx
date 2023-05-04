@@ -2,10 +2,10 @@ import { useRef, useState } from 'react';
 
 interface Props {
     image: File | null;
-    setImage: (value: File | null) => void;
+    onFileChange: (value: File | null) => void;
 }
 
-export const Dropzone = ({ image, setImage }:Props) => {
+export const Dropzone = ({ image, onFileChange }:Props) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [preview, setPreview] = useState<string>('');
     const imgRef = useRef<HTMLImageElement>(null);
@@ -16,7 +16,8 @@ export const Dropzone = ({ image, setImage }:Props) => {
 
             //Cargamos la imagen en el state
             const selectedFile = e.target.files[0];
-            setImage(selectedFile);
+
+            onFileChange(selectedFile);
 
             //Renderizamos la imagen cargada con el useref
             if(selectedFile){
@@ -42,7 +43,6 @@ export const Dropzone = ({ image, setImage }:Props) => {
     }
 
     const removeImage = () => {
-        setImage(null);
         setPreview('');
         inputRef.current!.value = '';
     }

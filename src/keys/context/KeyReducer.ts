@@ -3,10 +3,11 @@ import { KeyState } from "../interfaces/interfaces"
 
 type KeyAction =
     | { type: 'loadKeys', payload: Key[] }
+    | { type: 'onSetActiveKey', payload: Key}
     | { type: 'newKey', payload: Key }
-    | { type: 'deleteKey', payload: { id: string}}
+    | { type: 'updateKey', payload: Key }
+    | { type: 'deleteKey', payload: { id: string } }
     | { type: 'setError', payload: string }
-    | { type: 'toggleKey', payload: { id: string } }
 
 // En los reducer siempre se debe de retornar un nuevo estado
 // y no una mutación del estado anterior
@@ -23,6 +24,20 @@ export const keyReducer = (stateKeys: KeyState, action: KeyAction): KeyState => 
             return {
                 ...stateKeys,
                 keys: [action.payload, ...stateKeys.keys],
+                isLoading: true,
+                error: ""
+            }
+        }
+        case "onSetActiveKey": {
+            return {
+                ...stateKeys,
+                activeKey: action.payload,
+            }
+        }
+        case "updateKey": {
+            return {
+                ...stateKeys,
+                keys: stateKeys.keys.map(key => key._id === action.payload._id ? action.payload : key),
                 isLoading: true,
                 error: ""
             }

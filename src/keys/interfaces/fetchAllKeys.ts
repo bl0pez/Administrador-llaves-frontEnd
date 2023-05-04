@@ -11,14 +11,17 @@ export interface FetchPostCreateKey {
 }
 
 
-export interface Key {
-    _id:         string;
+export interface Key  extends KeyForm{
+    _id:        string;
+    createdAt:  string;
+    updatedAt:  string;
+}
+
+export interface KeyForm {
     name:        string;
     description: string;
     receivedBy:  string;
-    createdAt:   string;
-    updatedAt:   string;
-    image?:      string;
+    image:      File | null;
 }
 
 

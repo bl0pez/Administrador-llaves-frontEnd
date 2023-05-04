@@ -1,22 +1,47 @@
+import { useContext, useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { Dropzone } from '../dropzone/Dropzone';
 import Swal from 'sweetalert2';
-import { FetchPostCreateKey } from '../../interfaces/fetchAllKeys';
-import { keyApi } from '../../../api/keyApi';
-import { useContext, useState } from 'react';
-import { KeyContext } from '../../context/KeyContext';
+
+import { Dropzone } from '../dropzone/Dropzone';
+import { KeyContext } from '../../context';
+import { fetchCreateKey } from '../../helpers/fetchKeys';
 
 Modal.setAppElement('#root');
 
 interface Props {
-  isOpen: boolean;
-  setIsOpen: (value: boolean) => void;
+  isOpenModal: boolean;
+  onCloseModal: () => void;
 }
 
+const initialFormValues = {
+  name: '',
+  description: '',
+  receivedBy: '',
+  image: File || null
+}
 
-export const CreateKeyModal = ({ isOpen, setIsOpen }: Props) => {
+export const CreateKeyModal = ({ isOpenModal, onCloseModal }: Props) => {
 
   const { keyState, createKey } = useContext(KeyContext);
+  const { activeKey } = keyState;
+
+  const [formValues, setFormValues] = useState(initialFormValues);
+
+  // camputa los valores del input
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  // campura los valores del input file
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.files
+    })
+  }
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -27,22 +52,18 @@ export const CreateKeyModal = ({ isOpen, setIsOpen }: Props) => {
     e.preventDefault();
 
     try {
-      
 
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('description', description);
-      formData.append('receivedBy', receivedBy);
-      formData.append('image', image!);
+      const { key } = await fetchCreateKey({
+        name,
+        description,
+        receivedBy,
+        image
+      });
 
-      const { data } = await keyApi.post<FetchPostCreateKey>('/keys', 
-      formData
-      );
-
-
-      createKey(data.key);
+      createKey(key);
 
       Swal.fire('Exito', 'Llave creada', 'success');
+      onCloseModal();
 
 
     } catch (error) {
@@ -52,10 +73,20 @@ export const CreateKeyModal = ({ isOpen, setIsOpen }: Props) => {
     }
   }
 
+  useEffect(()=> {
+    if(activeKey !== null) {
+
+      setName(activeKey.name);
+      setDescription(activeKey.description);
+      setReceivedBy(activeKey.receivedBy);
+
+    }
+  }, [activeKey])
+
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={() => setIsOpen(false)}
+      isOpen={isOpenModal}
+      onRequestClose={onCloseModal}
       closeTimeoutMS={200}
       className="modal"
       overlayClassName="modal-fondo"
@@ -73,7 +104,7 @@ export const CreateKeyModal = ({ isOpen, setIsOpen }: Props) => {
           name="name"
           id="name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={onInputChange}
         />
 
         <label htmlFor="description">Descripción:</label>
@@ -82,7 +113,7 @@ export const CreateKeyModal = ({ isOpen, setIsOpen }: Props) => {
           name="description"
           id="description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={onInputChange}
         />
 
 
@@ -92,7 +123,7 @@ export const CreateKeyModal = ({ isOpen, setIsOpen }: Props) => {
           name="resepcionada por"
           id="resepcionada por"
           value={receivedBy}
-          onChange={(e) => setReceivedBy(e.target.value)}
+          onChange={onInputChange}
         />
 
         <label htmlFor="image">Imagen:</label>

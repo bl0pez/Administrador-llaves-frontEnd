@@ -1,7 +1,7 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from "./router";
-import { KeyProvider } from './keys/context/KeyContext';
-import { SidebarProvider } from './context/SidebarContext';
+import { KeyProvider, UiProvider } from './keys/context';
+import { SidebarProvider } from './context';
 
 export const App = () => {
 
@@ -9,7 +9,9 @@ export const App = () => {
     <>
       <SidebarProvider>
         <KeyProvider>
-          <RouterProvider router={router} />
+          <UiProvider>
+            <RouterProvider router={router} />
+          </UiProvider>
         </KeyProvider>
       </SidebarProvider>
     </>
