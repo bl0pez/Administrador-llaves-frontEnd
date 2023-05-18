@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props {
-    image: File | null;
-    onFileChange: (value: File | null) => void;
+    image: null,
+    onFileChange: ( e: React.ChangeEvent<HTMLInputElement> ) =>  void;
 }
 
 export const Dropzone = ({ image, onFileChange }:Props) => {
@@ -10,42 +10,65 @@ export const Dropzone = ({ image, onFileChange }:Props) => {
     const [preview, setPreview] = useState<string>('');
     const imgRef = useRef<HTMLImageElement>(null);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-            if (!e.target.files) return;
+    //         if (!e.target.files) return;
 
-            //Cargamos la imagen en el state
-            const selectedFile = e.target.files[0];
+    //         //Cargamos la imagen en el state
+    //         const selectedFile = e.target.files[0];
+    //         // setImage(selectedFile);
 
-            onFileChange(selectedFile);
+    //         // onFileChange(selectedFile);
 
-            //Renderizamos la imagen cargada con el useref
-            if(selectedFile){
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setPreview(reader.result as string);
-                }
+    //         //Renderizamos la imagen cargada con el useref
+    //         if(selectedFile){
+    //             const reader = new FileReader();
+    //             reader.onloadend = () => {
+    //                 setPreview(reader.result as string);
+    //             }
 
-                reader.readAsDataURL(selectedFile);
+    //             reader.readAsDataURL(selectedFile);
 
-            }else {
-                setPreview('');
-            }
+    //         }else {
+    //             setPreview('');
+    //         }
             
 
-            // const file:File = e.target.files[0];
-            // setImage(file);
-            // const url:string = URL.createObjectURL(file);
-            // imgRef.current!.src = url;
+    //         // const file:File = e.target.files[0];
+    //         // setImage(file);
+    //         // const url:string = URL.createObjectURL(file);
+    //         // imgRef.current!.src = url;
 
-            // return () => URL.revokeObjectURL(url);
+    //         // return () => URL.revokeObjectURL(url);
 
-    }
+    // }
 
     const removeImage = () => {
         setPreview('');
         inputRef.current!.value = '';
     }
+
+    // useEffect(() => {
+        
+    //     if (!image) return;
+
+    //     const selectedFile = image[0];
+
+    //     if(selectedFile){
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setPreview(reader.result as string);
+    //         }
+
+    //         reader.readAsDataURL(selectedFile);
+
+    //     }else {
+    //         removeImage();
+    //     }
+
+
+    // }, [image]);
+    
 
       return (
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'> 
@@ -53,20 +76,21 @@ export const Dropzone = ({ image, onFileChange }:Props) => {
                 type="file"
                 name="image"
                 id="image"
-                ref={inputRef}
                 className='block'
-                onChange={handleChange}
+                ref={inputRef}
+                onChange={onFileChange}
             />
 
             {
-                image && (
+                preview && (
                     <div className='relative w-32 h-32 lg:w-64 lg:h-64'>
                     <img
-                        className='relative w-full h-full'
+                        className='relative w-full h-full object-cover'
                         src={preview}
                         alt="Imagen de la llave"
                         />
                     <button
+                        type='button'
                         onClick={removeImage}
                         title='Eliminar imagen'
                         className='absolute -top-3 text-white -right-4 z-10 bg-red-500 rounded-full w-8 h-8 hover:bg-red-600 transition-all duration-500 ease-in-out'

@@ -5,11 +5,11 @@ interface Menu {
 }
 
 export const menu: Menu[] = [
-    {
-        title: "Crear llave",
-        icon: "fa-plus",
-        url: "/admin/new"
-    },
+    // {
+    //     title: "Crear llave",
+    //     icon: "fa-plus",
+    //     url: "/admin/new"
+    // },
     {
         title: "Llaves",
         icon: "fa-key",

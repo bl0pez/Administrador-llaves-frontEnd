@@ -4,6 +4,7 @@ import { Key } from '../../interfaces/fetchAllKeys';
 import { useContext } from 'react';
 import { KeyContext } from '../../context/KeyContext';
 import { UiContext } from '../../context';
+import { ModalContext } from '../../../context';
 
 interface props {
     item: Key;
@@ -13,10 +14,11 @@ export const KeyItem = ({ item }: props) => {
 
     const { deleteKey, onSelectKey } = useContext(KeyContext);
     const  { onOpenModal } = useContext(UiContext);
+    const { setIsOpenModal } = useContext(ModalContext);
 
     const updateKey = () => {
         onSelectKey(item);
-        onOpenModal();
+        setIsOpenModal();
     }
 
     const removeKey = async(id: string) => {

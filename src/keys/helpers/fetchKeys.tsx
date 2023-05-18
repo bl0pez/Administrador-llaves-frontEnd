@@ -7,13 +7,18 @@ export const getKeys = async():Promise<Key[]> => {
     return resp.data.keys;
 }
 
-export const fetchCreateKey = async(key: KeyForm):Promise<FetchPostCreateKey> => {
+export const fetchCreateKey = async(key: any):Promise<FetchPostCreateKey> => {
+
     const formData = new FormData();
     formData.append('name', key.name);
     formData.append('description', key.description);
     formData.append('receivedBy', key.receivedBy);
-    formData.append('image', key.image!);
+    formData.append('image', key.image);
 
-    const resp = await keyApi.post<FetchPostCreateKey>('/keys', formData);
+    const resp = await keyApi.post<FetchPostCreateKey>('/keys', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
     return resp.data;
 }

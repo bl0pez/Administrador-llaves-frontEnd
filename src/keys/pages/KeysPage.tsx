@@ -6,6 +6,7 @@ import { KeyItem } from '../components/keys/KeyItem';
 import { CreateKeyModal } from '../components/keys/CreateKeyModal';
 import { usePagination } from '../hooks/usePagination';
 import { Pagination } from '../components/pagination/Pagination';
+import { ModalContext } from '../../context';
 
 export const KeysPage = () => {
 
@@ -15,7 +16,8 @@ export const KeysPage = () => {
     const { filteredKeys, nextPage, prevPage, onSearchChange, search } = usePagination(keys);
 
     // modal
-    const  { isOpenModal, onCloseModal, onOpenModal } = useContext(UiContext);
+    const { isOpenModal, onCloseModal, onOpenModal } = useContext(UiContext);
+    const {setIsOpenModal} = useContext(ModalContext)
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
@@ -36,8 +38,8 @@ export const KeysPage = () => {
                 <TableKeys>
                     {
                         filteredKeys().map(key => (
-                            <KeyItem 
-                                key={key._id} 
+                            <KeyItem
+                                key={key._id}
                                 item={key}
                             />
                         ))
@@ -45,7 +47,7 @@ export const KeysPage = () => {
                 </TableKeys>
 
                 {/* paginación */}
-                <Pagination 
+                <Pagination
                     nextPage={nextPage}
                     prevPage={prevPage}
                 />
@@ -53,17 +55,15 @@ export const KeysPage = () => {
                 {/* Boton para crear nueva llave */}
                 <button
                     className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
-                    onClick={onOpenModal}
+                    onClick={setIsOpenModal}
                 >
                     <i className='fas fa-plus'></i>
                 </button>
 
 
             </section>
-            <CreateKeyModal
-                isOpenModal={isOpenModal}
-                onCloseModal={onCloseModal}
-            />
+
+            <CreateKeyModal />
         </>
     )
 }
