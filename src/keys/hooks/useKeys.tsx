@@ -1,11 +1,13 @@
 import { useReducer } from 'react';
-import { KeyState } from "../interfaces/interfaces"
+import { KeyState } from '../interfaces/interfaces';
 import { keyReducer } from "../context/KeyReducer";
 import { Key } from '../interfaces/fetchAllKeys';
 
+
+
 /**
  * Estado inicial del reducer que administra las llaves
- */
+*/
 const INITIAL_STATE: KeyState = {
     keys: [],
     isLoading: false,
@@ -13,8 +15,17 @@ const INITIAL_STATE: KeyState = {
     activeKey: null,
 }
 
-export const useKeys = () => {
+interface Action {
+    keyState: KeyState;
+    createKey: (key: Key) => void;
+    loadKeys: (keys: Key[]) => void;
+    onSelectKey: (key: Key) => void;
+    deleteKey: (id: string) => void;
+    onDeselectKey: () => void;
+    updateKey: (key: Key) => void;
+}
 
+export const useKeys = (): Action => {
     const [keyState, dispatch] = useReducer(keyReducer, INITIAL_STATE);
 
     //Cargar llaves

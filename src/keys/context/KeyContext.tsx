@@ -10,6 +10,7 @@ export type KeyContextProps = {
     deleteKey: (id: string) => void;
     onSelectKey: (key: Key) => void;
     onDeselectKey: () => void;
+    updateKey: (key: Key) => void;
 }
 
 export const KeyContext = createContext({} as KeyContextProps);
@@ -21,7 +22,7 @@ interface Props {
 
 export const KeyProvider = ({ children }: Props) => {
 
-    const { keyState, loadKeys, createKey, deleteKey, onSelectKey, onDeselectKey } = useKeys();
+    const { keyState, loadKeys, createKey, deleteKey, onSelectKey, onDeselectKey, updateKey } = useKeys();
     
     /**
      * Carga las llaves de la base de datos al iniciar la aplicación
@@ -38,6 +39,7 @@ export const KeyProvider = ({ children }: Props) => {
             deleteKey,
             onSelectKey,
             onDeselectKey,
+            updateKey
         }}>
             {children}
         </KeyContext.Provider>

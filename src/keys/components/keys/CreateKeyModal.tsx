@@ -23,7 +23,7 @@ const initialFormValues = {
 
 export const CreateKeyModal = () => {
 
-  const { keyState, createKey, onDeselectKey } = useContext(KeyContext);
+  const { keyState, createKey, onDeselectKey, updateKey } = useContext(KeyContext);
   const {setIsCloseModal, setIsOpenModal, stateModal} = useContext(ModalContext);
   const { activeKey } = keyState;
 
@@ -59,10 +59,10 @@ export const CreateKeyModal = () => {
       if(activeKey !== null) {
         const data = await fetchUpdateKey(activeKey._id, formValues);
 
-        console.log(data);
-        
+        const msj = data.msg || 'Error al actualizar la llave';
 
-        Swal.fire('Exito', 'Llave actualizada', 'success');
+        updateKey(data.key);
+        Swal.fire('Exito', msj, 'success');
         setIsCloseModal();
         setFormValues(initialFormValues);
 
@@ -79,9 +79,13 @@ export const CreateKeyModal = () => {
       setFormValues(initialFormValues);
 
 
-    } catch (error) {
+    } catch (error : any) {
 
-      Swal.fire('Error', 'No se pudo crear la llave', 'error');
+      console.log(error);
+      
+      const errorMsj = error.response.data.msg || 'Error al crear la llave';
+
+      Swal.fire('Error', errorMsj, 'error');
 
     }
   }
