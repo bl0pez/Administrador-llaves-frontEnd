@@ -1,75 +1,35 @@
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
-    image: null,
+    image: string,
     onFileChange: ( e: React.ChangeEvent<HTMLInputElement> ) =>  void;
 }
 
 export const Dropzone = ({ image, onFileChange }:Props) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [preview, setPreview] = useState<string>('');
-    const imgRef = useRef<HTMLImageElement>(null);
 
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
 
-    //         if (!e.target.files) return;
+        
+        if (!image || typeof(image) != 'object') return;
+        
+        const render = new FileReader();
+        render.onloadend = () => {
+            setPreview(render.result as string);
+        }
 
-    //         //Cargamos la imagen en el state
-    //         const selectedFile = e.target.files[0];
-    //         // setImage(selectedFile);
+        const blob = new Blob([image], { type: 'text/plain' });
 
-    //         // onFileChange(selectedFile);
+        render.readAsDataURL(blob);
 
-    //         //Renderizamos la imagen cargada con el useref
-    //         if(selectedFile){
-    //             const reader = new FileReader();
-    //             reader.onloadend = () => {
-    //                 setPreview(reader.result as string);
-    //             }
-
-    //             reader.readAsDataURL(selectedFile);
-
-    //         }else {
-    //             setPreview('');
-    //         }
-            
-
-    //         // const file:File = e.target.files[0];
-    //         // setImage(file);
-    //         // const url:string = URL.createObjectURL(file);
-    //         // imgRef.current!.src = url;
-
-    //         // return () => URL.revokeObjectURL(url);
-
-    // }
+    }, [image]);
 
     const removeImage = () => {
         setPreview('');
         inputRef.current!.value = '';
     }
-
-    // useEffect(() => {
-        
-    //     if (!image) return;
-
-    //     const selectedFile = image[0];
-
-    //     if(selectedFile){
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setPreview(reader.result as string);
-    //         }
-
-    //         reader.readAsDataURL(selectedFile);
-
-    //     }else {
-    //         removeImage();
-    //     }
-
-
-    // }, [image]);
     
-
       return (
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'> 
             <input

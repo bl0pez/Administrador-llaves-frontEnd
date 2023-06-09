@@ -17,11 +17,12 @@ export const useKeys = () => {
 
     const [keyState, dispatch] = useReducer(keyReducer, INITIAL_STATE);
 
+    //Cargar llaves
     const loadKeys = (keys: Key[]) => {
         dispatch({ type: 'loadKeys', payload: keys });
     }
 
-    //Crea una nueva key
+    //Crea una nueva llave
     const createKey = (key: Key) => {
         dispatch({type: 'newKey', payload: key });
     }
@@ -31,8 +32,14 @@ export const useKeys = () => {
         dispatch({type: 'deleteKey', payload: {id} });
     }
 
+    //Selecciona una llave
     const onSelectKey = (key: Key) => {
         dispatch({ type: 'onSetActiveKey', payload: key });
+    }
+
+    //Deseclecciona una llave
+    const onDeselectKey = () => {
+        dispatch({ type: 'onSetInactiveKey' });
     }
 
     const updateKey = (key: Key) => {
@@ -48,6 +55,7 @@ return {
     loadKeys,
     onSelectKey,
     deleteKey,
+    onDeselectKey,
     updateKey,
 }
 

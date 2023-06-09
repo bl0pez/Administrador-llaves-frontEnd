@@ -22,3 +22,13 @@ export const fetchCreateKey = async(key: any):Promise<FetchPostCreateKey> => {
     });
     return resp.data;
 }
+
+export const fetchUpdateKey = async(_id: any, key: any) => {    
+    const data = await keyApi.put(`/keys/${_id}`, key, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+    
+        
+}

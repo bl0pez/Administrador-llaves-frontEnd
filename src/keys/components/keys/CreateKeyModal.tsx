@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 
 import { Dropzone } from '../dropzone/Dropzone';
 import { KeyContext } from '../../context';
-import { fetchCreateKey } from '../../helpers/fetchKeys';
+import { fetchCreateKey, fetchUpdateKey } from '../../helpers/fetchKeys';
 import { ModalContext } from '../../../context';
 
 Modal.setAppElement('#root');
@@ -18,12 +18,12 @@ const initialFormValues = {
   name: '',
   description: '',
   receivedBy: '',
-  image: null,
+  image: ''
 }
 
 export const CreateKeyModal = () => {
 
-  const { keyState, createKey } = useContext(KeyContext);
+  const { keyState, createKey, onDeselectKey } = useContext(KeyContext);
   const {setIsCloseModal, setIsOpenModal, stateModal} = useContext(ModalContext);
   const { activeKey } = keyState;
 
@@ -36,6 +36,7 @@ export const CreateKeyModal = () => {
       [e.target.name]: e.target.value
     })
   }
+  
 
   // campura los valores del input file
   const onFileChange = (e: any) => {
@@ -44,17 +45,30 @@ export const CreateKeyModal = () => {
       [e.target.name]: e.target.files[0]
     })
   }
-  
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [receivedBy, setReceivedBy] = useState('');
-  const [image, setImage] = useState<File | null>(null); 
+  const onCloseModal = () => {
+    setFormValues(initialFormValues);
+    onDeselectKey();
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
+
+      if(activeKey !== null) {
+        const data = await fetchUpdateKey(activeKey._id, formValues);
+
+        console.log(data);
+        
+
+        Swal.fire('Exito', 'Llave actualizada', 'success');
+        setIsCloseModal();
+        setFormValues(initialFormValues);
+
+        return;
+
+      }
 
       const { key } = await fetchCreateKey(formValues);
 
@@ -74,13 +88,12 @@ export const CreateKeyModal = () => {
 
   useEffect(()=> {
     if(activeKey !== null) {
-
       setFormValues({
         name: activeKey.name,
         description: activeKey.description,
         receivedBy: activeKey.receivedBy,
-        image: null
-      })
+        image: activeKey.image
+      });
 
     }
   }, [activeKey])
@@ -92,7 +105,7 @@ export const CreateKeyModal = () => {
       closeTimeoutMS={200}
       className="modal"
       overlayClassName="modal-fondo"
-      onAfterClose={() => setFormValues(initialFormValues)}
+      onAfterClose={onCloseModal}
     >
 
 
@@ -100,7 +113,9 @@ export const CreateKeyModal = () => {
       <form
         onSubmit={onSubmit}
         className="flex flex-col gap-4 shadow-2xl p-4 w-full min-h-full">
-        <h1 className="text-4xl font-bold text-center">Crear llave</h1>
+        <h1 className="text-4xl font-bold text-center">{
+          (activeKey) ? 'Editar llave' : 'Crear llave'
+        }</h1>
         <label htmlFor="name">Nombre:</label>
         <input
           type="text"

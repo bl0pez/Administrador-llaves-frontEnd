@@ -21,7 +21,7 @@ export interface KeyForm {
     name:        string;
     description: string;
     receivedBy:  string;
-    image:      File | null;
+    image: string;
 }
 
 
