@@ -127,6 +127,7 @@ export const CreateKeyModal = () => {
           id="name"
           value={formValues.name}
           onChange={onInputChange}
+          autoComplete='off'
         />
 
         <label htmlFor="description">Descripción:</label>
@@ -136,6 +137,7 @@ export const CreateKeyModal = () => {
           id="description"
           value={formValues.description}
           onChange={onInputChange}
+          autoComplete='off'
         />
 
 
@@ -146,6 +148,7 @@ export const CreateKeyModal = () => {
           id="receivedBy"
           value={formValues.receivedBy}
           onChange={onInputChange}
+          autoComplete='off'
         />
 
         <label htmlFor="image">Imagen:</label>
