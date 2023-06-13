@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from 'react';
+import { createContext, useContext, useEffect, useReducer, useState } from 'react';
 import { AuthState } from '../../keys/interfaces/interfaces';
 import { AuthReducer } from './AuthReducer';
 import { keyApi } from '../../api/keyApi';
@@ -31,6 +31,14 @@ export const AuthProvider = ({ children }: Props) => {
 
     const [authstate, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
+    useEffect(() => {
+
+        if(!localStorage.getItem('token')) return;
+
+        handleChecking();
+
+    }, []);
+
     const handleLogin = async(data:FormValues) => {
 
         dispatch({ type: 'checking'});
@@ -51,6 +59,30 @@ export const AuthProvider = ({ children }: Props) => {
 
         } catch (error) {
             dispatch({ type: 'logout'});
+        }
+
+    }
+
+    const handleChecking = async() => {
+
+        dispatch({ type: 'checking'});
+
+        try {
+
+            const resp = await keyApi.get<Auth>('/validate');
+
+            //Guardamos el token en el localstorage
+            localStorage.setItem('token', resp.data.token);
+
+            dispatch({ type: 'login', payload: {
+                uid: resp.data.user._id,
+                name: resp.data.user.name,
+                email: resp.data.user.email
+            }});
+
+            
+        } catch (error) {
+            handleLogout();
         }
 
     }
