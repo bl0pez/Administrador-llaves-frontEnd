@@ -3,7 +3,7 @@ import { AuthState } from "../../keys/interfaces/interfaces"
 type AuthAction =
     | { type: 'checking' }
     | { type: 'logout' }
-    | { type: 'login', payload: { uid: string, name: string } }
+    | { type: 'login', payload: { uid: string, name: string, email:string } }
 
 export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
@@ -26,6 +26,7 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
                 status: 'authenticated',
                 uid: action.payload.uid,
                 name: action.payload.name,
+                email: action.payload.name,
             }
         }
         default:

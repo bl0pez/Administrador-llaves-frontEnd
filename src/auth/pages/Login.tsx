@@ -1,4 +1,5 @@
 import { useForm, FormValidations } from "../../hooks";
+import { useAuth } from "../context/AuthContext";
 
 const initialState = {
     email: '',
@@ -12,13 +13,15 @@ const formValidations: FormValidations = {
 
 export const Login = () => {
 
+    const { handleLogin } = useAuth();
     const { formValues, onInputChange, onBluer, errors } = useForm(initialState, formValidations);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
 
-        console.log('submit');
+        handleLogin(formValues);
+
     }
     
 
@@ -71,6 +74,8 @@ export const Login = () => {
                                 id='password'
                                 name='password'
                                 type='password'
+                                value={formValues.password}
+                                onChange={onInputChange}
                                 autoComplete='current-password'
                                 required
                                 className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'

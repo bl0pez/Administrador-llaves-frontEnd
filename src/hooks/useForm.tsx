@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-interface FormValues {
+export interface FormValues {
     [key: string]: any;
 }
 

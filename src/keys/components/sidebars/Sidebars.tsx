@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { menu } from './routes';
+import { useAuth } from '../../../auth/context/AuthContext';
 
 export const Sidebars = () => {
 
+    const { handleLogout } = useAuth();
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -82,6 +84,7 @@ export const Sidebars = () => {
             </nav>
 
             <button
+                onClick={handleLogout}
                 className='flex-initial flex items-center justify-between px-3 py-4 uppercase bg-red-700  font-bold hover:bg-red-800 transition-all duration-500 ease-in-out'
             >
                 <span>Salir</span>

@@ -23,19 +23,16 @@ export const router = createBrowserRouter([
         element: <PrivateRouter />,
         children: [
             {
-                path: 'new',
-                element: <CreateKeyPage />
+                path: '/',
+                element: <KeysPage />
             },
             {
                 path: 'history',
                 element: <div>a</div>
             },
-            {
-                path: 'keys',
-                element: <KeysPage />
-            }, {
+             {
                 path: '*',
-                element: <Navigate to="/new" />
+                element: <Navigate to="/" />
             }
         ]
     }
