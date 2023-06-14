@@ -26,6 +26,8 @@ interface Action {
 }
 
 export const useKeys = (): Action => {
+
+    //Reducer
     const [keyState, dispatch] = useReducer(keyReducer, INITIAL_STATE);
 
     //Cargar llaves

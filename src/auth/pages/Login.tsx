@@ -20,6 +20,11 @@ export const Login = () => {
 
         e.preventDefault();
 
+        //Validamos que los campos no esten vacios
+        if (formValues.email.trim().length === 0 || formValues.password.trim().length === 0) {
+            return;
+        }
+
         handleLogin(formValues);
 
     }

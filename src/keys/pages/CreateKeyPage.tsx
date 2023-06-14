@@ -3,7 +3,6 @@ import { KeyContext } from '../context/KeyContext';
 import { keyApi } from '../../api/keyApi';
 import { FetchPostCreateKey } from '../interfaces/fetchAllKeys';
 import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
 import { Dropzone } from '../components/dropzone/Dropzone';
 
 export const CreateKeyPage = () => {
@@ -31,7 +30,7 @@ export const CreateKeyPage = () => {
             const { data } = await keyApi.post<FetchPostCreateKey>('/keys', state);
             
 
-            createKey( data.responseItem );
+            createKey( data.key );
 
             Swal.fire('Exito', 'Llave creada', 'success');
 

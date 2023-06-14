@@ -4,6 +4,7 @@ import { AuthReducer } from './AuthReducer';
 import { keyApi } from '../../api/keyApi';
 import { Auth } from '../../keys/interfaces/authFetch';
 import { FormValues } from '../../hooks';
+import Swal from 'sweetalert2';
 
 interface AuthContextProps {
     authstate: AuthState;
@@ -57,8 +58,10 @@ export const AuthProvider = ({ children }: Props) => {
             }});
 
 
-        } catch (error) {
+        } catch (error : any) {
             dispatch({ type: 'logout'});
+            Swal.fire('Error', error.response.data.msg, 'error');
+            
         }
 
     }
