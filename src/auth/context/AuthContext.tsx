@@ -20,7 +20,7 @@ const AuthContext = createContext({} as AuthContextProps);
 
 //Estado inicial del reducer de autenticación
 const INITIAL_STATE: AuthState = {
-    status: 'not-authenticated', // 'authenticated' | 'not-authenticated' | 'checking'
+    status: 'checking', // 'authenticated' | 'not-authenticated' | 'checking'
     uid: null,
     name: null,
     email: null,
@@ -34,15 +34,18 @@ export const AuthProvider = ({ children }: Props) => {
 
     useEffect(() => {
 
-        if(!localStorage.getItem('token')) return;
+        if(!localStorage.getItem('token')){
+            return handleLogout();
+        };
 
         handleChecking();
 
     }, []);
 
-    const handleLogin = async(data:FormValues) => {
+    console.log(authstate.status);
+    
 
-        dispatch({ type: 'checking'});
+    const handleLogin = async(data:FormValues) => {
 
         try {
             
@@ -102,7 +105,13 @@ export const AuthProvider = ({ children }: Props) => {
             handleLogin,
             handleLogout,
         }}>
-            {children}
+            { 
+            
+                authstate.status === 'checking'
+                ? <h1>Caergandoo..</h1>
+                : (children)
+            
+            }
         </AuthContext.Provider>)
 
 }

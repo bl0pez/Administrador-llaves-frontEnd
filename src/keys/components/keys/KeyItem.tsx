@@ -1,9 +1,9 @@
 import Swal from 'sweetalert2';
+
 import { keyApi } from '../../../api/keyApi';
 import { Key } from '../../interfaces/fetchAllKeys';
 import { useContext } from 'react';
 import { KeyContext } from '../../context/KeyContext';
-import { UiContext } from '../../context';
 import { ModalContext } from '../../../context';
 
 interface props {
@@ -13,7 +13,6 @@ interface props {
 export const KeyItem = ({ item }: props) => {
 
     const { deleteKey, onSelectKey } = useContext(KeyContext);
-    const  { onOpenModal } = useContext(UiContext);
     const { setIsOpenModal } = useContext(ModalContext);
 
     const updateKey = () => {
@@ -35,8 +34,9 @@ export const KeyItem = ({ item }: props) => {
             });
 
             if (isConfirmed) {
-                await keyApi.delete(`/keys/${id}`);
-                Swal.fire('Eliminado', 'La llave ha sido eliminada', 'success');
+                const resp = await keyApi.delete(`/keys/${id}`);
+                console.log(resp.data);
+                Swal.fire('Eliminado', resp.data.msg , 'success');
                 deleteKey(id);
             }
 

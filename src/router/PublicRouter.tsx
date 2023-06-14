@@ -6,8 +6,6 @@ export const PublicRouter = () => {
  
     const { authstate } = useAuth();
 
-    if(authstate.status === 'checking') return (<div>Checking...</div>)
-
     return authstate.status === 'not-authenticated' ? <Auth /> : <Navigate to="/" />
 
 
