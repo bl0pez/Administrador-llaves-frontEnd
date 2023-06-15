@@ -17,7 +17,7 @@ const initialFormValues = {
 export const CreateKeyModal = () => {
 
   const { keyState, createKey, onDeselectKey, updateKey } = useContext(KeyContext);
-  const {setIsCloseModal, setIsOpenModal, stateModal} = useModalContext();
+  const {setIsCloseModal, stateModal} = useModalContext();
   const { activeKey } = keyState;
 
   const [formValues, setFormValues] = useState(initialFormValues);
