@@ -1,10 +1,9 @@
-import { createContext, useContext, useEffect, useReducer, useState } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { AuthReducer } from './AuthReducer';
 import { keyApi } from '../../api/keyApi';
-import { Auth } from '../../keys/interfaces/authFetch';
 import { FormValues } from '../../hooks';
 import Swal from 'sweetalert2';
-import { AuthState } from '../interfaces';
+import { AuthState, FetchAuth } from '../interfaces';
 
 interface AuthContextProps {
     authstate: AuthState;
@@ -52,7 +51,7 @@ export const AuthProvider = ({ children }: Props) => {
 
         try {
             
-            const resp = await keyApi.post<Auth>('/login', data);
+            const resp = await keyApi.post<FetchAuth>('/login', data);
 
             //Guardamos el token en el localstorage
             localStorage.setItem('token', resp.data.token);
@@ -79,7 +78,7 @@ export const AuthProvider = ({ children }: Props) => {
 
         try {
 
-            const resp = await keyApi.get<Auth>('/validate');
+            const resp = await keyApi.get<FetchAuth>('/validate');
 
             //Guardamos el token en el localstorage
             localStorage.setItem('token', resp.data.token);
