@@ -5,6 +5,7 @@ import { useKeyContext } from '../../context/KeyContext';
 import { Key } from '../../interfaces/interfaces';
 import { useAuth } from '../../../auth/context/AuthContext';
 import { useModalContext } from '../../context';
+import { transformDate } from '../../helpers/transformDate';
 
 interface props {
     item: Key;
@@ -66,7 +67,7 @@ export const KeyItem = ({ item }: props) => {
             <td className='border px-4 py-2'>{item.name}</td>
             <td className='border px-4 py-2'>{item.description}</td>
             <td className='border px-4 py-2'>{item.user?.name}</td>
-            <td className='border px-4 py-2'>{item.createdAt.slice(0, 10)}</td>
+            <td className='border px-4 py-2'>{transformDate(item.createdAt)}</td>
             {
                 authstate.role === 'ADMIN_ROLE' &&
                 (<td className='border px-4 py-2 text-center'>
