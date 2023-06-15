@@ -4,6 +4,7 @@ import { keyApi } from '../../api/keyApi';
 import { FormValues } from '../../hooks';
 import Swal from 'sweetalert2';
 import { AuthState, FetchAuth } from '../interfaces';
+import { Spiner } from '../../keys/components';
 
 interface AuthContextProps {
     authstate: AuthState;
@@ -109,7 +110,7 @@ export const AuthProvider = ({ children }: Props) => {
             { 
             
                 authstate.status === 'checking'
-                ? <h1>Caergandoo..</h1>
+                ? <Spiner />
                 : (children)
             
             }
