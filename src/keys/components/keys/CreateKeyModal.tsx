@@ -3,28 +3,21 @@ import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 
 import { Dropzone } from '../dropzone/Dropzone';
-import { KeyContext } from '../../context';
+import { KeyContext, useModalContext } from '../../context';
 import { fetchCreateKey, fetchUpdateKey } from '../../helpers/fetchKeys';
-import { ModalContext } from '../../../context';
 
 Modal.setAppElement('#root');
-
-interface Props {
-  isOpenModal: boolean;
-  onCloseModal: () => void;
-}
 
 const initialFormValues = {
   name: '',
   description: '',
-  receivedBy: '',
   image: ''
 }
 
 export const CreateKeyModal = () => {
 
   const { keyState, createKey, onDeselectKey, updateKey } = useContext(KeyContext);
-  const {setIsCloseModal, setIsOpenModal, stateModal} = useContext(ModalContext);
+  const {setIsCloseModal, setIsOpenModal, stateModal} = useModalContext();
   const { activeKey } = keyState;
 
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -57,11 +50,11 @@ export const CreateKeyModal = () => {
     try {
 
       if(activeKey !== null) {
-        const data = await fetchUpdateKey(activeKey._id, formValues);
+        const { key, msg } = await fetchUpdateKey(activeKey._id, formValues);
 
-        const msj = data.msg || 'Error al actualizar la llave';
+        const msj = msg || 'Error al actualizar la llave';
 
-        updateKey(data.key);
+        updateKey(key);
         Swal.fire('Exito', msj, 'success');
         setIsCloseModal();
         setFormValues(initialFormValues);
@@ -95,7 +88,6 @@ export const CreateKeyModal = () => {
       setFormValues({
         name: activeKey.name,
         description: activeKey.description,
-        receivedBy: activeKey.receivedBy,
         image: activeKey.image
       });
 
@@ -120,7 +112,7 @@ export const CreateKeyModal = () => {
         <h1 className="text-4xl font-bold text-center">{
           (activeKey) ? 'Editar llave' : 'Crear llave'
         }</h1>
-        <label htmlFor="name">Nombre:</label>
+        <label htmlFor="name">Nombre de la llave:</label>
         <input
           type="text"
           name="name"
@@ -136,17 +128,6 @@ export const CreateKeyModal = () => {
           name="description"
           id="description"
           value={formValues.description}
-          onChange={onInputChange}
-          autoComplete='off'
-        />
-
-
-        <label>resepcionada por:</label>
-        <input
-          type="text"
-          name="receivedBy"
-          id="receivedBy"
-          value={formValues.receivedBy}
           onChange={onInputChange}
           autoComplete='off'
         />

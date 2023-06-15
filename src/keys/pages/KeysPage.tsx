@@ -1,24 +1,22 @@
-import { useContext, useState } from 'react'
-
-import { UiContext, KeyContext } from '../context';
-import { TableKeys } from '../components/table/TableKeys';
-import { KeyItem } from '../components/keys/KeyItem';
-import { CreateKeyModal } from '../components/keys/CreateKeyModal';
+import { useKeyContext, useModalContext } from '../context';
 import { usePagination } from '../hooks/usePagination';
-import { Pagination } from '../components/pagination/Pagination';
-import { ModalContext } from '../../context';
+import { CreateKeyModal, IsAdmin, KeyItem, Pagination, Spiner, TableKeys } from '../components';
 
 export const KeysPage = () => {
 
-    const { keyState } = useContext(KeyContext);
-    const { isLoading, error, keys } = keyState;
+    const { keyState } = useKeyContext();
+    const { isLoading, keys } = keyState;
 
     const { filteredKeys, nextPage, prevPage, onSearchChange, search } = usePagination(keys);
 
     // modal
-    const { isOpenModal, onCloseModal, onOpenModal } = useContext(UiContext);
-    const {setIsOpenModal} = useContext(ModalContext)
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const { setIsOpenModal } = useModalContext();
+
+    if(!isLoading) return (
+        <div className='flex h-screen justify-center'>
+            <Spiner />
+        </div>
+    )
 
     return (
         <>
@@ -53,12 +51,14 @@ export const KeysPage = () => {
                 />
 
                 {/* Boton para crear nueva llave */}
-                <button
-                    className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
-                    onClick={setIsOpenModal}
-                >
-                    <i className='fas fa-plus'></i>
-                </button>
+                <IsAdmin>
+                    <button
+                        className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
+                        onClick={setIsOpenModal}
+                    >
+                        <i className='fas fa-plus'></i>
+                    </button>
+                </IsAdmin>
 
 
             </section>

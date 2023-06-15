@@ -1,21 +1,20 @@
-import { keyApi } from "../../api/keyApi"
-import { FetchAllkeysResponse, FetchPostCreateKey, Key, KeyForm } from "../interfaces/fetchAllKeys";
+import { keyApi } from '../../api/keyApi'
+import { FetchCreationResult, FetchKey, Key } from '../interfaces/interfaces';
 
 
-export const getKeys = async():Promise<Key[]> => { 
-    const resp = await keyApi.get<FetchAllkeysResponse>('/keys');
+export const fetchGetKey = async():Promise<Key[]> => { 
+    const resp = await keyApi.get<FetchKey>('/keys');
     return resp.data.keys;
 }
 
-export const fetchCreateKey = async(key: any):Promise<FetchPostCreateKey> => {
+export const fetchCreateKey = async(key: any):Promise<FetchCreationResult> => {
 
     const formData = new FormData();
     formData.append('name', key.name);
     formData.append('description', key.description);
-    formData.append('receivedBy', key.receivedBy);
     formData.append('image', key.image);
 
-    const resp = await keyApi.post<FetchPostCreateKey>('/keys', formData, {
+    const resp = await keyApi.post<FetchCreationResult>('/keys', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -23,8 +22,8 @@ export const fetchCreateKey = async(key: any):Promise<FetchPostCreateKey> => {
     return resp.data;
 }
 
-export const fetchUpdateKey = async(_id: any, key: any) => {    
-    const resp = await keyApi.put<FetchPostCreateKey>(`/keys/${_id}`, key, {
+export const fetchUpdateKey = async(_id: any, key: any):Promise<FetchCreationResult> => {    
+    const resp = await keyApi.put<FetchCreationResult>(`/keys/${_id}`, key, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }

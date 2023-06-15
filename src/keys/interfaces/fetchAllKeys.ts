@@ -10,7 +10,6 @@ export interface FetchPostCreateKey {
     key: Key;
 }
 
-
 export interface Key  extends KeyForm{
     _id:        string;
     createdAt:  string;
@@ -20,8 +19,5 @@ export interface Key  extends KeyForm{
 export interface KeyForm {
     name:        string;
     description: string;
-    receivedBy:  string;
     image: string;
 }
-
-

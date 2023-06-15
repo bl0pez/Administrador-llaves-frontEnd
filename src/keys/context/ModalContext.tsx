@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 export type ModalContextProps = {
     stateModal: boolean;
@@ -38,6 +38,8 @@ export const ModalProvider = ({ children }: Props) => {
 
 
 }
+
+export const useModalContext = () => useContext(ModalContext);
 
 
 

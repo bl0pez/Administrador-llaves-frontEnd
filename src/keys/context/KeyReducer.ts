@@ -1,5 +1,4 @@
-import { Key } from "../interfaces/fetchAllKeys"
-import { KeyState } from "../interfaces/interfaces"
+import { Key, KeyState } from "../interfaces/interfaces"
 
 type KeyAction =
     | { type: 'loadKeys', payload: Key[] }

@@ -1,10 +1,10 @@
 import Swal from 'sweetalert2';
 
 import { keyApi } from '../../../api/keyApi';
-import { Key } from '../../interfaces/fetchAllKeys';
-import { useContext } from 'react';
-import { KeyContext } from '../../context/KeyContext';
-import { ModalContext } from '../../../context';
+import { useKeyContext } from '../../context/KeyContext';
+import { Key } from '../../interfaces/interfaces';
+import { useAuth } from '../../../auth/context/AuthContext';
+import { useModalContext } from '../../context';
 
 interface props {
     item: Key;
@@ -12,17 +12,26 @@ interface props {
 
 export const KeyItem = ({ item }: props) => {
 
-    const { deleteKey, onSelectKey } = useContext(KeyContext);
-    const { setIsOpenModal } = useContext(ModalContext);
+    const { deleteKey, onSelectKey } = useKeyContext();
+    const { authstate } = useAuth();
+    const { setIsOpenModal } = useModalContext();
 
+    /**
+     * Selecciona la llave y 
+     * abre el modal para editar la llave
+     */
     const updateKey = () => {
         onSelectKey(item);
         setIsOpenModal();
     }
 
-    const removeKey = async(id: string) => {
+    /**
+     * Perminte eliminar una llave
+     * @param id id de la llave a eliminar
+     */
+    const removeKey = async (id: string) => {
         try {
-            
+
             //Preguntamos con swal si esta seguro de eliminar la llave
             const { isConfirmed } = await Swal.fire({
                 title: '¿Estas seguro?',
@@ -36,14 +45,14 @@ export const KeyItem = ({ item }: props) => {
             if (isConfirmed) {
                 const resp = await keyApi.delete(`/keys/${id}`);
                 console.log(resp.data);
-                Swal.fire('Eliminado', resp.data.msg , 'success');
+                Swal.fire('Eliminado', resp.data.msg, 'success');
                 deleteKey(id);
             }
 
 
         } catch (error) {
             Swal.fire('Error', 'Error al eliminar la llave', 'error');
-        }   
+        }
     }
 
     return (
@@ -56,23 +65,26 @@ export const KeyItem = ({ item }: props) => {
             </td>
             <td className='border px-4 py-2'>{item.name}</td>
             <td className='border px-4 py-2'>{item.description}</td>
-            <td className='border px-4 py-2'>{item.receivedBy}</td>
+            <td className='border px-4 py-2'>{item.user?.name}</td>
             <td className='border px-4 py-2'>{item.createdAt.slice(0, 10)}</td>
-            <td className='border px-4 py-2 text-center'>
-                {/* Boton para editar llave */}
-                <button 
-                    className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'
-                    onClick={() =>  updateKey()}
+            {
+                authstate.role === 'ADMIN_ROLE' &&
+                (<td className='border px-4 py-2 text-center'>
+                    {/* Boton para editar llave */}
+                    <button
+                        className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'
+                        onClick={() => updateKey()}
                     >
-                    <i className='fas fa-edit'></i>
-                </button>
-                {/* Boton para elminar llave */}
-                <button
-                    onClick={() => removeKey(item._id)} 
-                    className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
-                    <i className='fas fa-trash'></i>
-                </button>
-            </td>
+                        <i className='fas fa-edit'></i>
+                    </button>
+                    {/* Boton para elminar llave */}
+                    <button
+                        onClick={() => removeKey(item._id)}
+                        className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
+                        <i className='fas fa-trash'></i>
+                    </button>
+                </td>)
+            }
         </tr>
     )
 }

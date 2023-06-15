@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useReducer, useState } from 'react';
-import { AuthState } from '../../keys/interfaces/interfaces';
 import { AuthReducer } from './AuthReducer';
 import { keyApi } from '../../api/keyApi';
 import { Auth } from '../../keys/interfaces/authFetch';
 import { FormValues } from '../../hooks';
 import Swal from 'sweetalert2';
+import { AuthState } from '../interfaces';
 
 interface AuthContextProps {
     authstate: AuthState;
@@ -24,6 +24,7 @@ const INITIAL_STATE: AuthState = {
     uid: null,
     name: null,
     email: null,
+    role: null,
     errorMsj: null
 }
 
@@ -47,6 +48,8 @@ export const AuthProvider = ({ children }: Props) => {
 
     const handleLogin = async(data:FormValues) => {
 
+            dispatch({ type: 'checking'});
+
         try {
             
             const resp = await keyApi.post<Auth>('/login', data);
@@ -57,7 +60,8 @@ export const AuthProvider = ({ children }: Props) => {
             dispatch({ type: 'login', payload: {
                 uid: resp.data.user._id,
                 name: resp.data.user.name,
-                email: resp.data.user.email
+                email: resp.data.user.email,
+                role: resp.data.user.role
             }});
 
 
@@ -83,7 +87,8 @@ export const AuthProvider = ({ children }: Props) => {
             dispatch({ type: 'login', payload: {
                 uid: resp.data.user._id,
                 name: resp.data.user.name,
-                email: resp.data.user.email
+                email: resp.data.user.email,
+                role: resp.data.user.role
             }});
 
             

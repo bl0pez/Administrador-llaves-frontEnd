@@ -1,23 +1,30 @@
-import { AuthState } from "../../keys/interfaces/interfaces"
+import { AuthState } from "../interfaces"
 
 type AuthAction =
     | { type: 'checking' }
     | { type: 'logout' }
-    | { type: 'login', payload: { uid: string, name: string, email:string } }
+    | { type: 'login', payload: { uid: string, name: string, email:string, role: string } }
 
 export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
         case "checking": {
             return {
-                ...stateAuth,
+                uid: null,
+                role: null,
+                name: null,
+                email: null,
+                errorMsj: null,
                 status: 'checking'
             }
         }
         case "logout": {
             return {
-                ...stateAuth,
+                uid: null,
+                role: null,
+                name: null,
+                email: null,
+                errorMsj: null,
                 status: 'not-authenticated',
-                errorMsj: '',
             }
         }
         case "login": {
@@ -26,7 +33,8 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
                 status: 'authenticated',
                 uid: action.payload.uid,
                 name: action.payload.name,
-                email: action.payload.name,
+                email: action.payload.email,
+                role: action.payload.role
             }
         }
         default:

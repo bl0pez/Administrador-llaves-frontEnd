@@ -1,7 +1,7 @@
-import { createContext, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { KeyState } from "../interfaces/interfaces";
 import { useKeys } from "../hooks/useKeys";
-import { getKeys } from "../helpers/fetchKeys";
+import { fetchGetKey } from "../helpers/fetchKeys";
 import { Key } from "../interfaces/fetchAllKeys";
 
 export type KeyContextProps = {
@@ -28,7 +28,7 @@ export const KeyProvider = ({ children }: Props) => {
      * Carga las llaves de la base de datos al iniciar la aplicación
      */
     useEffect(() => {
-        getKeys()
+        fetchGetKey()
             .then(keys => loadKeys(keys));
     }, []);
 
@@ -46,3 +46,6 @@ export const KeyProvider = ({ children }: Props) => {
     )
 
 }
+
+
+export const useKeyContext = () => useContext(KeyContext);

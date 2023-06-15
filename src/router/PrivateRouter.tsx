@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { Layouts } from "../keys/pages/Layouts";
 import { useAuth } from "../auth/context/AuthContext";
-import { KeyProvider, UiProvider } from "../keys/context";
-import { ModalProvider } from "../context";
+import { KeyProvider, ModalProvider, UiProvider } from "../keys/context";
+
 
 export const PrivateRouter = () => {
 

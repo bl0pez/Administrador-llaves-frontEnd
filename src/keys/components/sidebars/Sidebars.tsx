@@ -5,7 +5,7 @@ import { useAuth } from '../../../auth/context/AuthContext';
 
 export const Sidebars = () => {
 
-    const { handleLogout } = useAuth();
+    const { handleLogout, authstate } = useAuth();
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -45,14 +45,16 @@ export const Sidebars = () => {
 
             <button
                 onClick={handleSidebarOpen}
-                className={`h-12 w-12 bg-indigo-700 text-white relative top-5 left-[300px] rounded-md`}
+                className={`h-12 w-12 bg-indigo-700 text-white fixed top-5 left-[300px] rounded-md`}
             >
                 <i className={`fas ${isSidebarOpen ? 'fa-times' : 'fa-bars'}`}></i>
             </button>
 
             <div
-                className='flex-initial flex flex-col border-b-2 border-indigo-600'>
-                texto
+                className='flex border-b-2 border-indigo-600 justify-center items-center py-4'>
+                {
+                    authstate.name
+                }
             </div>
 
 

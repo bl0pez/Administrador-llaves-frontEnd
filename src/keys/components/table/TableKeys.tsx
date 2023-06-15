@@ -1,3 +1,5 @@
+import { IsAdmin } from "../isAdmin/IsAdmin";
+
 interface Props {
   children: JSX.Element | JSX.Element[];
 }
@@ -13,7 +15,9 @@ export const TableKeys = ({ children }: Props) => {
             <th>Descripción</th>
             <th>Resepcionada por</th>
             <th>Fecha de resepcion</th>
-            <th>Acciones</th>
+            <IsAdmin>
+              <th>Acciones</th>
+            </IsAdmin>
           </tr>
         </thead>
         <tbody>

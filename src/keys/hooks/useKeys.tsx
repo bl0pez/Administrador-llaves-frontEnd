@@ -1,7 +1,6 @@
 import { useReducer } from 'react';
-import { KeyState } from '../interfaces/interfaces';
+import { Key, KeyState } from '../interfaces/interfaces';
 import { keyReducer } from "../context/KeyReducer";
-import { Key } from '../interfaces/fetchAllKeys';
 
 
 
@@ -31,7 +30,7 @@ export const useKeys = (): Action => {
     const [keyState, dispatch] = useReducer(keyReducer, INITIAL_STATE);
 
     //Cargar llaves
-    const loadKeys = (keys: Key[]) => {
+    const loadKeys = async(keys: Key[]) => {
         dispatch({ type: 'loadKeys', payload: keys });
     }
 
