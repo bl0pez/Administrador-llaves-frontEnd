@@ -36,8 +36,8 @@ export const Login = () => {
             <div className='max-w-md w-full space-y-8 shadow-2xl p-2 bg-white'>
                 <div>
                     <img
-                        className='mx-auto h-12 w-auto'
-                        src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
+                        className='mx-auto h-24 w-auto'
+                        src='https://www.blopez.cl/assets/logo-4d2289a5.svg'
                         alt='Workflow'
                     />
                     <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>

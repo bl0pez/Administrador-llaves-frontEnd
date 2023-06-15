@@ -110,7 +110,9 @@ export const AuthProvider = ({ children }: Props) => {
             { 
             
                 authstate.status === 'checking'
-                ? <Spiner />
+                ? (<div className='h-screen flex items-center justify-center'>
+                    <Spiner />
+                </div>)
                 : (children)
             
             }
