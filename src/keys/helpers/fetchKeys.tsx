@@ -27,10 +27,7 @@ export const fetchUpdateKey = async(_id: string, key: any):Promise<FetchCreation
         headers: {
             'Content-Type': 'multipart/form-data'
         }
-    });
-
-    console.log(resp.data);
-    
+    });    
 
     return resp.data;
     

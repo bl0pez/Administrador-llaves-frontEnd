@@ -42,9 +42,6 @@ export const AuthProvider = ({ children }: Props) => {
 
     }, []);
 
-    console.log(authstate.status);
-    
-
     const handleLogin = async(data:FormValues) => {
 
             dispatch({ type: 'checking'});
