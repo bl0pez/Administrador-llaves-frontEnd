@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: Props) => {
 
             //Guardamos el token en el localstorage
             localStorage.setItem('token', resp.data.token);
-
+            
             dispatch({ type: 'login', payload: {
                 uid: resp.data.user._id,
                 name: resp.data.user.name,
