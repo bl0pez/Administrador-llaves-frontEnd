@@ -72,10 +72,7 @@ export const CreateKeyModal = () => {
       setFormValues(initialFormValues);
 
 
-    } catch (error : any) {
-
-      console.log(error);
-      
+    } catch (error : any) {      
       const errorMsj = error.response.data.msg || 'Error al crear la llave';
 
       Swal.fire('Error', errorMsj, 'error');

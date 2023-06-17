@@ -1,10 +1,9 @@
 import Swal from 'sweetalert2';
 
 import { keyApi } from '../../../api/keyApi';
-import { useKeyContext } from '../../context/KeyContext';
 import { Key } from '../../interfaces/interfaces';
 import { useAuth } from '../../../auth/context/AuthContext';
-import { useModalContext } from '../../context';
+import { useKeyContext, useModalContext } from '../../context';
 import { transformDate } from '../../helpers/transformDate';
 
 interface props {
@@ -45,14 +44,14 @@ export const KeyItem = ({ item }: props) => {
 
             if (isConfirmed) {
                 const resp = await keyApi.delete(`/keys/${id}`);
-                console.log(resp.data);
-                Swal.fire('Eliminado', resp.data.msg, 'success');
                 deleteKey(id);
+                Swal.fire('Eliminado', resp.data.msg, 'success');
             }
 
 
-        } catch (error) {
-            Swal.fire('Error', 'Error al eliminar la llave', 'error');
+        } catch (error : any) {
+            const msg = error.response.data.msg || 'Error al eliminar la llave';
+            Swal.fire('Error', msg, 'error');
         }
     }
 
@@ -68,6 +67,13 @@ export const KeyItem = ({ item }: props) => {
             <td className='border px-4 py-2'>{item.description}</td>
             <td className='border px-4 py-2'>{item.user?.name}</td>
             <td className='border px-4 py-2'>{transformDate(item.createdAt)}</td>
+            <td className='border px-4 py-2'>
+                {
+                    item.status
+                        ? <span className='bg-green-500 text-white p-2 rounded-md'>Prestada</span>
+                        : <span className='bg-red-500 text-white p-2 rounded-md'>No prestada</span>
+                }
+            </td>
             {
                 authstate.role === 'ADMIN_ROLE' &&
                 (<td className='border px-4 py-2 text-center'>

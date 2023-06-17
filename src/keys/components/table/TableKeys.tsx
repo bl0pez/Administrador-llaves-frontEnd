@@ -15,6 +15,7 @@ export const TableKeys = ({ children }: Props) => {
             <th>Descripción</th>
             <th>Resepcionada por</th>
             <th>Fecha de resepcion</th>
+            <th>Status</th>
             <IsAdmin>
               <th>Acciones</th>
             </IsAdmin>

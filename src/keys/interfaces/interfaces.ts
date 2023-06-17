@@ -27,6 +27,7 @@ export interface Key {
     user?:        User;
     createdAt:   string;
     updatedAt:   string;
+    status:      boolean;
 }
 
 export interface User {

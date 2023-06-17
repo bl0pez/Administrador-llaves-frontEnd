@@ -12,6 +12,7 @@ export interface FetchPostCreateKey {
 
 export interface Key  extends KeyForm{
     _id:        string;
+    status:     boolean;
     createdAt:  string;
     updatedAt:  string;
 }
