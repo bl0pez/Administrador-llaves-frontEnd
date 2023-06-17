@@ -1,8 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { KeysPage } from '../keys/pages/KeysPage';
 import { PrivateRouter } from './PrivateRouter';
 import { Login } from '../auth/pages/Login';
 import { PublicRouter } from './PublicRouter';
+import { Keys, LoadKeys } from '../keys/pages';
 
 export const router = createBrowserRouter([
     {
@@ -23,11 +23,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <KeysPage />
+                element: <Keys />
             },
             {
-                path: 'history',
-                element: <div>a</div>
+                path: 'load-keys',
+                element: <LoadKeys />
             },
              {
                 path: '*',

@@ -2,7 +2,7 @@ import { useKeyContext, useModalContext } from '../context';
 import { usePagination } from '../hooks/usePagination';
 import { CreateKeyModal, IsAdmin, KeyItem, Pagination, Spiner, TableKeys } from '../components';
 
-export const KeysPage = () => {
+export const Keys = () => {
 
     const { keyState } = useKeyContext();
     const { isLoading, keys } = keyState;
