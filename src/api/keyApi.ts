@@ -6,3 +6,11 @@ export const keyApi = axios.create({
         "authorization": `Bearer ${localStorage.getItem("token")}` || "",
     }
 });
+
+keyApi.interceptors.request.use(
+    (config) => {
+        config.headers.authorization = `Bearer ${localStorage.getItem("token")}` || "";
+        return config;
+    }
+);
+
