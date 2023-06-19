@@ -33,7 +33,16 @@ export const Keys = () => {
                     onChange={onSearchChange}
                 />
 
-                <TableKeys>
+                <TableKeys
+                    words={[
+                        'Imagen',
+                        'Llaves',
+                        'Descripción',
+                        'Resepcionado por',
+                        'Fecha de resepcion',
+                        'Status',
+                    ]}
+                >
                     {
                         filteredKeys().map(key => (
                             <KeyItem

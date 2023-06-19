@@ -1,10 +1,10 @@
 import Swal from 'sweetalert2';
 
-import { keyApi } from '../../../api/keyApi';
-import { Key } from '../../interfaces/interfaces';
-import { useAuth } from '../../../auth/context/AuthContext';
-import { useKeyContext, useModalContext } from '../../context';
-import { transformDate } from '../../helpers/transformDate';
+import { keyApi } from '@/api/keyApi';
+import { Key } from '@/keys/interfaces';
+import { useAuth } from '@/auth/context';
+import { useKeyContext, useModalContext } from '@/keys/context';
+import { transformDate } from '@/keys/helpers';
 
 interface props {
     item: Key;
@@ -57,17 +57,17 @@ export const KeyItem = ({ item }: props) => {
 
     return (
         <tr>
-            <td className='border px-4 py-2'>
+            <td>
                 <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/${item.image}`}
                     className='w-14 h-14 object-cover rounded-md'
                     alt='imagen' />
             </td>
-            <td className='border px-4 py-2'>{item.name}</td>
-            <td className='border px-4 py-2'>{item.description}</td>
-            <td className='border px-4 py-2'>{item.user?.name}</td>
-            <td className='border px-4 py-2'>{transformDate(item.createdAt)}</td>
-            <td className='border px-4 py-2'>
+            <td>{item.name}</td>
+            <td>{item.description}</td>
+            <td>{item.user?.name}</td>
+            <td>{transformDate(item.createdAt)}</td>
+            <td>
                 {
                     item.status
                         ? <span className='bg-green-500 text-white p-2 rounded-md'>Prestada</span>
@@ -76,7 +76,7 @@ export const KeyItem = ({ item }: props) => {
             </td>
             {
                 authstate.role === 'ADMIN_ROLE' &&
-                (<td className='border px-4 py-2 text-center'>
+                (<td>
                     {/* Boton para editar llave */}
                     <button
                         className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'

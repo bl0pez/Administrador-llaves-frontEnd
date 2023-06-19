@@ -2,20 +2,25 @@ import { IsAdmin } from "../isAdmin/IsAdmin";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
+  words: string[];
 }
 
-export const TableKeys = ({ children }: Props) => {
+/**
+ * Componente para renderizar la tabla de llaves
+ * @param words - array de palabras para los encabezados de la tabla 
+ * @returns - JSX.Element
+ */
+export const TableKeys = ({ children, words }: Props) => {
   return (
     <div className="w-full overflow-x-auto">
       <table>
         <thead className=''>
           <tr>
-            <th>Imagen</th>
-            <th>Llave</th>
-            <th>Descripción</th>
-            <th>Resepcionada por</th>
-            <th>Fecha de resepcion</th>
-            <th>Status</th>
+            {
+               words.map((word: string) => (
+                <th key={word}>{word}</th>
+              ))
+            }
             <IsAdmin>
               <th>Acciones</th>
             </IsAdmin>

@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
-import { AuthReducer } from './AuthReducer';
-import { keyApi } from '../../api/keyApi';
-import { FormValues } from '../../hooks';
 import Swal from 'sweetalert2';
+
+import { AuthReducer } from '../reducers';
+import { keyApi } from '@/api/keyApi';
+import { FormValues } from '@/hooks';
 import { AuthState, FetchAuth } from '../interfaces';
-import { Spiner } from '../../keys/components';
+
+import { Spiner } from '@/keys/components';
 
 interface AuthContextProps {
     authstate: AuthState;

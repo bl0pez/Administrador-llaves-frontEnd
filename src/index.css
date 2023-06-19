@@ -21,12 +21,16 @@ thead {
   @apply bg-indigo-500 text-white;
 }
 
+tbody tr:nth-child(even) {
+  @apply bg-gray-100;
+}
+
 th{
   @apply px-6 py-2 whitespace-nowrap;
 }
 
 td{
-  @apply px-6 py-2 whitespace-nowrap;
+  @apply px-6 py-2 whitespace-nowrap border-b border-gray-200 text-center;
 }
 
 .ReactModalPortal > div{

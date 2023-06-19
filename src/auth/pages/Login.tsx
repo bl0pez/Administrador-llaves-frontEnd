@@ -11,7 +11,7 @@ const formValidations: FormValidations = {
     'password': [(value: string) => value.trim().length > 4, 'La contraseña es requerida'],
 }
 
-export const Login = () => {
+function Login() {
 
     const { handleLogin } = useAuth();
     const { formValues, onInputChange, onBluer, errors } = useForm(initialState, formValidations);
@@ -108,3 +108,5 @@ export const Login = () => {
         </div>
     )
 }
+
+export default Login;

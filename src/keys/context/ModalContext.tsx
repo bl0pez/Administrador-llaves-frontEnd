@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo } from 'react';
 
 export type ModalContextProps = {
     stateModal: boolean;
@@ -14,8 +14,11 @@ interface Props {
 }
 
 export const ModalProvider = ({ children }: Props) => {
+
     
-        const [stateModal, setStateModal] = useState<boolean>(false);
+    const [stateModal, setStateModal] = useState<boolean>(false);
+    
+    console.count('LoadKeys');
 
         const setIsCloseModal = () => {
             setStateModal(false);
@@ -37,13 +40,10 @@ export const ModalProvider = ({ children }: Props) => {
         )
 
 
-}
+};
 
-export const useModalContext = () => useContext(ModalContext);
-
-
-
-
-
-// isOpenModal={isOpenModal}
-// onCloseModal={onCloseModal}
+/**
+ * Hook para acceder al context de ModalContext
+ * @returns {ModalContextProps} ModalContextProps
+ */
+export const useModalContext = ():ModalContextProps  => useContext(ModalContext);

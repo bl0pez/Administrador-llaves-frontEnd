@@ -1,8 +1,6 @@
 import { useReducer } from 'react';
 import { Key, KeyState } from '../interfaces/interfaces';
-import { keyReducer } from "../context/KeyReducer";
-
-
+import { keyReducer } from "@/keys/reducers";
 
 /**
  * Estado inicial del reducer que administra las llaves
