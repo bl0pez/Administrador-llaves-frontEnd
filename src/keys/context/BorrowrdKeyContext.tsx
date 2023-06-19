@@ -3,29 +3,23 @@ import { BorrowedKey, BorrowrdKeyState, ChildrenProps } from '../interfaces';
 import { useBorrowrdKeys } from '../hooks';
 import { Action } from '../hooks/useBorrowrdKeys';
 
-type ContextProps = {
-    borrowrdKeyState: BorrowrdKeyState;
+interface ContextProps extends Action {
+
 }
 
 const BorrowedKeyContext = createContext({} as ContextProps);
 
-type BorrowedKeyContextProps = {
-    state: BorrowedKey[];
-}
-
-
 export const BorrowedKeyProvider = ({ children }: ChildrenProps) => {
 
-    const { getBorrowedKeys, borrowrdKeyState } = useBorrowrdKeys();
-
-    useEffect(() => {
-        getBorrowedKeys();
-    }, [])
+    const { getBorrowedKeys, borrowrdKeyState, createBorrowedKey, updateStatusBorrowedKey } = useBorrowrdKeys();
 
 
     return (
         <BorrowedKeyContext.Provider value={{
-            borrowrdKeyState
+            getBorrowedKeys,
+            borrowrdKeyState,
+            createBorrowedKey,
+            updateStatusBorrowedKey
         }}>
             {children}
         </BorrowedKeyContext.Provider>

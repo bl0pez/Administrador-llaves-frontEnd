@@ -8,6 +8,7 @@ type KeyAction =
     | { type: 'updateKey', payload: Key }
     | { type: 'deleteKey', payload: { id: string } }
     | { type: 'setError', payload: string }
+    | { type: 'changeStatus', payload: string }
 
 // En los reducer siempre se debe de retornar un nuevo estado
 // y no una mutación del estado anterior
@@ -52,6 +53,13 @@ export const keyReducer = (stateKeys: KeyState, action: KeyAction): KeyState => 
             return {
                 ...stateKeys,
                 keys: stateKeys.keys.filter(key => key._id !== action.payload.id),
+            }
+        }
+        case "changeStatus": {
+            return {
+                ...stateKeys,
+                keys: stateKeys.keys.map(key => key._id === action.payload ? { ...key, status: !key.status } : key),
+                isLoading: true,
             }
         }
         case "setError": {

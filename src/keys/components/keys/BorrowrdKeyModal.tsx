@@ -1,15 +1,44 @@
 import Modal from 'react-modal';
-import { useKeyContext, useModalContext } from '../../context';
+import { useBorrowedKeyContext, useKeyContext, useModalContext } from '../../context';
 import Select from 'react-select';
+import { useBorrowrdKeys, useForm } from '@/keys/hooks';
+import { BorrowedKeyForm } from '@/keys/interfaces';
+import { useState } from 'react';
 
-export const BorrowrdKeyModal = () => {
+const INITIAL_STATE: BorrowedKeyForm = {
+    key: '',
+    operator: '',
+    requestedBy: '',
+    service: '',
+}
+
+type Props = {
+  createBorrowedKey : (borrowedKey: BorrowedKeyForm) => void;
+}
+
+export const BorrowrdKeyModal = ({ createBorrowedKey }: Props) => {
 
     const { stateModal, setIsCloseModal } = useModalContext();
+    const [selecOption, setSelectOption] = useState('');
+    const { formValues, onInputChange, resetForm } = useForm(INITIAL_STATE);
+
+    const onClosedModal = () => {
+        resetForm();
+    }
+    
+
     const { keyState } = useKeyContext();
     const { keys } = keyState;
 
-    const handleSelect = (e: any) => {
-        console.log(e);
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
+        createBorrowedKey({
+            key: selecOption,
+            operator: formValues.operator,
+            requestedBy: formValues.requestedBy,
+            service: formValues.service,
+        });
     }
 
   return (
@@ -19,8 +48,10 @@ export const BorrowrdKeyModal = () => {
         closeTimeoutMS={200}
         className="modal"
         overlayClassName="modal-fondo"
+        onAfterClose={onClosedModal}
       >
         <form
+          onSubmit={handleSubmit}
           className='grid grid-cols-1 gap-5 justify-center items-center mx-auto py-5 px-5'
         >
 
@@ -30,24 +61,43 @@ export const BorrowrdKeyModal = () => {
             <label htmlFor='search' className='text-2xl'>Llave: </label>
             <Select
               className='block text-black mt-2'
-              options={keys.map(key => ({ value: key._id, label: key.name }))}
-              onChange={handleSelect}
+              options={keys.filter(key => !key.status).map(key => ({ value: key._id, label: key.name }))}
+              onChange={(e: any) => setSelectOption(e.value)}
             />
           </div>
 
           <div>
             <label htmlFor='search' className='text-2xl'>Nombre Operador: </label>
-            <input type='text' className='block w-full mt-2' placeholder='Operador' />
+            <input 
+              type='text' 
+              className='block w-full mt-2' 
+              placeholder='Operador' 
+              name='operator'
+              value={formValues.operator}
+              onChange={onInputChange}
+            />
           </div>
 
           <div>
             <label htmlFor='search' className='text-2xl'>Emprestada a: </label>
-            <input type='text' className='block w-full mt-2' placeholder='Pepito...' />
+            <input 
+              type='text' 
+              className='block w-full mt-2' 
+              placeholder='Pepito peres'
+              name='requestedBy'
+              onChange={onInputChange} 
+            />
           </div>
 
           <div>
             <label htmlFor='search' className='text-2xl'>Servicio / empresa: </label>
-            <input type='text' className='block w-full mt-2' placeholder='Servicio / empresa' />
+            <input 
+              type='text' 
+              className='block w-full mt-2' 
+              placeholder='Servicio / empresa' 
+              name='service'
+              onChange={onInputChange}  
+            />
           </div>
 
           <button

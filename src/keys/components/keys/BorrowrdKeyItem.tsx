@@ -1,7 +1,31 @@
 import { transformDate } from '@/keys/helpers';
 import { BorrowedKey } from '@/keys/interfaces';
+import Swal from 'sweetalert2';
 
-export const BorrowrdKeyItem = ({ items }: { items: BorrowedKey[] }) => {
+type Props = {
+    items: BorrowedKey[];
+    updateStatusBorrowedKey: (id: string) => void;
+}
+
+export const BorrowrdKeyItem = ({ items, updateStatusBorrowedKey }: Props) => {
+
+    const onConfirm = async(id: string, name: string) => {
+        const { isConfirmed } = await Swal.fire({
+            title: `¿Estas seguro de devolver la llave: ${name}?`,
+            text: 'No podras revertir esta accion',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, devolver',
+            cancelButtonText: 'No, cancelar'
+        });
+
+        if(isConfirmed){
+            updateStatusBorrowedKey(id);
+        }
+
+
+    }
+
     return (
         <>
             {
@@ -13,7 +37,9 @@ export const BorrowrdKeyItem = ({ items }: { items: BorrowedKey[] }) => {
                         <td>{item.service}</td>
                         <td>{transformDate(item.createdAt)}</td>
                         <td>
-                            <button className='bg-green-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition duration-300 ease-in-out hover:shadow-lg' >
+                            <button
+                                onClick={() => onConfirm(item._id, item.key.name)} 
+                                className='bg-green-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition duration-300 ease-in-out hover:shadow-lg' >
                         Devolver
                     </button>
                             </td >

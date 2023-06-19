@@ -54,6 +54,11 @@ export interface BorrowedKeys {
     borrowedKeys: BorrowedKey[];
 }
 
+export interface ResBorrowedKey {
+    msg:          string;
+    borrowedKey: BorrowedKey;
+}
+
 export interface BorrowedKey {
     _id:         string;
     key:         Key;
@@ -63,6 +68,13 @@ export interface BorrowedKey {
     status:      boolean;
     createdAt:   string;
     updatedAt:   string;
+}
+
+export interface BorrowedKeyForm {
+    key:         string;
+    operator:    string;
+    requestedBy: string;
+    service:     string;
 }
 
 export interface Key {

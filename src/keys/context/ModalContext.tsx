@@ -17,8 +17,6 @@ export const ModalProvider = ({ children }: Props) => {
 
     
     const [stateModal, setStateModal] = useState<boolean>(false);
-    
-    console.count('LoadKeys');
 
         const setIsCloseModal = () => {
             setStateModal(false);

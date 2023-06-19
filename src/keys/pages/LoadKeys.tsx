@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import { BorrowrdKeyItem, BorrowrdKeyModal, Spiner, TableKeys } from '../components';
 import { useBorrowedKeyContext, useModalContext } from '../context';
 
 function LoadKeys(){
   
-  const { borrowrdKeyState } = useBorrowedKeyContext();
+  const { borrowrdKeyState, createBorrowedKey, getBorrowedKeys, updateStatusBorrowedKey } = useBorrowedKeyContext();
   const { isLoading, borrowedKeys, error } = borrowrdKeyState;
+
+  //Cargamos las llaves prestadas
+  useEffect(() => {
+    getBorrowedKeys();
+  }, [])
+  
 
   //Modal
   const { setIsOpenModal } = useModalContext();
@@ -37,6 +44,7 @@ function LoadKeys(){
       >
           <BorrowrdKeyItem 
             items={borrowedKeys}
+            updateStatusBorrowedKey={updateStatusBorrowedKey}
           />
       </TableKeys>
 
@@ -47,7 +55,9 @@ function LoadKeys(){
         <i className='fas fa-plus'></i>
       </button>
 
-      <BorrowrdKeyModal />
+      <BorrowrdKeyModal 
+        createBorrowedKey={createBorrowedKey}
+      />
 
     </section>
   )

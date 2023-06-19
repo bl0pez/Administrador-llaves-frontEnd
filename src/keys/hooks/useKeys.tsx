@@ -12,7 +12,7 @@ const INITIAL_STATE: KeyState = {
     activeKey: null,
 }
 
-interface Action {
+export type Action = {
     keyState: KeyState;
     createKey: (key: Key) => void;
     loadKeys: (keys: Key[]) => void;
@@ -20,6 +20,7 @@ interface Action {
     deleteKey: (id: string) => void;
     onDeselectKey: () => void;
     updateKey: (key: Key) => void;
+    changeStateKey: (id: string) => void;
 }
 
 export const useKeys = (): Action => {
@@ -56,6 +57,10 @@ export const useKeys = (): Action => {
         dispatch({type: 'updateKey', payload: key });
     }
 
+    const changeStateKey = (id: string) =>  {
+        dispatch({type:'changeStatus', payload: id });
+    }
+
 return {
     //State
     keyState,
@@ -67,6 +72,7 @@ return {
     deleteKey,
     onDeselectKey,
     updateKey,
+    changeStateKey,
 }
 
 }
