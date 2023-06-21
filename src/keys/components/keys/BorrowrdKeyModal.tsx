@@ -1,9 +1,10 @@
-import Modal from 'react-modal';
-import { useBorrowedKeyContext, useKeyContext, useModalContext } from '../../context';
-import Select from 'react-select';
-import { useBorrowrdKeys, useForm } from '@/keys/hooks';
-import { BorrowedKeyForm } from '@/keys/interfaces';
 import { useState } from 'react';
+import Modal from 'react-modal';
+
+import { useKeyContext, useModalContext } from '@/keys/context';
+import Select from 'react-select';
+import { useForm } from '@/keys/hooks';
+import { BorrowedKeyForm } from '@/keys/interfaces';
 
 const INITIAL_STATE: BorrowedKeyForm = {
     key: '',
@@ -17,20 +18,20 @@ type Props = {
 }
 
 export const BorrowrdKeyModal = ({ createBorrowedKey }: Props) => {
-
-    const { stateModal, setIsCloseModal } = useModalContext();
-    const [selecOption, setSelectOption] = useState('');
-    const { formValues, onInputChange, resetForm } = useForm(INITIAL_STATE);
+  
+  const { stateModal, setIsCloseModal } = useModalContext();
+  const [selecOption, setSelectOption] = useState('');
+  const { formValues, onInputChange, resetForm } = useForm(INITIAL_STATE);
+  const { keyState } = useKeyContext();
+  const { keys } = keyState;
 
     const onClosedModal = () => {
         resetForm();
     }
     
 
-    const { keyState } = useKeyContext();
-    const { keys } = keyState;
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         createBorrowedKey({
@@ -75,17 +76,19 @@ export const BorrowrdKeyModal = ({ createBorrowedKey }: Props) => {
               name='operator'
               value={formValues.operator}
               onChange={onInputChange}
+              autoComplete='off'
             />
           </div>
 
           <div>
-            <label htmlFor='search' className='text-2xl'>Emprestada a: </label>
+            <label htmlFor='search' className='text-2xl'>Prestada a: </label>
             <input 
               type='text' 
               className='block w-full mt-2' 
               placeholder='Pepito peres'
               name='requestedBy'
-              onChange={onInputChange} 
+              onChange={onInputChange}
+              autoComplete='off' 
             />
           </div>
 
@@ -96,7 +99,8 @@ export const BorrowrdKeyModal = ({ createBorrowedKey }: Props) => {
               className='block w-full mt-2' 
               placeholder='Servicio / empresa' 
               name='service'
-              onChange={onInputChange}  
+              onChange={onInputChange}
+              autoComplete='off'  
             />
           </div>
 
