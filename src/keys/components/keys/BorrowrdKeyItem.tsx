@@ -1,35 +1,14 @@
 import { transformDate } from '@/keys/helpers';
-import { BorrowedKey } from '@/keys/interfaces';
-import Swal from 'sweetalert2';
+import { onConfirm } from '@/keys/helpers/onConfirm';
+import { useBorrowrdKeys } from '@/keys/hooks';
 
-type Props = {
-    items: BorrowedKey[];
-    updateStatusBorrowedKey: (id: string) => void;
-}
-
-export const BorrowrdKeyItem = ({ items, updateStatusBorrowedKey }: Props) => {
-
-    const onConfirm = async(id: string, name: string) => {
-        const { isConfirmed } = await Swal.fire({
-            title: `¿Estas seguro de devolver la llave: ${name}?`,
-            text: 'No podras revertir esta accion',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Si, devolver',
-            cancelButtonText: 'No, cancelar'
-        });
-
-        if(isConfirmed){
-            updateStatusBorrowedKey(id);
-        }
-
-
-    }
+export const BorrowrdKeyItem = () => {
+    const { updateStatusBorrowedKey, borrowedKeys } = useBorrowrdKeys();
 
     return (
         <>
             {
-                items.map((item) => (
+                borrowedKeys.map((item) => (
                     <tr key={item._id}>
                         <td>{item.key.name}</td>
                         <td>{item.operator}</td>
@@ -38,11 +17,12 @@ export const BorrowrdKeyItem = ({ items, updateStatusBorrowedKey }: Props) => {
                         <td>{transformDate(item.createdAt)}</td>
                         <td>
                             <button
-                                onClick={() => onConfirm(item._id, item.key.name)} 
+                                onClick={() => onConfirm(item._id, item.key.name, updateStatusBorrowedKey)}
                                 className='bg-green-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition duration-300 ease-in-out hover:shadow-lg' >
-                        Devolver
-                    </button>
-                            </td >
+                                        Devolver
+                                
+                            </button>
+                        </td >
 
                     </tr >
                 ))

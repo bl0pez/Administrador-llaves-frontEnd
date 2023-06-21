@@ -1,33 +1,15 @@
 import { useEffect } from 'react';
-import { BorrowrdKeyItem, BorrowrdKeyModal, Spiner, TableKeys } from '../components';
-import { useBorrowedKeyContext, useModalContext } from '../context';
+import { BorrowrdKeyItem, BorrowrdKeyModal, ButtonOpenModal, Spiner, TableKeys } from '../components';
+import { useBorrowrdKeys } from '../hooks';
 
-function LoadKeys(){
-  
-  const { borrowrdKeyState, createBorrowedKey, getBorrowedKeys, updateStatusBorrowedKey } = useBorrowedKeyContext();
-  const { isLoading, borrowedKeys, error } = borrowrdKeyState;
+function LoadKeys() {
+
+  const { getBorrowedKeys } = useBorrowrdKeys();
 
   //Cargamos las llaves prestadas
   useEffect(() => {
     getBorrowedKeys();
-  }, [])
-  
-
-  //Modal
-  const { setIsOpenModal } = useModalContext();
-
-  if(isLoading) return (
-    <div className='flex h-screen justify-center'>
-        <Spiner />
-    </div>
-)
-
-    if(error) return (
-        <div className='flex h-screen justify-center items-center'>
-            <h1>Upss algo a salido mal</h1>
-        </div>
-    )
-
+  }, []);
 
   return (
     <section
@@ -47,22 +29,12 @@ function LoadKeys(){
           'Fecha de solicitud',
         ]}
       >
-          <BorrowrdKeyItem 
-            items={borrowedKeys}
-            updateStatusBorrowedKey={updateStatusBorrowedKey}
-          />
+        <BorrowrdKeyItem />
       </TableKeys>
 
-      <button
-        className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
-        onClick={setIsOpenModal}
-      >
-        <i className='fas fa-plus'></i>
-      </button>
+      <ButtonOpenModal />
 
-      <BorrowrdKeyModal 
-        createBorrowedKey={createBorrowedKey}
-      />
+      <BorrowrdKeyModal />
 
     </section>
   )

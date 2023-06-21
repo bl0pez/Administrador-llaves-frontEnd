@@ -1,3 +1,7 @@
+export { ButtonOpenModal } from './html/ButtonOpenModal';
+
+export { Input } from './html/Input';
+
 export { BorrowrdKeyModal } from "./keys/BorrowrdKeyModal";
 
 export { BorrowrdKeyItem } from "./keys/BorrowrdKeyItem";
