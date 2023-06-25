@@ -1,12 +1,12 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
-import { Keys } from '@/keys/pages';
+import { KeyHistory, Keys } from '@/keys/pages';
 import { lazy, Suspense } from 'react';
+import LoadKeys from '@/keys/pages/LoadKeys';
 
 
 const Login = lazy(() => import('@/auth/pages/Login'));
-const LoadKeys = lazy(() => import('@/keys/pages/LoadKeys'));
 
 export const router = createBrowserRouter([
     {
@@ -35,11 +35,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'load-keys',
-                element: (
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <LoadKeys />
-                    </Suspense>
-                )
+                element: (<LoadKeys />)
+            },
+            {
+                path: 'history',
+                element: <KeyHistory />
             },
              {
                 path: '*',

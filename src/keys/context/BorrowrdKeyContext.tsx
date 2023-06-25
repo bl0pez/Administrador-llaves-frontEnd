@@ -1,6 +1,8 @@
-import { createContext, useContext, useReducer } from 'react';
-import { BorrowedKey, BorrowrdKeyState, ChildrenProps } from '../interfaces';
+import { createContext, useContext, useEffect, useReducer } from 'react';
+import { BorrowedKey, BorrowedKeys, BorrowrdKeyState, ChildrenProps } from '../interfaces';
 import { BorrowrdKeyReducer } from '../reducers/BorrowrdKeyReducer';
+import { useBorrowrdKeys } from '../hooks';
+import { keyApi } from '@/api/keyApi';
 
 interface ContextProps {
     borrowrdKeyState: BorrowrdKeyState;
@@ -19,16 +21,27 @@ const INITIAL_STATE: BorrowrdKeyState = {
     error: false,
 }
 
-export const BorrowedKeyProvider = ({ children }: ChildrenProps) => {
 
+export const BorrowedKeyProvider = ({ children }: ChildrenProps) => {
+    
     const [borrowrdKeyState, dispatch] = useReducer(BorrowrdKeyReducer, INITIAL_STATE);
+
+    useEffect(() => {
+        loadBorrowedKeys();
+    }, [])
     
     const startLoading = () => {
         dispatch({ type: 'startLoadingBorrowrdKeys'})
     }
 
-    const loadBorrowedKeys = (borrowrdKeys: BorrowedKey[]) => {
-        dispatch({ type: 'loadBorrowrdKeys', payload: borrowrdKeys})
+    //Cargamos las llaves prestadas
+    const loadBorrowedKeys = async():Promise<void> => {        
+        try {
+            const { data } = await keyApi.get<BorrowedKeys>('/borrowedKeys');
+            dispatch({ type: 'loadBorrowrdKeys', payload: data.borrowedKeys});
+        } catch (error) {
+            errorBorrowrdKey();
+        }
     }
 
     const newBorrowrdKey = (borrowrdKey: BorrowedKey) => {

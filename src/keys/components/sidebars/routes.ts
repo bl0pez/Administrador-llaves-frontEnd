@@ -15,4 +15,9 @@ export const menu: Menu[] = [
         icon: "fa-key",
         url: "/load-keys"
     },
+    {
+        title: "Historial",
+        icon: "fa-history",
+        url: "/history"
+    },
 ]

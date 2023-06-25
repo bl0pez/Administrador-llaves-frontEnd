@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { Layouts } from "../keys/pages/Layouts";
 import { useAuth } from "../auth/context/AuthContext";
-import { BorrowedKeyProvider, KeyProvider, ModalProvider, UiProvider } from '@/keys/context';
+import { BorrowedKeyProvider, KeyHistoryProvider, KeyProvider, ModalProvider, UiProvider } from '@/keys/context';
 
 
 export const PrivateRouter = () => {
@@ -14,7 +14,9 @@ export const PrivateRouter = () => {
         <ModalProvider>
           <KeyProvider>
             <BorrowedKeyProvider>
-              <Layouts />
+              <KeyHistoryProvider>
+                <Layouts />
+              </KeyHistoryProvider>
             </BorrowedKeyProvider>
           </KeyProvider>
         </ModalProvider>

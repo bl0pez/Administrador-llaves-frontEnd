@@ -1,21 +1,12 @@
 import { keyApi } from '@/api/keyApi';
 import { BorrowedKey, BorrowedKeyForm, BorrowedKeys, ResBorrowedKey } from "../interfaces";
-import { useBorrowedKeyContext, useKeyContext, useModalContext } from '../context';
-import { useState } from 'react';
+import { useBorrowedKeyContext, useKeyContext, useKeyHistoryContext, useModalContext } from '../context';
 import Swal from 'sweetalert2';
-
-// export type Action = {
-//     borrowrdKeyState: BorrowrdKeyState;
-//     getBorrowedKeys: () => any;
-//     createBorrowedKey: (borrowedKey: BorrowedKeyForm) => any;
-//     updateStatusBorrowedKey: (id: string) => any;
-// }
 
 type FetchAction = {
     isLoading: boolean;
     error: boolean;
     borrowedKeys: BorrowedKey | BorrowedKey[];
-    getBorrowedKeys: () => any;
     createBorrowedKey: (borrowedKey: BorrowedKeyForm) => any;
     updateStatusBorrowedKey: (id: string) => any;
 }
@@ -32,19 +23,10 @@ type FetchAction = {
 export const useBorrowrdKeys = (): FetchAction => {
 
     const { changeStateKey } = useKeyContext();
-    const { loadBorrowedKeys, startLoading, errorBorrowrdKey, newBorrowrdKey, borrowrdKeyState, updateBorrowrdKey } = useBorrowedKeyContext();
-    const { borrowedKeys, error, isLoading } = borrowrdKeyState
+    const { startLoading, errorBorrowrdKey, newBorrowrdKey, borrowrdKeyState, updateBorrowrdKey } = useBorrowedKeyContext();
+    const { addKeyHistory } = useKeyHistoryContext();
 
-    //Obtener las llaves prestadas
-    const getBorrowedKeys = async () => {
-        try {
-            const resp = await keyApi.get<BorrowedKeys>('/borrowedKeys');
-            loadBorrowedKeys(resp.data.borrowedKeys);
-        } catch (error) {
-            errorBorrowrdKey();
-        }
-    }
-
+    const { borrowedKeys, error, isLoading } = borrowrdKeyState;
 
     const createBorrowedKey = async (borrowedKey: BorrowedKeyForm) => {
         try {
@@ -65,6 +47,7 @@ export const useBorrowrdKeys = (): FetchAction => {
                 const { data }= await keyApi.put<ResBorrowedKey>(`/borrowedKeys/update/${id}`);
                 updateBorrowrdKey(data.borrowedKey);
                 changeStateKey(data.borrowedKey.key._id);
+                addKeyHistory(data.borrowedKey);
             } catch (error) {
                 errorBorrowrdKey();
             }
@@ -76,7 +59,6 @@ export const useBorrowrdKeys = (): FetchAction => {
         error,
         isLoading,
         //Actions
-        getBorrowedKeys,
         createBorrowedKey,
         updateStatusBorrowedKey,
     }

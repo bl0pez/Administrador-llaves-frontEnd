@@ -42,7 +42,6 @@ export const BorrowrdKeyModal = () => {
 
     setIsLoading(true);
     
-    setTimeout(() => {
       createBorrowedKey({
         key: selecOption,
         operator: formValues.operator,
@@ -50,7 +49,6 @@ export const BorrowrdKeyModal = () => {
         service: formValues.service,
       });
       setIsLoading(false);
-    }, 4000)
 
     
     

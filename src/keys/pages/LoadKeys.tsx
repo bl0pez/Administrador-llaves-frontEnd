@@ -1,15 +1,6 @@
-import { useEffect } from 'react';
 import { BorrowrdKeyItem, BorrowrdKeyModal, ButtonOpenModal, Spiner, TableKeys } from '../components';
-import { useBorrowrdKeys } from '../hooks';
 
 function LoadKeys() {
-
-  const { getBorrowedKeys } = useBorrowrdKeys();
-
-  //Cargamos las llaves prestadas
-  useEffect(() => {
-    getBorrowedKeys();
-  }, []);
 
   return (
     <section
@@ -27,6 +18,9 @@ function LoadKeys() {
           'Solicitada por',
           'Servicio / empresa',
           'Fecha de solicitud',
+        ]}
+        wordsAdmin={[
+          'Acciones'
         ]}
       >
         <BorrowrdKeyItem />

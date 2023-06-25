@@ -6,8 +6,6 @@ import { AuthProvider, useAuth } from './auth/context/AuthContext';
 
 export const App = () => {
 
-  const { authstate } = useAuth();
-
   return (
     <>
         <AuthProvider>

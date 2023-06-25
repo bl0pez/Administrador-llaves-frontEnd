@@ -42,6 +42,9 @@ export const Keys = () => {
                         'Fecha de resepcion',
                         'Status',
                     ]}
+                    wordsAdmin={[
+                        'Acciones'
+                      ]}
                 >
                     {
                         filteredKeys().map(key => (

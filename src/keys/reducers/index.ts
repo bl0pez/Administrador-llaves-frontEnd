@@ -1,2 +1,2 @@
-export { keyReducer } from "./KeyReducer";
-
+export * from './KeyHistoryReducer';
+export { keyReducer } from './KeyReducer';
