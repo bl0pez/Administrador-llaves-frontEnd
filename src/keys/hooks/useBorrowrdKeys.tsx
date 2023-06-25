@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 type FetchAction = {
     isLoading: boolean;
     error: boolean;
-    borrowedKeys: BorrowedKey | BorrowedKey[];
+    borrowedKeys: BorrowedKey[];
     createBorrowedKey: (borrowedKey: BorrowedKeyForm) => any;
     updateStatusBorrowedKey: (id: string) => any;
 }
@@ -23,7 +23,7 @@ type FetchAction = {
 export const useBorrowrdKeys = (): FetchAction => {
 
     const { changeStateKey } = useKeyContext();
-    const { startLoading, errorBorrowrdKey, newBorrowrdKey, borrowrdKeyState, updateBorrowrdKey } = useBorrowedKeyContext();
+    const { errorBorrowrdKey, newBorrowrdKey, borrowrdKeyState, updateBorrowrdKey } = useBorrowedKeyContext();
     const { addKeyHistory } = useKeyHistoryContext();
 
     const { borrowedKeys, error, isLoading } = borrowrdKeyState;
@@ -37,8 +37,9 @@ export const useBorrowrdKeys = (): FetchAction => {
             Swal.fire('Llave prestada', msj, 'success');
         } catch (error: any) {
             errorBorrowrdKey();
-            const msj = error.response.data.msg || 'Error al prestar la llave';
-            Swal.fire('Error', msj, 'error');
+            // const msj = error.response.data.msg || 'Error al prestar la llave';
+            // Swal.fire('Error', msj, 'error');
+            throw new Error(error);
         }
     }
 
@@ -48,7 +49,9 @@ export const useBorrowrdKeys = (): FetchAction => {
                 updateBorrowrdKey(data.borrowedKey);
                 changeStateKey(data.borrowedKey.key._id);
                 addKeyHistory(data.borrowedKey);
-            } catch (error) {
+            } catch (error: any) {
+                const msj = error.response.data.msg || 'Error al devolver la llave';
+                Swal.fire('Error', msj, 'error');
                 errorBorrowrdKey();
             }
     }

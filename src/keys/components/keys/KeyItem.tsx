@@ -60,7 +60,7 @@ export const KeyItem = ({ item }: props) => {
             <td>
                 <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/${item.image}`}
-                    className='w-14 h-14 object-cover rounded-md'
+                    className='w-10 h-10 object-cover rounded-md'
                     alt='imagen' />
             </td>
             <td>{item.name}</td>
@@ -70,8 +70,8 @@ export const KeyItem = ({ item }: props) => {
             <td>
                 {
                     item.status
-                        ? <span className='bg-green-500 text-white p-2 rounded-md'>Prestada</span>
-                        : <span className='bg-red-500 text-white p-2 rounded-md'>No prestada</span>
+                        ? <span className='bg-green-500 text-white p-1 rounded-md'>Prestada</span>
+                        : <span className='bg-red-500 text-white p-1 rounded-md'>No prestada</span>
                 }
             </td>
             {

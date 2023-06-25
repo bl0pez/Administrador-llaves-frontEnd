@@ -4,6 +4,7 @@ export interface KeyHistoryInitialState {
     keysHistory: BorrowedKey[];
     count: number;
     isLoading: boolean;
+    totalPage: number;
     error: boolean;
 }
 
@@ -12,6 +13,7 @@ export const INITIAL_STATE:KeyHistoryInitialState = {
     count: 0,
     isLoading: true,
     error: false,
+    totalPage: 1,
 }
 
 type KeyAction = 
@@ -27,12 +29,14 @@ export const KeyHistoryReducer = (stateKeys: KeyHistoryInitialState, action: Key
                 keysHistory: action.payload.keys,
                 count: action.payload.count,
                 isLoading: false,
+                totalPage: Math.ceil(action.payload.count / 10),
             }
         case "addKeyHistory":
             return {
                 ...stateKeys,
                 keysHistory: [action.payload, ...stateKeys.keysHistory],
                 count: stateKeys.count + 1,
+                totalPage: Math.ceil((stateKeys.count + 1) / 10),
             }
         default:
             return stateKeys;

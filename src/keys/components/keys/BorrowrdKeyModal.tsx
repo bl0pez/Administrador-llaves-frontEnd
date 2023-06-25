@@ -40,18 +40,26 @@ export const BorrowrdKeyModal = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setIsLoading(true);
-    
+    try {
+
+      setIsLoading(true);
+
       createBorrowedKey({
         key: selecOption,
         operator: formValues.operator,
         requestedBy: formValues.requestedBy,
         service: formValues.service,
       });
-      setIsLoading(false);
 
-    
-    
+      setIsCloseModal();
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    setIsLoading(false);
+
+
   }
 
 

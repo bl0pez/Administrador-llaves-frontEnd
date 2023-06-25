@@ -40,7 +40,7 @@ export const Sidebars = () => {
     return (
         <aside
             ref={menuRef}
-            className={`h-screen w-72 text-white bg-indigo-700 flex flex-col absolute text-2xl shadow-lg z-10 transform transition-all duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+            className={`min-h-screen w-72 text-white bg-indigo-700 flex flex-col absolute text-2xl shadow-lg z-10 transform transition-all duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
 
             <button

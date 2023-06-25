@@ -1,6 +1,6 @@
-import { BorrowrdKeyItem, BorrowrdKeyModal, ButtonOpenModal, Spiner, TableKeys } from '../components';
+import { BorrowrdKeyItem, BorrowrdKeyModal, ButtonOpenModal, IsAdmin, Spiner, TableKeys } from '../components';
 
-function LoadKeys() {
+export const BorrowrdKey = () => {
 
   return (
     <section
@@ -8,7 +8,7 @@ function LoadKeys() {
     >
 
       <h1
-        className='text-4xl font-bold text-center'
+        className='text-4xl font-bold'
       >Prestamo de llaves</h1>
 
       <TableKeys
@@ -26,12 +26,12 @@ function LoadKeys() {
         <BorrowrdKeyItem />
       </TableKeys>
 
-      <ButtonOpenModal />
+      <IsAdmin>
+        <ButtonOpenModal />
 
-      <BorrowrdKeyModal />
+        <BorrowrdKeyModal />
+      </IsAdmin>
 
     </section>
   )
 }
-
-export default LoadKeys;

@@ -42,7 +42,6 @@ export const BorrowrdKeyReducer = (state: BorrowrdKeyState, action: Action): Bor
                 ...state,
                 isLoading: false,
                 error: true,
-                borrowedKeys: []
             }
         
 

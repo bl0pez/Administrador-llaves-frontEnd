@@ -3,7 +3,7 @@ import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { KeyHistory, Keys } from '@/keys/pages';
 import { lazy, Suspense } from 'react';
-import LoadKeys from '@/keys/pages/LoadKeys';
+import { BorrowrdKey } from '@/keys/pages/BorrowrdKey';
 
 
 const Login = lazy(() => import('@/auth/pages/Login'));
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'load-keys',
-                element: (<LoadKeys />)
+                element: (<BorrowrdKey />)
             },
             {
                 path: 'history',

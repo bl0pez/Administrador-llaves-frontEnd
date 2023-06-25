@@ -40,6 +40,7 @@ export const KeyHistoryProvider = ({ children }: ChildrenProps) => {
             count: KeyHistoryState.count,
             isLoading: KeyHistoryState.isLoading,
             error: KeyHistoryState.error,
+            totalPage: KeyHistoryState.totalPage,
             addKeyHistory,
         }}>
             {children}
