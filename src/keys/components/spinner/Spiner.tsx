@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const Spiner = () => {
   return (
     <div className="flex justify-center items-center h-full">

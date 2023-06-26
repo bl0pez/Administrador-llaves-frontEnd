@@ -65,9 +65,9 @@ export const AuthProvider = ({ children }: Props) => {
 
 
         } catch (error : any) {
-            dispatch({ type: 'logout'});
-            Swal.fire('Error', error.response.data.msg, 'error');
-            
+            const msj = error.response?.data.msg || 'Error al iniciar sesión';
+            Swal.fire('Error', msj, 'error');
+            dispatch({ type: 'logout'});   
         }
 
     }
