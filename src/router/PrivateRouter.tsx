@@ -8,7 +8,7 @@ export const PrivateRouter = () => {
 
   const { authstate } = useAuth();
 
-  return authstate.status === 'authenticated'
+  return authstate?.status === 'authenticated'
     ? (
       <UiProvider>
         <ModalProvider>

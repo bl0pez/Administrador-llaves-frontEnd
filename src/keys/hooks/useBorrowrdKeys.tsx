@@ -7,7 +7,7 @@ type FetchAction = {
     isLoading: boolean;
     error: boolean;
     borrowedKeys: BorrowedKey[];
-    createBorrowedKey: (borrowedKey: BorrowedKeyForm) => any;
+    createBorrowedKey: (borrowedKey: BorrowedKey) => any;
     updateStatusBorrowedKey: (id: string) => any;
 }
 
@@ -28,19 +28,9 @@ export const useBorrowrdKeys = (): FetchAction => {
 
     const { borrowedKeys, error, isLoading } = borrowrdKeyState;
 
-    const createBorrowedKey = async (borrowedKey: BorrowedKeyForm) => {
-        try {
-            const { data }= await keyApi.post<ResBorrowedKey>('/borrowedKeys/create', borrowedKey);
-            newBorrowrdKey(data.borrowedKey);
-            changeStateKey(data.borrowedKey.key._id);
-            const msj = data.msg || 'La llave se presto correctamente';
-            Swal.fire('Llave prestada', msj, 'success');
-        } catch (error: any) {
-            errorBorrowrdKey();
-            // const msj = error.response.data.msg || 'Error al prestar la llave';
-            // Swal.fire('Error', msj, 'error');
-            throw new Error(error);
-        }
+    const createBorrowedKey = async (borrowedKey: BorrowedKey) => {
+            newBorrowrdKey(borrowedKey);
+            changeStateKey(borrowedKey.key._id);
     }
 
     const updateStatusBorrowedKey = async (id: string) => {

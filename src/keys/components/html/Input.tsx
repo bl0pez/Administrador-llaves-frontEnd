@@ -12,6 +12,7 @@ export const Input = ({ value, name, onInputChange, placeholder, texto }: Props)
     <div>
     <label htmlFor={name} className='text-2xl'>{ texto }</label>
     <input 
+      id={name}
       type='text' 
       className='block w-full mt-2' 
       placeholder={placeholder} 

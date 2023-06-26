@@ -20,6 +20,8 @@ export const CreateKeyModal = () => {
   const {setIsCloseModal, stateModal} = useModalContext();
   const { activeKey } = keyState;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formValues, setFormValues] = useState(initialFormValues);
 
   // camputa los valores del input
@@ -47,9 +49,12 @@ export const CreateKeyModal = () => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setIsLoading(true);
+
     try {
 
       if(activeKey !== null) {
+
         const { key, msg } = await fetchUpdateKey(activeKey._id, formValues);
 
         const msj = msg || 'Error al actualizar la llave';
@@ -59,6 +64,7 @@ export const CreateKeyModal = () => {
         setIsCloseModal();
         setFormValues(initialFormValues);
 
+        setIsLoading(false);
         return;
 
       }
@@ -78,6 +84,9 @@ export const CreateKeyModal = () => {
       Swal.fire('Error', errorMsj, 'error');
 
     }
+
+    setIsLoading(false);
+
   }
 
   useEffect(()=> {
@@ -135,7 +144,14 @@ export const CreateKeyModal = () => {
             image={formValues.image}
           />
         <button
-          className="bg-indigo-600 p-2 rounded-md text-white w-full">Crear</button>
+          disabled={isLoading}
+          className="bg-indigo-600 p-2 rounded-md text-white w-full">
+            {
+              (isLoading)
+              ? <i className="fas fa-spinner fa-spin"></i>
+              : (activeKey) ? 'Actualizar' : 'Crear'
+            }
+          </button>
 
       </form>
 

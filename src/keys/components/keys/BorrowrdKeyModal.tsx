@@ -4,18 +4,16 @@ import Modal from 'react-modal';
 import { useKeyContext, useModalContext } from '@/keys/context';
 import Select from 'react-select';
 import { useBorrowrdKeys, useForm } from '@/keys/hooks';
-import { BorrowedKeyForm } from '@/keys/interfaces';
+import { BorrowedKeyForm, ResBorrowedKey } from '@/keys/interfaces';
 import { Input } from '../html/Input';
+import Swal from 'sweetalert2';
+import { keyApi } from '@/api/keyApi';
 
 const INITIAL_STATE: BorrowedKeyForm = {
   key: '',
   operator: '',
   requestedBy: '',
   service: '',
-}
-
-type Props = {
-  createBorrowedKey: (borrowedKey: BorrowedKeyForm) => void;
 }
 
 export const BorrowrdKeyModal = () => {
@@ -44,17 +42,20 @@ export const BorrowrdKeyModal = () => {
 
       setIsLoading(true);
 
-      createBorrowedKey({
+      const { data }= await keyApi.post<ResBorrowedKey>('/borrowedKeys/create', {
         key: selecOption,
         operator: formValues.operator,
         requestedBy: formValues.requestedBy,
         service: formValues.service,
       });
 
+      createBorrowedKey(data.borrowedKey);
       setIsCloseModal();
 
-    } catch (error) {
-      console.log(error);
+    } catch (error : any) {
+      const msj = error.response.data.msg || 'Error al solicitar la llave';
+
+      Swal.fire('Error', msj, 'error');
     }
 
     setIsLoading(false);
