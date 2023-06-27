@@ -60,7 +60,8 @@ export const KeyItem = ({ item }: props) => {
         <tr>
             <td>
                 <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/${item.image}`}
+                    // src={`${import.meta.env.VITE_BACKEND_URL}/${item.image}`} local
+                    src={item.image} //cloudinary
                     className='w-12 h-12 object-cover rounded-md block'
                     alt='imagen' />
             </td>
