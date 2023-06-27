@@ -63,7 +63,9 @@ export const Keys = () => {
 
                 <Pagination />
 
-                <IsAdmin>
+                <IsAdmin
+                    roles={['ADMIN_ROLE']}
+                >
                     <button
                         className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
                         onClick={setIsOpenModal}

@@ -22,7 +22,9 @@ export const TableKeys = ({ children, words, wordsAdmin }: Props) => {
                 <th key={word}>{word}</th>
               ))
             }
-            <IsAdmin>
+            <IsAdmin
+              roles={['ADMIN_ROLE']}
+            >
               <>
                 {
                   wordsAdmin?.map((word: string) => (

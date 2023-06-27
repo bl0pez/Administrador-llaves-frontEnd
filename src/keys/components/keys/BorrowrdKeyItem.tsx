@@ -17,7 +17,9 @@ export const BorrowrdKeyItem = () => {
                         <td>{item.requestedBy}</td>
                         <td>{item.service}</td>
                         <td>{transformDate(item.createdAt)}</td>
-                        <IsAdmin>
+                        <IsAdmin
+                            roles={['ADMIN_ROLE', 'OPERATOR_ROLE']}
+                        >
                             <td>
                                 <button
                                     onClick={() => onConfirm(item._id, item.key.name, updateStatusBorrowedKey)}

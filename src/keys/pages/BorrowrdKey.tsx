@@ -26,7 +26,9 @@ export const BorrowrdKey = () => {
         <BorrowrdKeyItem />
       </TableKeys>
 
-      <IsAdmin>
+      <IsAdmin
+        roles={['ADMIN_ROLE', 'OPERATOR_ROLE']}
+      >
         <ButtonOpenModal />
 
         <BorrowrdKeyModal />

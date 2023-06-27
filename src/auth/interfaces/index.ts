@@ -1,7 +1,7 @@
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
     uid: string | null;
-    role: string | null;
+    role: string;
     name: string | null;
     email: string | null;
     errorMsj: string | null;
