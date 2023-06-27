@@ -23,11 +23,11 @@ const AuthContext = createContext({} as AuthContextProps);
 //Estado inicial del reducer de autenticación
 const INITIAL_STATE: AuthState = {
     status: 'checking', // 'authenticated' | 'not-authenticated' | 'checking'
-    uid: null,
-    name: null,
-    email: null,
-    role: null,
-    errorMsj: null
+    uid: "",
+    name: "",
+    email: "",
+    role: "",
+    errorMsj: ""
 }
 
 
