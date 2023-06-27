@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const keyApi = axios.create({
-    baseURL: "http://localhost:3001/api",
+    baseURL: import.meta.env.VITE_URL_BACKEND as string,
     headers: {
         "authorization": `Bearer ${localStorage.getItem("token")}` || "",
     }
