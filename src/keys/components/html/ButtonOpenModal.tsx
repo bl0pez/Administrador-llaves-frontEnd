@@ -2,6 +2,8 @@ import { useModalContext } from '@/keys/context';
 
 export const ButtonOpenModal = () => {
 
+  console.count('ButtonOpenModal');
+
     const { setIsOpenModal } = useModalContext();
 
   return (

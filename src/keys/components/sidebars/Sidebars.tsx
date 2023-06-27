@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { menu } from './routes';
-import { useAuth } from '../../../auth/context/AuthContext';
+import { useAuth } from '@/auth/context';
 
 export const Sidebars = () => {
 
@@ -36,7 +36,6 @@ export const Sidebars = () => {
         return setIsSidebarOpen(!isSidebarOpen);
     }
     
-
     return (
         <aside
             ref={menuRef}

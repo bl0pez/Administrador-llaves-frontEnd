@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { Layouts } from "../keys/pages/Layouts";
 import { useAuth } from "../auth/context/AuthContext";
-import { BorrowedKeyProvider, KeyHistoryProvider, KeyProvider, ModalProvider, UiProvider } from '@/keys/context';
+import { BorrowedKeyProvider, KeyHistoryProvider, KeyProvider, ModalProvider } from '@/keys/context';
 
 
 export const PrivateRouter = () => {
@@ -10,7 +10,6 @@ export const PrivateRouter = () => {
 
   return authstate?.status === 'authenticated'
     ? (
-      <UiProvider>
         <ModalProvider>
           <KeyProvider>
             <BorrowedKeyProvider>
@@ -20,7 +19,6 @@ export const PrivateRouter = () => {
             </BorrowedKeyProvider>
           </KeyProvider>
         </ModalProvider>
-      </UiProvider>
     )
     : (<Navigate to="/auth/login" />)
 }

@@ -17,7 +17,6 @@ const INITIAL_STATE: BorrowedKeyForm = {
 }
 
 export const BorrowrdKeyModal = () => {
-
   const { stateModal, setIsCloseModal } = useModalContext();
   const [selecOption, setSelectOption] = useState('');
   const { formValues, onInputChange, resetForm } = useForm(INITIAL_STATE);

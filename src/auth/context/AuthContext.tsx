@@ -31,12 +31,15 @@ const INITIAL_STATE: AuthState = {
 }
 
 
+const init = (initialState: AuthState) => {
+    return initialState;
+}
+
 export const AuthProvider = ({ children }: Props) => {
 
-    const [authstate, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+    const [authstate, dispatch] = useReducer(AuthReducer, INITIAL_STATE, init);
 
     useEffect(() => {
-
         if(!localStorage.getItem('token')){
             return handleLogout();
         };

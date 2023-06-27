@@ -1,17 +1,16 @@
 import { useKeyContext, useModalContext } from '../context';
-import { CreateKeyModal, IsAdmin, KeyItem, Spiner, TableKeys } from '../components';
+import { ButtonOpenModal, CreateKeyModal, IsAdmin, KeyItem, Spiner, TableKeys } from '../components';
 import { usePaginations } from '../hooks/usePaginations';
 import { Key } from '../interfaces';
 
 export const Keys = () => {
 
+    console.count('Keys');
+
     const { keyState } = useKeyContext();
     const { isLoading, keys } = keyState;
 
     const { filterd, search, handleSearch, Pagination } = usePaginations(keys);
-
-    // modal
-    const { setIsOpenModal } = useModalContext();
 
     if (!isLoading) return (
         <div className='flex h-screen justify-center'>
@@ -66,18 +65,13 @@ export const Keys = () => {
                 <IsAdmin
                     roles={['ADMIN_ROLE']}
                 >
-                    <button
-                        className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700'
-                        onClick={setIsOpenModal}
-                    >
-                        <i className='fas fa-plus'></i>
-                    </button>
+                    <ButtonOpenModal />
+                    <CreateKeyModal />
                 </IsAdmin>
 
 
             </section>
 
-            <CreateKeyModal />
         </>
     )
 }

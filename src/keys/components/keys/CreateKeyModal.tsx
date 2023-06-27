@@ -6,8 +6,6 @@ import { Dropzone } from '../dropzone/Dropzone';
 import { KeyContext, useModalContext } from '../../context';
 import { fetchCreateKey, fetchUpdateKey } from '../../helpers/fetchKeys';
 
-Modal.setAppElement('#root');
-
 const initialFormValues = {
   name: '',
   description: '',

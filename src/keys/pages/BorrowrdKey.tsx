@@ -2,6 +2,8 @@ import { BorrowrdKeyItem, BorrowrdKeyModal, ButtonOpenModal, IsAdmin, Spiner, Ta
 
 export const BorrowrdKey = () => {
 
+  console.count('BorrowrdKey');
+
   return (
     <section
       className='text-black flex flex-col gap-5 justify-center items-center mx-auto py-5 container'
