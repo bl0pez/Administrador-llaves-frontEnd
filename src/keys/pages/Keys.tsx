@@ -5,8 +5,6 @@ import { Key } from '../interfaces';
 
 export const Keys = () => {
 
-    console.count('Keys');
-
     const { keyState } = useKeyContext();
     const { isLoading, keys } = keyState;
 

@@ -5,9 +5,6 @@ type Porps = {
 }
 
 export const ButtonOpenModal = ({text}: Porps) => {
-
-  console.count('ButtonOpenModal');
-
     const { setIsOpenModal } = useModalContext();
 
   return (
