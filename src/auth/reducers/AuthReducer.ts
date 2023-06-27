@@ -9,21 +9,21 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
     switch (action.type) {
         case "checking": {
             return {
-                uid: null,
-                role: null,
-                name: null,
-                email: null,
-                errorMsj: null,
+                uid: "",
+                role: "",
+                name: "",
+                email: "",
+                errorMsj: "",
                 status: 'checking'
             }
         }
         case "logout": {
             return {
-                uid: null,
-                role: null,
-                name: null,
-                email: null,
-                errorMsj: null,
+                uid: "",
+                role: "",
+                name: "",
+                email: "",
+                errorMsj: "",
                 status: 'not-authenticated',
             }
         }
