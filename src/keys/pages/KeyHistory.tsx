@@ -43,8 +43,8 @@ export const KeyHistory = () => {
                         'Solicitado por',
                         'Fecha de prestamo',
                         'Fecha de devolucion'
-
                     ]}
+                    roles={[]}
                 >
                 {
                     filterd().slice(currentPage, endPage).map((item: BorrowedKey) => (

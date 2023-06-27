@@ -49,6 +49,7 @@ export const Keys = () => {
                     wordsAdmin={[
                         'Acciones'
                     ]}
+                    roles={['ADMIN_ROLE']}
                 >
                     {
                         filterd().map((key: Key) => (
@@ -65,7 +66,9 @@ export const Keys = () => {
                 <IsAdmin
                     roles={['ADMIN_ROLE']}
                 >
-                    <ButtonOpenModal />
+                    <ButtonOpenModal 
+                        text='Crear llave'
+                    />
                     <CreateKeyModal />
                 </IsAdmin>
 

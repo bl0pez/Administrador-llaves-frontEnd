@@ -11,7 +11,7 @@ export const BorrowrdKey = () => {
 
       <h1
         className='text-4xl font-bold'
-      >Prestamo de llaves</h1>
+      >Llaves Prestadas</h1>
 
       <TableKeys
         words={[
@@ -24,6 +24,7 @@ export const BorrowrdKey = () => {
         wordsAdmin={[
           'Acciones'
         ]}
+        roles={['ADMIN_ROLE', 'OPERATOR_ROLE']}
       >
         <BorrowrdKeyItem />
       </TableKeys>
@@ -31,7 +32,9 @@ export const BorrowrdKey = () => {
       <IsAdmin
         roles={['ADMIN_ROLE', 'OPERATOR_ROLE']}
       >
-        <ButtonOpenModal />
+        <ButtonOpenModal 
+          text='Solicitar llave'
+        />
 
         <BorrowrdKeyModal />
       </IsAdmin>

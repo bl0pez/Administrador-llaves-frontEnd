@@ -5,6 +5,7 @@ import { Key } from '@/keys/interfaces';
 import { useAuth } from '@/auth/context';
 import { useKeyContext, useModalContext } from '@/keys/context';
 import { transformDate } from '@/keys/helpers';
+import { IsAdmin } from '../isAdmin/IsAdmin';
 
 interface props {
     item: Key;
@@ -49,7 +50,7 @@ export const KeyItem = ({ item }: props) => {
             }
 
 
-        } catch (error : any) {
+        } catch (error: any) {
             const msg = error.response.data.msg || 'Error al eliminar la llave';
             Swal.fire('Error', msg, 'error');
         }
@@ -75,22 +76,25 @@ export const KeyItem = ({ item }: props) => {
                 }
             </td>
             {
-                authstate.role === 'ADMIN_ROLE' &&
-                (<td>
-                    {/* Boton para editar llave */}
-                    <button
-                        className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'
-                        onClick={() => updateKey()}
-                    >
-                        <i className='fas fa-edit'></i>
-                    </button>
-                    {/* Boton para elminar llave */}
-                    <button
-                        onClick={() => removeKey(item._id)}
-                        className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
-                        <i className='fas fa-trash'></i>
-                    </button>
-                </td>)
+                <IsAdmin
+                    roles={['ADMIN_ROLE']}
+                >
+                    <td>
+                        {/* Boton para editar llave */}
+                        <button
+                            className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'
+                            onClick={() => updateKey()}
+                        >
+                            <i className='fas fa-edit'></i>
+                        </button>
+                        {/* Boton para elminar llave */}
+                        <button
+                            onClick={() => removeKey(item._id)}
+                            className='bg-red-600 p-3 rounded-md text-white hover:bg-red-700'>
+                            <i className='fas fa-trash'></i>
+                        </button>
+                    </td>
+                </IsAdmin>
             }
         </tr>
     )

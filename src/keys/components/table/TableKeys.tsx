@@ -4,6 +4,7 @@ interface Props {
   children: JSX.Element | JSX.Element[];
   words: string[];
   wordsAdmin?: string[];
+  roles: string[];
 }
 
 /**
@@ -11,34 +12,38 @@ interface Props {
  * @param words - array de palabras para los encabezados de la tabla 
  * @returns - JSX.Element
  */
-export const TableKeys = ({ children, words, wordsAdmin }: Props) => {
+export const TableKeys = ({ children, words, wordsAdmin, roles }: Props) => {
   return (
     <div className="w-full overflow-x-auto">
       <table>
-        <thead className=''>
+        <thead>
           <tr>
             {
               words.map((word: string) => (
                 <th key={word}>{word}</th>
               ))
             }
-            <IsAdmin
-              roles={['ADMIN_ROLE']}
-            >
-              <>
-                {
-                  wordsAdmin?.map((word: string) => (
-                    <th key={word}>{word}</th>
-                  ))
-                }
-              </>
-            </IsAdmin>
+            {
+              wordsAdmin && (
+                <IsAdmin
+                  roles={roles}
+                >
+                  <>
+                    {
+                      wordsAdmin?.map((word: string) => (
+                        <th key={word}>{word}</th>
+                      ))
+                    }
+                  </>
+                </IsAdmin>
+              )
+            }
           </tr>
         </thead>
         <tbody>
           {children}
         </tbody>
-      </table>     
+      </table>
     </div>
   )
 }
