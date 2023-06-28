@@ -64,7 +64,7 @@ export const Sidebars = () => {
 
                 {
                     menu.map((item) => (
-                        <div className='px-2'>
+                        <div className='px-2' key={item.title}>
                             <Link
                             to={item.url}
                             key={item.title}

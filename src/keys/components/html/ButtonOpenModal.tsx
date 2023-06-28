@@ -9,7 +9,7 @@ export const ButtonOpenModal = ({text}: Porps) => {
 
   return (
     <button
-    className='absolute bottom-5 right-5 bg-indigo-600 text-4xl w-16 h-16 rounded-full text-white hover:bg-indigo-700 group'
+    className='fixed bottom-3 right-3 bg-indigo-600 text-4xl rounded-full text-white hover:bg-indigo-700 group w-14 h-14'
     onClick={setIsOpenModal}
   >
     <i className='fas fa-plus'></i>
