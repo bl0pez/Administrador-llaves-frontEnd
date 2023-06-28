@@ -9,12 +9,12 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
     switch (action.type) {
         case "checking": {
             return {
+                status: 'checking',
                 uid: "",
                 role: "",
                 name: "",
                 email: "",
                 errorMsj: "",
-                status: 'checking'
             }
         }
         case "logout": {

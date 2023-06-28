@@ -5,7 +5,10 @@ export const PublicRouter = () => {
  
     const { authstate } = useAuth();
 
-    return authstate.status === 'not-authenticated' ? <Auth /> : <Navigate to="/" />
+    console.log(authstate);
+    
+
+    return authstate?.status === 'not-authenticated' ? <Auth /> : <Navigate to="/" />
 
 
 }

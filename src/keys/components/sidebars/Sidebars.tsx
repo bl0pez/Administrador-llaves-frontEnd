@@ -35,22 +35,23 @@ export const Sidebars = () => {
     const handleSidebarOpen = () => {
         return setIsSidebarOpen(!isSidebarOpen);
     }
-    
+
     return (
         <aside
             ref={menuRef}
-            className={`min-h-screen w-72 text-white bg-indigo-700 flex flex-col absolute text-2xl shadow-lg z-10 transform transition-all duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+            className={`min-h-screen w-72 text-xl text-white bg-indigo-950 flex flex-col fixed shadow z-10 transform transition-all duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
 
             <button
                 onClick={handleSidebarOpen}
-                className={`h-12 w-12 bg-indigo-700 text-white fixed top-5 left-[300px] rounded-md`}
+                className={`h-12 w-12 bg-indigo-950 text-white fixed top-5 left-[300px] rounded-md hover:bg-indigo-600 transition-all duration-500 ease-in-out`}
             >
                 <i className={`fas ${isSidebarOpen ? 'fa-times' : 'fa-bars'}`}></i>
             </button>
 
             <div
-                className='flex border-b-2 border-indigo-600 justify-center items-center py-4'>
+                className='flex justify-center items-center py-4 gap-2'>
+                    <i className='fas fa-user-circle text-4xl'></i>
                 {
                     authstate.name
                 }
@@ -58,7 +59,7 @@ export const Sidebars = () => {
 
 
             <nav
-                className='flex-1 flex flex-col h-full'
+                className='flex-1 flex flex-col h-full gap-2'
             >
 
                 {
@@ -66,7 +67,7 @@ export const Sidebars = () => {
                         <Link
                             to={item.url}
                             key={item.title}
-                            className={`flex px-4 py-2 items-center gap-2 uppercase justify-between border-y border-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-500 ease-in-out ${pathname === item.url ? 'bg-indigo-600 text-white' : ''}`}
+                            className={`flex items-center justify-between px-4 py-2 shadow-lg bg-indigo-800 hover:bg-indigo-500 transition-all duration-500  ${(pathname == item.url) ? 'bg-indigo-500' : ''}`}
                         >
                             <div
                                 className='flex items-center gap-2'
@@ -84,13 +85,16 @@ export const Sidebars = () => {
 
             </nav>
 
-            <button
-                onClick={handleLogout}
-                className='flex-initial flex items-center justify-between px-3 py-4 uppercase bg-red-700  font-bold hover:bg-red-800 transition-all duration-500 ease-in-out'
-            >
-                <span>Salir</span>
-                <i className='fas fa-sign-out-alt'></i>
-            </button>
+            <div className='p-2'>
+                <button
+                    onClick={handleLogout}
+                    // className='flex-initial flex items-center justify-between px-3 py-4 uppercase bg-red-700  font-bold hover:bg-red-800 transition-all duration-500 ease-in-out'
+                    className='bg-red-700 py-2 px-4 w-full flex justify-center items-center gap-3 shadow hiver:bg-red-800 transition-all duration-500 ease-in-out hover:rounded-md'
+                >
+                    <i className='fas fa-sign-out-alt'></i>
+                    <span>Loagout</span>
+                </button>
+            </div>
 
         </aside>
     )

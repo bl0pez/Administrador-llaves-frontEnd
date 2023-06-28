@@ -30,14 +30,9 @@ const INITIAL_STATE: AuthState = {
     errorMsj: ""
 }
 
-
-const init = (initialState: AuthState) => {
-    return initialState;
-}
-
 export const AuthProvider = ({ children }: Props) => {
 
-    const [authstate, dispatch] = useReducer(AuthReducer, INITIAL_STATE, init);
+    const [authstate, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
     useEffect(() => {
         if(!localStorage.getItem('token')){
