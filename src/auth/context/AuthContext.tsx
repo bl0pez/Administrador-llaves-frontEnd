@@ -71,9 +71,6 @@ export const AuthProvider = ({ children }: Props) => {
     }
 
     const handleChecking = async() => {
-
-        dispatch({ type: 'checking'});
-
         try {
 
             const resp = await keyApi.get<FetchAuth>('/validate');
@@ -107,15 +104,7 @@ export const AuthProvider = ({ children }: Props) => {
             handleLogin,
             handleLogout,
         }}>
-            { 
-            
-                authstate.status === 'checking'
-                ? (<div className='h-screen flex items-center justify-center'>
-                    <Spiner />
-                </div>)
-                : (children)
-            
-            }
+                {children}    
         </AuthContext.Provider>)
 
 }

@@ -44,13 +44,13 @@ export const Sidebars = () => {
 
             <button
                 onClick={handleSidebarOpen}
-                className={`h-12 w-12 bg-indigo-950 text-white fixed top-5 left-[300px] rounded-md hover:bg-indigo-600 transition-all duration-500 ease-in-out`}
+                className={`h-12 w-12 bg-indigo-600 text-white fixed top-5 left-[300px] rounded-md hover:bg-indigo-600 transition-all duration-500 ease-in-out`}
             >
                 <i className={`fas ${isSidebarOpen ? 'fa-times' : 'fa-bars'}`}></i>
             </button>
 
             <div
-                className='flex justify-center items-center py-4 gap-2'>
+                className='flex justify-center items-center py-4 gap-2 bg-indigo-600 mb-2'>
                     <i className='fas fa-user-circle text-4xl'></i>
                 {
                     authstate.name
@@ -64,7 +64,8 @@ export const Sidebars = () => {
 
                 {
                     menu.map((item) => (
-                        <Link
+                        <div className='px-2'>
+                            <Link
                             to={item.url}
                             key={item.title}
                             className={`flex items-center justify-between px-4 py-2 shadow-lg bg-indigo-800 hover:bg-indigo-500 transition-all duration-500  ${(pathname == item.url) ? 'bg-indigo-500' : ''}`}
@@ -79,6 +80,7 @@ export const Sidebars = () => {
                             <i className='fas fa-chevron-right'></i>
 
                         </Link>
+                        </div>
                     ))
                 }
 

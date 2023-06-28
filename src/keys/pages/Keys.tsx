@@ -51,10 +51,10 @@ export const Keys = () => {
                 >
                     {
                         filterd().slice(currentPage, endPage).map((key: Key) => (
-                            <KeyItem
-                                key={key._id}
-                                item={key}
-                            />
+                                <KeyItem
+                                    key={key._id}
+                                    item={key}
+                                />
                         ))
                     }
                 </TableKeys>
@@ -65,7 +65,7 @@ export const Keys = () => {
                 <IsAdmin
                     roles={['ADMIN_ROLE']}
                 >
-                    <ButtonOpenModal 
+                    <ButtonOpenModal
                         text='Crear llave'
                     />
                     <CreateKeyModal />
