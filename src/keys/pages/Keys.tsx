@@ -8,7 +8,7 @@ export const Keys = () => {
     const { keyState } = useKeyContext();
     const { isLoading, keys } = keyState;
 
-    const { filterd, search, handleSearch, Pagination } = usePaginations(keys);
+    const { filterd, search, handleSearch, Pagination, currentPage, endPage } = usePaginations(keys);
 
     if (!isLoading) return (
         <div className='flex h-screen justify-center'>
@@ -50,7 +50,7 @@ export const Keys = () => {
                     roles={['ADMIN_ROLE']}
                 >
                     {
-                        filterd().map((key: Key) => (
+                        filterd().slice(currentPage, endPage).map((key: Key) => (
                             <KeyItem
                                 key={key._id}
                                 item={key}
@@ -58,6 +58,7 @@ export const Keys = () => {
                         ))
                     }
                 </TableKeys>
+
 
                 <Pagination />
 
