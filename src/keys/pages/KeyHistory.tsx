@@ -21,7 +21,7 @@ export const KeyHistory = () => {
     return (
         <section className='text-black flex flex-col gap-5 justify-center items-center mx-auto py-5 container'>
 
-            <h1 className='text-4xl font-bold'>
+            <h1 className='text-2xl text-center font-bold'>
                 Historial de llaves prestadas
             </h1>
 

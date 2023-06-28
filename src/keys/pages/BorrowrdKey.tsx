@@ -7,7 +7,7 @@ export const BorrowrdKey = () => {
     >
 
       <h1
-        className='text-4xl font-bold'
+        className='text-2xl text-center font-bold'
       >Llaves Prestadas</h1>
 
       <TableKeys
