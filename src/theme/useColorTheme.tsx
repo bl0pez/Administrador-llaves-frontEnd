@@ -1,0 +1,28 @@
+import { useState, useMemo } from 'react';
+import { createTheme, PaletteMode } from "@mui/material";
+import { getDesignTokens } from './theme';
+export const useColorTheme = () => {
+  
+    const [mode, setMode] = useState<PaletteMode>('dark');
+
+    const colorMode = useMemo(
+        () => ({
+          // The dark mode switch would invoke this method
+          toggleColorMode: () => {
+            setMode((prevMode: PaletteMode) =>
+              prevMode === 'light' ? 'dark' : 'light',
+            );
+          },
+        }),
+        [],
+      );
+
+    const modifiedTheme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
+    return {
+        theme: modifiedTheme,
+        mode,
+        colorMode
+    }
+
+}

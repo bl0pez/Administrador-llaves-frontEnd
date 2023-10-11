@@ -1,11 +1,20 @@
 import { Outlet } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { ToggleThemeMode } from '@/components/ui/ToggleThemeMode';
 
 export const Auth = () => {
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <>
+      <ToggleThemeMode />
 
-    <Outlet />
-
-</div>
+      <Box
+        height={'100vh'}
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+      >
+        <Outlet />
+      </Box>
+    </>
   )
 }

@@ -1,5 +1,8 @@
-import { useForm, FormValidations } from "../../hooks";
-import { useAuth } from "../context/AuthContext";
+import { Box, Typography, TextField, Button } from '@mui/material';
+import { useForm, FormValidations } from '../../hooks';
+import { useAuth } from '../context/AuthContext';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LoginIcon from '@mui/icons-material/Login';
 
 const initialState = {
     email: '',
@@ -13,7 +16,6 @@ const formValidations: FormValidations = {
 
 export const LoginForm = () => {
 
-    
     const { handleLogin } = useAuth();
     const { formValues, onInputChange, onBluer, errors } = useForm(initialState, formValidations);
 
@@ -33,65 +35,70 @@ export const LoginForm = () => {
 
 
   return (
-    <form
-    onSubmit={handleSubmit} 
-    className='mt-8 space-y-6'>
-    <input type='hidden' name='remember' defaultValue='true' />
-    <div className='rounded-md shadow-sm -space-y-px'>
-        <div>
-            <label htmlFor='email-address' className='sr-only'>
-                Email address
-            </label>
-            <input
+    <Box
+        component='form'
+        onSubmit={handleSubmit}
+        boxShadow={4}
+        p={4}
+        display={'flex'}
+        flexDirection={'column'}
+        gap={4}
+        borderRadius={2}
+        width={'400px'}
+    >
+        <Typography 
+            variant='h1' 
+            align='center' 
+            gap={2}
+            fontSize={28} 
+            display={'flex'} 
+            justifyContent={'center'}
+            alignItems={'center'}
+            >
+                <AccountCircleIcon fontSize='large' color='primary' />  
+                Iniciar sesión
+        </Typography>
 
-                id='email-address'
-                name='email'
-                type='email'
-                value={formValues.email}
-                onChange={onInputChange}
-                autoComplete='email'
-                required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-                placeholder='Email address'
-                onBlur={onBluer}
-            />
-            {
-                errors.email && <span className='text-red-500 text-xs'>{errors.email}</span>
-            }
-        </div>
-        <div>
-            <label htmlFor='password' className='sr-only'>
-                Password
-            </label>
-            <input
+        <TextField
+            color='primary'
+            variant='outlined'
+            label='Email'
+            name='email'
+            value={formValues.email}
+            onChange={onInputChange}
+            onBlur={onBluer}
+            error={!!errors.email}
+            helperText={errors.email}
+            required
+        />
 
-                id='password'
-                name='password'
-                type='password'
-                value={formValues.password}
-                onChange={onInputChange}
-                autoComplete='current-password'
-                required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-                placeholder='Password'
-                onBlur={onBluer}
-            />
-            {
-                errors.password && <span className='text-red-500 text-xs'>{errors.password}</span>
-            }
-        </div>
-    </div>
+        <TextField
+            color='primary'
+            variant='outlined'
+            label='Contraseña'
+            name='password'
+            type='password'
+            value={formValues.password}
+            onChange={onInputChange}
+            onBlur={onBluer}
+            error={!!errors.password}
+            helperText={errors.password}
+            required
+        />
 
-
-    <div>
-        <button
+        <Button
+            variant='contained'
+            color='primary'
             type='submit'
-            // className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-            className='btn'
-        >
-            Ingresar
-        </button>
-    </div>
-</form>
+            sx={{
+                gap: 1,
+            }}
+            >
+                <LoginIcon
+                    fontSize='small'
+                />
+                Ingresar
+        </Button>
+    </Box>
   )
 }
