@@ -1,16 +1,13 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
-import Swal from 'sweetalert2';
 
 import { AuthReducer } from '../reducers';
 import { keyApi } from '@/api/keyApi';
 import { FormValues } from '@/hooks';
-import { AuthState, FetchAuth } from '../interfaces';
-
-import { Spiner } from '@/keys/components';
+import { AuthState, FetchAuth, User } from '../interfaces';
 
 interface AuthContextProps {
     authstate: AuthState;
-    handleLogin: (data:FormValues) => void;
+    handleLogin: (user: User) => void;
     handleLogout: () => void;
 }
 
@@ -43,31 +40,13 @@ export const AuthProvider = ({ children }: Props) => {
 
     }, []);
 
-    const handleLogin = async(data:FormValues) => {
-
-            dispatch({ type: 'checking'});
-
-        try {
-            
-            const resp = await keyApi.post<FetchAuth>('/login', data);
-
-            //Guardamos el token en el localstorage
-            localStorage.setItem('token', resp.data.token);
-            
+    const handleLogin = async(user: User) => {         
             dispatch({ type: 'login', payload: {
-                uid: resp.data.user._id,
-                name: resp.data.user.name,
-                email: resp.data.user.email,
-                role: resp.data.user.role
+                uid: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
             }});
-
-
-        } catch (error : any) {
-            const msj = error.response?.data.msg || 'Error al iniciar sesión';
-            Swal.fire('Error', msj, 'error');
-            dispatch({ type: 'logout'});   
-        }
-
     }
 
     const handleChecking = async() => {

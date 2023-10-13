@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -13,8 +13,15 @@ export const ToggleThemeMode = () => {
                 position: 'absolute', 
                 top: 0, 
                 right: 0, 
-                m: 2, 
+                m: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 1
             }}>
+      <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        Theme {theme.palette.mode}
+      </Typography>
       <IconButton
         onClick={() => colorMode.toggleColorMode()}
         color="inherit"

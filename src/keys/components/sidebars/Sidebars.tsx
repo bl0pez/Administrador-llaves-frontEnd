@@ -1,103 +1,119 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { menu } from './routes';
 import { useAuth } from '@/auth/context';
+import * as React from 'react';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
+import MuiDrawer from '@mui/material/Drawer';
+import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import { Menu, menu } from './routes';
+import { ItemMenu } from './ItemMenu';
+import { ActionItemMenu } from './ActionItemMenu';
+import { Box } from '@mui/material';
+
+
+const drawerWidth = 240;
+
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+);
 
 export const Sidebars = () => {
 
     const { handleLogout, authstate } = useAuth();
-    const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    const handleMenuClose = () => {
-        setIsSidebarOpen(false);
-    }
+    const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
     const { pathname } = useLocation();
 
-    useEffect(() => {
 
-        const handleOutsideClick = (e: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-                setIsSidebarOpen(false);
-            }
-        }
+    const [open, setOpen] = React.useState(false);
 
-        document.addEventListener('click', handleOutsideClick);
-
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        }
-
-    }, [handleMenuClose])
-
-
-    const handleSidebarOpen = () => {
-        return setIsSidebarOpen(!isSidebarOpen);
+    const handleDrawerAction = () => {
+        setOpen(!open);
     }
-
+  
     return (
-        <aside
-            ref={menuRef}
-            className={`min-h-screen w-72 text-xl text-white bg-indigo-950 flex flex-col fixed shadow z-10 transform transition-all duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        >
-
-            <button
-                onClick={handleSidebarOpen}
-                className={`h-12 w-12 bg-indigo-600 text-white fixed top-5 left-[300px] rounded-md hover:bg-indigo-600 transition-all duration-500 ease-in-out`}
-            >
-                <i className={`fas ${isSidebarOpen ? 'fa-times' : 'fa-bars'}`}></i>
-            </button>
-
-            <div
-                className='flex justify-center items-center py-4 gap-2 bg-indigo-600 mb-2'>
-                    <i className='fas fa-user-circle text-4xl'></i>
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerAction}>
+              {open ? <ChevronLeftIcon />: <ChevronRightIcon /> }
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            minHeight={'calc(100vh - 65px)'}
+          >
+          <List
+            sx={{
+              flexGrow: 1,
+            }}
+          >
                 {
-                    authstate.name
+                  menu.map((item: Menu) => (
+                    <ItemMenu 
+                      key={item.title}
+                      item={item}
+                      isOpenMenu={open}
+                    />
+                  ))
                 }
-            </div>
-
-
-            <nav
-                className='flex-1 flex flex-col h-full gap-2'
-            >
-
-                {
-                    menu.map((item) => (
-                        <div className='px-2' key={item.title}>
-                            <Link
-                            to={item.url}
-                            key={item.title}
-                            className={`flex items-center justify-between px-4 py-2 shadow-lg bg-indigo-800 hover:bg-indigo-500 transition-all duration-500  ${(pathname == item.url) ? 'bg-indigo-500' : ''}`}
-                        >
-                            <div
-                                className='flex items-center gap-2'
-                            >
-                                <i className={`fas ${item.icon} bg-indigo-950 p-2 rounded-md`}></i>
-                                <span>{item.title}</span>
-                            </div>
-
-                            <i className='fas fa-chevron-right'></i>
-
-                        </Link>
-                        </div>
-                    ))
-                }
-
-
-            </nav>
-
-            <div className='p-2'>
-                <button
-                    onClick={handleLogout}
-                    // className='flex-initial flex items-center justify-between px-3 py-4 uppercase bg-red-700  font-bold hover:bg-red-800 transition-all duration-500 ease-in-out'
-                    className='bg-red-700 py-2 px-4 w-full flex justify-center items-center gap-3 shadow hiver:bg-red-800 transition-all duration-500 ease-in-out hover:rounded-md'
-                >
-                    <i className='fas fa-sign-out-alt'></i>
-                    <span>Loagout</span>
-                </button>
-            </div>
-
-        </aside>
+          </List>
+          <ActionItemMenu />
+          </Box>
+        </Drawer>
     )
 }

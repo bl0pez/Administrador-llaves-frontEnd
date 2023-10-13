@@ -1,8 +1,11 @@
-import { Box, Typography, TextField, Button } from '@mui/material';
+import { Box, Typography, TextField, Button, CircularProgress, Alert, Snackbar, SlideProps, Slide} from '@mui/material';
 import { useForm, FormValidations } from '../../hooks';
 import { useAuth } from '../context/AuthContext';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
+import { useState } from 'react';
+import { keyApi } from '@/api/keyApi';
+import { FetchAuth } from '../interfaces';
 
 const initialState = {
     email: '',
@@ -14,25 +17,45 @@ const formValidations: FormValidations = {
     'password': [(value: string) => value.trim().length > 4, 'La contraseña es requerida'],
 }
 
+function SlideTransition(props: SlideProps) {
+    return <Slide {...props} direction="right" />;
+}
+
 export const LoginForm = () => {
 
     const { handleLogin } = useAuth();
     const { formValues, onInputChange, onBluer, errors } = useForm(initialState, formValidations);
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean>(false);
 
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
 
+        setIsLogin(true);
         //Validamos que los campos no esten vacios
         if (formValues.email.trim().length === 0 || formValues.password.trim().length === 0) {
             return;
         }
 
-        handleLogin(formValues);
+        
+        try {
+            
+            const resp = await keyApi.post<FetchAuth>('/login', formValues);
+
+            //Guardamos el token en el localstorage
+            localStorage.setItem('token', resp.data.token);
+            
+            handleLogin(resp.data.user)
+
+
+        } catch (error : any) {
+            setIsError(true);
+        } finally {
+            setIsLogin(false);
+        }
 
     }
-
 
   return (
     <Box
@@ -46,6 +69,21 @@ export const LoginForm = () => {
         borderRadius={2}
         width={'400px'}
     >
+
+        <Snackbar
+            sx={{
+                position: 'absolute',
+            }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} 
+            open={isError}
+            TransitionComponent={SlideTransition}
+            autoHideDuration={4000} 
+            onClose={() => setIsError(false)}>
+            <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
+                Email o contraseña incorrectos
+            </Alert>
+        </Snackbar>
+
         <Typography 
             variant='h1' 
             align='center' 
@@ -92,12 +130,17 @@ export const LoginForm = () => {
             type='submit'
             sx={{
                 gap: 1,
+                height: '40px',
             }}
+            disabled={isLogin}
             >
-                <LoginIcon
-                    fontSize='small'
-                />
-                Ingresar
+                {
+                    isLogin 
+                        ?  <CircularProgress  
+                            size={20}
+                        /> : <LoginIcon  fontSize='small' />
+                }
+                    Iniciar sesión
         </Button>
     </Box>
   )

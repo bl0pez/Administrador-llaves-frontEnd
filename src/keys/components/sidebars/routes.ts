@@ -1,23 +1,29 @@
-interface Menu {
-    title: string;
-    icon: string;
-    url: string;
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { SvgIconTypeMap } from "@mui/material";
+import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
+import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
+export interface Menu {
+  title: string;
+  icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+    muiName: string;
+  };
+  url: string;
 }
 
 export const menu: Menu[] = [
-    {
-        title: "Llaves",
-        icon: "fa-key",
-        url: "/"
-    },
-    {
-        title: "Llaves prestadas",
-        icon: "fa-key",
-        url: "/load-keys"
-    },
-    {
-        title: "Historial",
-        icon: "fa-history",
-        url: "/history"
-    },
-]
+  {
+    title: "Llaves Prestadas",
+    icon: PlaylistAddOutlinedIcon,
+    url: "/",
+  },
+  {
+    title: "Listado de Llaves",
+    icon: KeyOutlinedIcon,
+    url: "/load-keys",
+  },
+  // {
+  //     title: "Historial",
+  //     icon: "fa-history",
+  //     url: "/history"
+  // },
+];
