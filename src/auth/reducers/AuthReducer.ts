@@ -1,4 +1,4 @@
-import { AuthState } from '../interfaces'
+import { IAuthState } from '../interfaces'
 
 type User = {
     uid: string,
@@ -12,7 +12,7 @@ type AuthAction =
     | { type: 'logout' }
     | { type: 'login', payload: User }
 
-export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState => {
+export const AuthReducer = (stateAuth: IAuthState, action: AuthAction): IAuthState => {
     switch (action.type) {
         case "checking": {
             return {

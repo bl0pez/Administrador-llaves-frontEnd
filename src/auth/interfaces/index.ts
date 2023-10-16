@@ -1,4 +1,4 @@
-export interface AuthState {
+export interface IAuthState {
   status: "checking" | "authenticated" | "not-authenticated";
   uid: string;
   roles: string[];

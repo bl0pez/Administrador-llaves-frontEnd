@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { AuthReducer } from '../reducers';
-import { AuthState, IUser } from '../interfaces';
+import { IAuthState, IUser } from '../interfaces';
 import { checkAuthStatusService } from '../services';
 
 interface AuthContextProps {
-    authstate: AuthState;
+    authstate: IAuthState;
     handleLogin: (user: IUser) => void;
     handleLogout: () => void;
 }
@@ -17,7 +17,7 @@ interface Props {
 const AuthContext = createContext({} as AuthContextProps);
 
 //Estado inicial del reducer de autenticación
-const INITIAL_STATE: AuthState = {
+const INITIAL_STATE: IAuthState = {
     status: 'checking', // 'authenticated' | 'not-authenticated' | 'checking'
     uid: "",
     name: "",

@@ -58,7 +58,9 @@ export const LoginForm = () => {
     <Box
         component='form'
         onSubmit={handleSubmit}
-        boxShadow={4}
+        sx={{
+           boxShadow: { xs: 0, md: 4 },
+        }}
         p={4}
         display={'flex'}
         flexDirection={'column'}
