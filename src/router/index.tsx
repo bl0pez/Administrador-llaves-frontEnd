@@ -1,9 +1,10 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
-const PublicRouter = lazy(() => import('./PublicRouter'));
-const Login = lazy(() => import('@/auth/pages/Login'));
+import PublicRouter from './PublicRouter';
+import { Spinner } from '@/components/spinner/Spinner';
 
+const Login = lazy(() => import('@/auth/pages/Login'));
 const PrivateRouter = lazy(() => import('./PrivateRouter'));
 const Keys = lazy(() => import('@/keys/pages/Keys'));
 const BorrowrdKey = lazy(() => import('@/keys/pages/BorrowrdKey'));
@@ -13,15 +14,11 @@ const KeyHistory = lazy(() => import('@/keys/pages/KeyHistory'));
 export const router = createBrowserRouter([
     {
         path: '/auth',
-        element: (
-            <Suspense fallback={<div>Loading...</div>}>
-                <PublicRouter />
-            </Suspense>
-        ),
+        element: ( <PublicRouter /> ),
         children: [{
             path: 'login',
             element: (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Spinner />}>
                     <Login />
                 </Suspense>
             )
@@ -34,7 +31,7 @@ export const router = createBrowserRouter([
     {
         path: '/',
         element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Spinner />}>
                 <PrivateRouter />
             </Suspense>
         ),
@@ -43,7 +40,7 @@ export const router = createBrowserRouter([
                 path: '/',
                 element: 
                     (
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<Spinner />}>
                             <Keys />
                         </Suspense>
                     )
@@ -52,7 +49,7 @@ export const router = createBrowserRouter([
                 path: 'load-keys',
                 element: 
                     (
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<Spinner />}>
                             <BorrowrdKey />
                         </Suspense>
                     )
@@ -61,7 +58,7 @@ export const router = createBrowserRouter([
                 path: 'history',
                 element: 
                     (
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<Spinner />}>
                             <KeyHistory />
                         </Suspense>
                     )
