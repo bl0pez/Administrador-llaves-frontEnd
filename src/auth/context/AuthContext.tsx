@@ -23,7 +23,6 @@ const INITIAL_STATE: AuthState = {
     name: "",
     email: "",
     roles: [],
-    errorMsj: ""
 }
 
 export const AuthProvider = ({ children }: Props) => {

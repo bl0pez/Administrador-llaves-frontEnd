@@ -1,9 +1,16 @@
-import { AuthState } from "../interfaces"
+import { AuthState } from '../interfaces'
+
+type User = {
+    uid: string,
+    name: string,
+    email: string,
+    roles: string[],
+}
 
 type AuthAction =
     | { type: 'checking' }
     | { type: 'logout' }
-    | { type: 'login', payload: { uid: string, name: string, email:string, roles: string[] } }
+    | { type: 'login', payload: User }
 
 export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
@@ -14,7 +21,6 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
                 roles: [],
                 name: "",
                 email: "",
-                errorMsj: "",
             }
         }
         case "logout": {
@@ -23,7 +29,6 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
                 roles: [],
                 name: "",
                 email: "",
-                errorMsj: "",
                 status: 'not-authenticated',
             }
         }

@@ -1,4 +1,4 @@
-import { useAuth } from "../../../auth/context/AuthContext";
+import { useAuth } from '@/auth/context/';
 
 interface Props {
     children: JSX.Element | JSX.Element[];
@@ -16,7 +16,7 @@ export const IsAdmin = ({ children, roles }: Props) => {
   return (
     <>
         {
-            roles?.includes(authstate.role) &&
+            roles?.includes('admin') &&
             (
                 children
             )
