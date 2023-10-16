@@ -1,18 +1,30 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { PrivateRouter } from './PrivateRouter';
-import { PublicRouter } from './PublicRouter';
-import { KeyHistory, Keys } from '@/keys/pages';
-import { BorrowrdKey } from '@/keys/pages/BorrowrdKey';
-import Login from '@/auth/pages/Login';
+import { lazy, Suspense } from 'react';
+
+const PublicRouter = lazy(() => import('./PublicRouter'));
+const Login = lazy(() => import('@/auth/pages/Login'));
+
+const PrivateRouter = lazy(() => import('./PrivateRouter'));
+const Keys = lazy(() => import('@/keys/pages/Keys'));
+const BorrowrdKey = lazy(() => import('@/keys/pages/BorrowrdKey'));
+const KeyHistory = lazy(() => import('@/keys/pages/KeyHistory'));
 
 
 export const router = createBrowserRouter([
     {
         path: '/auth',
-        element: <PublicRouter />,
+        element: (
+            <Suspense fallback={<div>Loading...</div>}>
+                <PublicRouter />
+            </Suspense>
+        ),
         children: [{
             path: 'login',
-            element: <Login />
+            element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Login />
+                </Suspense>
+            )
         },
         {
             path: '*',
@@ -21,19 +33,38 @@ export const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <PrivateRouter />,
+        element: (
+            <Suspense fallback={<div>Loading...</div>}>
+                <PrivateRouter />
+            </Suspense>
+        ),
         children: [
             {
                 path: '/',
-                element: <Keys />
+                element: 
+                    (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Keys />
+                        </Suspense>
+                    )
             },
             {
                 path: 'load-keys',
-                element: (<BorrowrdKey />)
+                element: 
+                    (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <BorrowrdKey />
+                        </Suspense>
+                    )
             },
             {
                 path: 'history',
-                element: <KeyHistory />
+                element: 
+                    (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <KeyHistory />
+                        </Suspense>
+                    )
             },
              {
                 path: '*',

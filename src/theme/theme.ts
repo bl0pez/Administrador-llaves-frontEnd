@@ -2,33 +2,27 @@ import { PaletteMode } from "@mui/material";
 
 export const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
+    primary: {
+      main: "#666CFF",
+    },
+    secondary: {
+      main: "#6D788D",
+    },
+    error: {
+      main: "#FF4D49",
+    },
+    success: {
+      main: "#1BC5BD",
+    },
     mode,
     ...(mode === "light"
       ? {
-          primary: {
-            main: "#666CFF",
-          },
-          secondary: {
-            main: "#6D788D",
-          },
-          error: {
-            main: "#FF4D49",
-          },
           background: {
             default: "#F4F6F8",
             paper: "#FFFFFF",
           },
         }
       : {
-          primary: {
-            main: "#666CFF",
-          },
-          secondary: {
-            main: "#6D788D",
-          },
-          error: {
-            main: "#FF4D49",
-          },
           background: {
             default: "#30334E",
             paper: "#666CFF",

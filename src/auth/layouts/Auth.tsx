@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { ToggleThemeMode } from '@/components/ui/ToggleThemeMode';
 
-export const Auth = () => {
+const Auth = () => {
   return (
     <>
       <ToggleThemeMode />
@@ -18,3 +18,5 @@ export const Auth = () => {
     </>
   )
 }
+
+export default Auth;

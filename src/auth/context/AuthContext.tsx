@@ -1,13 +1,12 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { AuthReducer } from '../reducers';
-import { keyApi } from '@/api/keyApi';
-import { FormValues } from '@/hooks';
-import { AuthState, FetchAuth, User } from '../interfaces';
+import { AuthState, IUser } from '../interfaces';
+import { checkAuthStatusService } from '../services';
 
 interface AuthContextProps {
     authstate: AuthState;
-    handleLogin: (user: User) => void;
+    handleLogin: (user: IUser) => void;
     handleLogout: () => void;
 }
 
@@ -23,7 +22,7 @@ const INITIAL_STATE: AuthState = {
     uid: "",
     name: "",
     email: "",
-    role: "",
+    roles: [],
     errorMsj: ""
 }
 
@@ -40,28 +39,28 @@ export const AuthProvider = ({ children }: Props) => {
 
     }, []);
 
-    const handleLogin = async(user: User) => {         
+    const handleLogin = async(user: IUser) => {         
             dispatch({ type: 'login', payload: {
-                uid: user._id,
-                name: user.name,
+                uid: user.id,
+                name: user.fullName,
                 email: user.email,
-                role: user.role
+                roles: user.roles
             }});
     }
 
     const handleChecking = async() => {
         try {
 
-            const resp = await keyApi.get<FetchAuth>('/validate');
+            const { token, user } = await checkAuthStatusService();
 
             //Guardamos el token en el localstorage
-            localStorage.setItem('token', resp.data.token);
+            localStorage.setItem('token', token);
 
             dispatch({ type: 'login', payload: {
-                uid: resp.data.user._id,
-                name: resp.data.user.name,
-                email: resp.data.user.email,
-                role: resp.data.user.role
+                uid: user.id,
+                name: user.fullName,
+                email: user.email,
+                roles: user.roles
             }});
 
             

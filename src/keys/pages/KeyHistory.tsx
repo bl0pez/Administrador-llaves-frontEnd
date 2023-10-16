@@ -5,7 +5,7 @@ import { KeyHistoryItem } from '../components/keys/KeyHistoryItem';
 import { usePaginations } from '../hooks/usePaginations';
 
 
-export const KeyHistory = () => {
+const KeyHistory = () => {
 
     const { keysHistory, isLoading } = useKeyHistoryContext();
 
@@ -68,3 +68,5 @@ export const KeyHistory = () => {
         </section>
     )
 }
+
+export default KeyHistory;

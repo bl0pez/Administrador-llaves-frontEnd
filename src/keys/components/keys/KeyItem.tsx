@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 import { keyApi } from '@/api/keyApi';
 import { Key } from '@/keys/interfaces';
 import { useAuth } from '@/auth/context';
-import { useKeyContext, useModalContext } from '@/keys/context';
 import { transformDate } from '@/keys/helpers';
 import { IsAdmin } from '../isAdmin/IsAdmin';
 
@@ -13,18 +12,18 @@ interface props {
 
 export const KeyItem = ({ item }: props) => {
 
-    const { deleteKey, onSelectKey } = useKeyContext();
+    // const { deleteKey, onSelectKey } = useKeyContext();
     const { authstate } = useAuth();
-    const { setIsOpenModal } = useModalContext();
+    // const { setIsOpenModal } = useModalContext();
 
     /**
      * Selecciona la llave y 
      * abre el modal para editar la llave
      */
-    const updateKey = () => {
-        onSelectKey(item);
-        setIsOpenModal();
-    }
+    // const updateKey = () => {
+    //     onSelectKey(item);
+    //     setIsOpenModal();
+    // }
 
     /**
      * Perminte eliminar una llave
@@ -45,7 +44,7 @@ export const KeyItem = ({ item }: props) => {
 
             if (isConfirmed) {
                 const resp = await keyApi.delete(`/keys/${id}`);
-                deleteKey(id);
+                // deleteKey(id);
                 Swal.fire('Eliminado', resp.data.msg, 'success');
             }
 
@@ -68,7 +67,7 @@ export const KeyItem = ({ item }: props) => {
             <td>{item.name}</td>
             <td>{item.description}</td>
             <td>{item.user?.name}</td>
-            <td>{transformDate(item.createdAt)}</td>
+            {/* <td>{transformDate(item.createdAt)}</td> */}
             <td>
                 {
                     item.status
@@ -84,7 +83,7 @@ export const KeyItem = ({ item }: props) => {
                         {/* Boton para editar llave */}
                         <button
                             className='bg-indigo-600 p-3 rounded-md text-white mr-2 hover:bg-indigo-700'
-                            onClick={() => updateKey()}
+                            // onClick={() => updateKey()}
                         >
                             <i className='fas fa-edit'></i>
                         </button>

@@ -1,20 +1,16 @@
+import { useState } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import { Box, Typography, TextField, Button, CircularProgress, Alert, Snackbar, SlideProps, Slide} from '@mui/material';
-import { useForm, FormValidations } from '../../hooks';
-import { useAuth } from '../context/AuthContext';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
-import { useState } from 'react';
-import { keyApi } from '@/api/keyApi';
-import { FetchAuth } from '../interfaces';
+import { useAuth } from '../context/AuthContext';
+import { ILoginUser } from '../interfaces';
+import { loginService } from '../services';
 
-const initialState = {
+const initialState: ILoginUser = {
     email: '',
     password: ''
-}
-
-const formValidations: FormValidations = {
-    'email': [(value: string) => value.trim().length > 4, 'El email es requerido'],
-    'password': [(value: string) => value.trim().length > 4, 'La contraseña es requerida'],
 }
 
 function SlideTransition(props: SlideProps) {
@@ -24,38 +20,39 @@ function SlideTransition(props: SlideProps) {
 export const LoginForm = () => {
 
     const { handleLogin } = useAuth();
-    const { formValues, onInputChange, onBluer, errors } = useForm(initialState, formValidations);
-    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
 
-    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-
-        e.preventDefault();
-
-        setIsLogin(true);
-        //Validamos que los campos no esten vacios
-        if (formValues.email.trim().length === 0 || formValues.password.trim().length === 0) {
-            return;
-        }
-
+        const { handleSubmit, errors, getFieldProps, touched } = useFormik<ILoginUser>({
+            initialValues: initialState,
+            onSubmit: async (values) => {
+              
+              setIsLoading(true);
         
-        try {
-            
-            const resp = await keyApi.post<FetchAuth>('/login', formValues);
-
-            //Guardamos el token en el localstorage
-            localStorage.setItem('token', resp.data.token);
-            
-            handleLogin(resp.data.user)
-
-
-        } catch (error : any) {
-            setIsError(true);
-        } finally {
-            setIsLogin(false);
-        }
-
-    }
+              try {
+                
+                const { token, user } = await loginService(values);
+                localStorage.setItem('token', token);
+                handleLogin(user)
+        
+              } catch (error) {
+                setIsError(true);
+              }finally {
+                setIsLoading(false);
+              }
+        
+            },
+            validationSchema: Yup.object({
+              email: Yup.string()
+                        .email('El email no es valido')
+                        .required('Este campo es requerido'),
+              password: 
+                Yup.string()
+                    .min(8, 'La contraseña debe tener al menos 8 caracteres')
+                    .max(20, 'La contraseña debe tener menos de 20 caracteres')
+                    .matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, 'La contraseña debe contener al menos una letra mayúscula, una minúscula y un número')
+            })
+          });
 
   return (
     <Box
@@ -99,14 +96,12 @@ export const LoginForm = () => {
 
         <TextField
             color='primary'
+            autoComplete='off'
             variant='outlined'
             label='Email'
-            name='email'
-            value={formValues.email}
-            onChange={onInputChange}
-            onBlur={onBluer}
-            error={!!errors.email}
-            helperText={errors.email}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
+            { ...getFieldProps('email') }
             required
         />
 
@@ -114,13 +109,10 @@ export const LoginForm = () => {
             color='primary'
             variant='outlined'
             label='Contraseña'
-            name='password'
             type='password'
-            value={formValues.password}
-            onChange={onInputChange}
-            onBlur={onBluer}
-            error={!!errors.password}
-            helperText={errors.password}
+            { ...getFieldProps('password') }
+            error={touched.password && Boolean(errors.password)}
+            helperText={touched.password && errors.password}
             required
         />
 
@@ -132,10 +124,10 @@ export const LoginForm = () => {
                 gap: 1,
                 height: '40px',
             }}
-            disabled={isLogin}
+            disabled={isLoading}
             >
                 {
-                    isLogin 
+                    isLoading 
                         ?  <CircularProgress  
                             size={20}
                         /> : <LoginIcon  fontSize='small' />

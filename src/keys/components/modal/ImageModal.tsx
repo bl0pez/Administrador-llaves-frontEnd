@@ -1,48 +1,25 @@
 import { FC } from 'react';
-import { Backdrop, Box, Card, CardMedia, Fade, Modal } from '@mui/material';
+import { Card, CardMedia } from '@mui/material';
+import { MainModal } from './MainModal';
 
 interface Props {
     url: string;
     isOpen: boolean;
-    handleOpen: () => void;
     handleClose: () => void;
-
 }
-
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    minWidth: '300px',
-    with: '400px',
-    boxShadow: 24,
-};
 
 
 export const ImageModal:FC<Props> = ({
     url,
     isOpen,
-    handleOpen,
     handleClose
 }) => {
   return (
-    <Modal
-        open={isOpen}
-        onClose={handleClose}
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 200,
-          },
-        }}
+    <MainModal
+        handleClose={handleClose}
+        isOpen={isOpen}
     >
-        <Fade in={isOpen}>
-        <Box sx={style}>
-            <Card>
+        <Card>
                 <CardMedia
                     component="img"
                  
@@ -53,9 +30,7 @@ export const ImageModal:FC<Props> = ({
                     image={url}
                     alt="green iguana"
                 />
-            </Card>
-        </Box>
-        </Fade>
-    </Modal>
+        </Card>
+    </MainModal>
   )
 }

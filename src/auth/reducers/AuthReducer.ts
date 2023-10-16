@@ -3,7 +3,7 @@ import { AuthState } from "../interfaces"
 type AuthAction =
     | { type: 'checking' }
     | { type: 'logout' }
-    | { type: 'login', payload: { uid: string, name: string, email:string, role: string } }
+    | { type: 'login', payload: { uid: string, name: string, email:string, roles: string[] } }
 
 export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
@@ -11,7 +11,7 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
             return {
                 status: 'checking',
                 uid: "",
-                role: "",
+                roles: [],
                 name: "",
                 email: "",
                 errorMsj: "",
@@ -20,7 +20,7 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
         case "logout": {
             return {
                 uid: "",
-                role: "",
+                roles: [],
                 name: "",
                 email: "",
                 errorMsj: "",
@@ -34,7 +34,7 @@ export const AuthReducer = (stateAuth: AuthState, action: AuthAction): AuthState
                 uid: action.payload.uid,
                 name: action.payload.name,
                 email: action.payload.email,
-                role: action.payload.role
+                roles: action.payload.roles,
             }
         }
         default:
