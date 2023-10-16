@@ -1,4 +1,4 @@
-import { BorrowrdKeyItem, BorrowrdKeyModal, ButtonOpenModal, IsAdmin, Spiner, TableKeys } from '../components';
+import { BorrowrdKeyItem, IsAdmin, Spiner, TableKeys } from '../components';
 
 const BorrowrdKey = () => {
   return (
@@ -29,11 +29,7 @@ const BorrowrdKey = () => {
     <IsAdmin
       roles={['ADMIN_ROLE', 'OPERATOR_ROLE']}
     >
-      <ButtonOpenModal 
-        text='Solicitar llave'
-      />
 
-      <BorrowrdKeyModal />
     </IsAdmin>
 
   </section>

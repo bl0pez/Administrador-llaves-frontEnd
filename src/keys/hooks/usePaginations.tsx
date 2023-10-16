@@ -20,9 +20,9 @@ const keyFiltrado = (items: Key[], search: String) => {
     return items.filter((item) => 
         item.name.toLowerCase().includes(search.toLowerCase())
         || item.description.toLowerCase().includes(search.toLowerCase())
-        || transformDate(item.createdAt).toLowerCase().includes(search.toLowerCase())
+        // || transformDate(item.createdAt).toLowerCase().includes(search.toLowerCase())
         || item.user?.name.toLowerCase().includes(search.toLowerCase())
-        || transformDate(item.updatedAt).toLowerCase().includes(search.toLowerCase())
+        // || transformDate(item.updatedAt).toLowerCase().includes(search.toLowerCase())
     );
 }
 
