@@ -13,8 +13,8 @@ const KeyHistoryContext = createContext({} as KeyHistoryContextProps);
 //Cargamos el historial de llaves devueltas
 const getKeysHistory = async(): Promise<KeyHistory> => {
     try {
-        const { data } = await keyApi.get<KeyHistory>('/keyHistory');
-        return data;
+        // const { data } = await keyApi.get<KeyHistory>('/keyHistory');
+        // return data;
     } catch (error : any) {
         throw new Error(error);
     }

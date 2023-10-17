@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Button } from '@mui/material';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import { Button, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { CreateKeyModal } from '../modal';
 
 export const ButtonCreateKey = () => {
@@ -11,16 +11,18 @@ export const ButtonCreateKey = () => {
         <>
             <Button
               onClick={() => setIsOpenModal(true)}
-              variant='outlined'
-              color='primary'
+              variant='contained'
               sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1
+                  gap: 0.5,
+                  position: 'absolute',
+                  top: 20,
+                  right: 0,
               }}
           >
-              <AddCircleOutlineOutlinedIcon />
-              Crear llave
+              <AddIcon />
+              <Typography variant='button'>
+                  Crear Llave
+              </Typography>
           </Button>
           {
               isOpenModal && <CreateKeyModal

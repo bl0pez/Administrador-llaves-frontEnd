@@ -26,7 +26,7 @@ export const BorrowedKeyProvider = ({ children }: ChildrenProps) => {
     const [borrowrdKeyState, dispatch] = useReducer(BorrowrdKeyReducer, INITIAL_STATE);
 
     useEffect(() => {
-        loadBorrowedKeys();
+        // loadBorrowedKeys();
     }, [])
     
     const startLoading = () => {
@@ -36,23 +36,23 @@ export const BorrowedKeyProvider = ({ children }: ChildrenProps) => {
     //Cargamos las llaves prestadas
     const loadBorrowedKeys = async():Promise<void> => {        
         try {
-            const { data } = await keyApi.get<BorrowedKeys>('/borrowedKeys');
-            dispatch({ type: 'loadBorrowrdKeys', payload: data.borrowedKeys});
+            // const { data } = await keyApi.get<BorrowedKeys>('/borrowedKeys');
+            // dispatch({ type: 'loadBorrowrdKeys', payload: data.borrowedKeys});
         } catch (error) {
             errorBorrowrdKey();
         }
     }
 
     const newBorrowrdKey = (borrowrdKey: BorrowedKey) => {
-        dispatch({ type: 'addBorrowrdKey', payload: borrowrdKey });
+        // dispatch({ type: 'addBorrowrdKey', payload: borrowrdKey });
     }
 
     const updateBorrowrdKey = (borrowrdKey: BorrowedKey) => {
-        dispatch({ type: 'updateStateBorrowedKey', payload: borrowrdKey });
+        // dispatch({ type: 'updateStateBorrowedKey', payload: borrowrdKey });
     }
 
     const errorBorrowrdKey = () => {
-        dispatch({ type: 'errorBorrowrdKeys' });
+        // dispatch({ type: 'errorBorrowrdKeys' });
     }
 
 

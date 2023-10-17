@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useImageUpload = (handleChange: (e: any) => void, image: string | null, handleImageReset: () => void) => {
+type Props = {
+    name: string;
+    handleChange: (e: any) => void;
+    image: string | null;
+    handleImageReset: () => void;
+}
+
+export const useImageUpload = ({handleChange, handleImageReset, image, name}: Props) => {
  
     const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -22,7 +29,7 @@ export const useImageUpload = (handleChange: (e: any) => void, image: string | n
         if (file) {
           const syntheticEvent = {
             target: {
-              name: 'image',
+              name: name,
               value: file,
             },
           };
@@ -34,7 +41,7 @@ export const useImageUpload = (handleChange: (e: any) => void, image: string | n
     const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {        
         const syntheticEvent = {
           target: {
-            name: 'image',
+            name: name,
             value: e.target.files![0],
           },
         };

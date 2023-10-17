@@ -1,49 +1,50 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
-import { ChildrenProps, Key, KeyState } from "../interfaces/interfaces";
-import { fetchGetKey } from "../helpers/fetchKeys";
-import { keyReducer } from "../reducers";
+import { EReducerTypes, IChildrenProps, IGetAllKeys, IKey, IKeyStateReducer } from '../interfaces';
+import { keyReducer } from '../reducer/KeyReducer';
+import { findAllKeysService } from '../services/keyCreationService';
 
 
 export type KeyContextProps = {
-    keyState: KeyState;
-    createKey: (key: Key) => void;
-    loadKeys: (keys: Key[]) => void;
-    onSelectKey: (key: Key) => void;
+    stateKeys: IKeyStateReducer;
+    createKey: (key: IKey) => void;
+    loadKeys: ({count, keys}: IGetAllKeys) => void;
+    onSelectKey: (key: IKey) => void;
     deleteKey: (id: string) => void;
     onDeselectKey: () => void;
-    updateKey: (key: Key) => void;
+    updateKey: (key: IKey) => void;
     changeStateKey: (id: string) => void;
 }
 
 export const KeyContext = createContext({} as KeyContextProps);
 
-const INITIAL_STATE: KeyState = {
+const INITIAL_STATE: IKeyStateReducer = {
     keys: [],
     isLoading: false,
-    error: "",
-    activeKey: null,
+    count: 0,
 }
 
-export const KeyProvider = ({ children }: ChildrenProps) => {
+export const KeyProvider = ({ children }: IChildrenProps) => {
 
-    const [keyState, dispatch] = useReducer(keyReducer, INITIAL_STATE);
+    const [stateKeys, dispatch] = useReducer(keyReducer, INITIAL_STATE);
 
-    /**
-     * Carga las llaves de la base de datos al iniciar la aplicación
-     */
+    
+    
+    const getKeys = async() => {
+        const data = await findAllKeysService();
+        loadKeys(data);
+    }
+    
+    
     useEffect(() => {
-        fetchGetKey()
-            .then(keys => loadKeys(keys));
+        getKeys();
     }, []);
 
-    //Cargar llaves
-    const loadKeys = async(keys: Key[]) => {
-        dispatch({ type: 'loadKeys', payload: keys });
+    const loadKeys = async({count, keys}: IGetAllKeys) => {
+        dispatch({ type: EReducerTypes.LOAD_KEYS, payload: {count, keys} });
     }
 
-    //Crea una nueva llave
-    const createKey = (key: Key) => {
-        dispatch({type: 'newKey', payload: key });
+    const createKey = (key: IKey) => {
+        dispatch({type: EReducerTypes.ADD_KEY, payload: key });
     }
 
     //Elimina una key
@@ -52,7 +53,7 @@ export const KeyProvider = ({ children }: ChildrenProps) => {
     }
 
     //Selecciona una llave
-    const onSelectKey = (key: Key) => {
+    const onSelectKey = (key: IKey) => {
         dispatch({ type: 'onSetActiveKey', payload: key });
     }
 
@@ -61,7 +62,7 @@ export const KeyProvider = ({ children }: ChildrenProps) => {
         dispatch({ type: 'onSetInactiveKey' });
     }
 
-    const updateKey = (key: Key) => {
+    const updateKey = (key: IKey) => {
         dispatch({type: 'updateKey', payload: key });
     }
 
@@ -71,7 +72,7 @@ export const KeyProvider = ({ children }: ChildrenProps) => {
 
     return (
         <KeyContext.Provider value={{
-            keyState,
+            stateKeys,
             createKey,
             deleteKey,
             onSelectKey,

@@ -1,5 +1,3 @@
-export { Input } from './html/Input';
-
 export { BorrowrdKeyItem } from "./keys/BorrowrdKeyItem";
 export { IsAdmin } from "./isAdmin/IsAdmin";
 export { KeyItem } from "./keys/KeyItem";

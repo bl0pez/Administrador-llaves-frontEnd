@@ -1,6 +1,6 @@
 import { keyApi } from '@/api/keyApi';
 import { BorrowedKey, ResBorrowedKey } from "../interfaces";
-import { useBorrowedKeyContext, useKeyContext, useKeyHistoryContext } from '../context';
+import { useBorrowedKeyContext, useKeyHistoryContext } from '../context';
 import Swal from 'sweetalert2';
 
 type FetchAction = {
@@ -22,7 +22,7 @@ type FetchAction = {
  */
 export const useBorrowrdKeys = (): FetchAction => {
 
-    const { changeStateKey } = useKeyContext();
+    // const { changeStateKey } = useKeyContext();
     const { errorBorrowrdKey, newBorrowrdKey, borrowrdKeyState, updateBorrowrdKey } = useBorrowedKeyContext();
     const { addKeyHistory } = useKeyHistoryContext();
 
@@ -30,14 +30,14 @@ export const useBorrowrdKeys = (): FetchAction => {
 
     const createBorrowedKey = async (borrowedKey: BorrowedKey) => {
             newBorrowrdKey(borrowedKey);
-            changeStateKey(borrowedKey.key._id);
+            // changeStateKey(borrowedKey.key._id);
     }
 
     const updateStatusBorrowedKey = async (id: string) => {
             try {
                 const { data }= await keyApi.put<ResBorrowedKey>(`/borrowedKeys/update/${id}`);
                 updateBorrowrdKey(data.borrowedKey);
-                changeStateKey(data.borrowedKey.key._id);
+                // changeStateKey(data.borrowedKey.key._id);
                 addKeyHistory(data.borrowedKey);
             } catch (error: any) {
                 const msj = error.response.data.msg || 'Error al devolver la llave';
