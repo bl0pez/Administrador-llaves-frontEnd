@@ -18,20 +18,14 @@ interface Paginations {
 export const usePaginations = (): Paginations => {
 
     const { stateKeys } = useKeyContext();
-    const { keys, count } = stateKeys;
+    const { keys } = stateKeys;
     
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [countItems, setCountItems] = useState(count);
+    const [countItems, setCountItems] = useState(0);
 
-    useEffect(() => {
-        setCountItems(count);
-    }, [count]);
-    
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value);
-    }
+    console.log('countItems', countItems);
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -47,8 +41,8 @@ export const usePaginations = (): Paginations => {
         setPage(0);
       };
 
-    const filterd = (): IKey[] => {
-        if (search.length === 0) return keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    const filterdItems = (): IKey[] => {
+        if (search.length === 0) return keys;
         const items = keys.filter((item) => 
         item.keyName.toLowerCase().includes(search.toLowerCase())
         || item.keyDescription.toLowerCase().includes(search.toLowerCase())
@@ -59,13 +53,21 @@ export const usePaginations = (): Paginations => {
         || transformDate(item.updatedAt).toLowerCase().includes(search.toLowerCase())
         );
 
-        return items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
+        return items;
     }
 
+    const filterd = (): IKey[] => {
+        return filterdItems().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    }
+    
     useEffect(() => {
-        setCountItems(filterd().length);
-    }, [search]);
+        setCountItems(filterdItems().length);
+    }, [filterdItems, keys]);
+
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value);
+  }
     
 
 
