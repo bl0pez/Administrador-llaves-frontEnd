@@ -8,17 +8,15 @@ interface Props {
 export const StickyTableContainer: FC<Props> = ({ children }) => {
   return (
     <Paper 
-    sx={{ 
-        marginTop: '10px',
+    sx={{
         boxShadow: "0px 5px 5px rgba(0,0,0,0.05)",
         width: '100%',
-        overflow: 'auto'                
+        overflow: 'hidden'                
     }}>
     <TableContainer
         sx={{
             height: '400px',
             width: '100%',
-            overflow: 'auto'
         }}
     >
         <Table

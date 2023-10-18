@@ -1,6 +1,5 @@
-import { FC, useState } from 'react';
+import { FC, useState, lazy } from 'react';
 import { Button, CardMedia, IconButton, TableCell, TableRow, Typography, styled } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { IKey } from '@/app/interfaces';
 import { ImageModal } from '../modal';
 import { transformDate } from '@/app/helpers/transformDate';
@@ -26,7 +25,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 interface Props {
     item: IKey;
-    // handleOpenModal: (url: string) => void;
 }
 
 export const KeyTableRowItem: FC<Props> = ({ item }) => {
@@ -96,6 +94,9 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
             </TableCell>
             <TableCell>
                 { item.deliveredBy }
+            </TableCell>  
+            <TableCell>
+                { item.createBy }
             </TableCell>  
         </StyledTableRow>
         <ImageModal 

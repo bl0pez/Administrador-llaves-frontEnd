@@ -4,6 +4,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { KeyTableRowItem, StickyTableContainer, TableHeaderRow } from "../components/table";
 import { IKey } from "../interfaces";
 import { useKeyContext } from "../context/KeyContext";
+import { usePaginations } from "../hooks/usePaginations";
+import { useThemeContext } from "@/theme/ThemeContextProvider";
 
 const columns = [
     'Imagen',
@@ -12,79 +14,100 @@ const columns = [
     'Fecha de creación',
     'Estado',
     'Entregada por',
+    'Recibida por',
 ]
 
 const KeyList = () => {
 
-    const { stateKeys } = useKeyContext();
-
-    const { keys, count } = stateKeys;
+    const {mode} = useThemeContext();
+    const { rowsPerPage, filterd, countItems, handleChangeRowsPerPage,  handleChangePage, page, handleSearch, search } = usePaginations();
 
   return (
     <>
-      <ButtonCreateKey />
-      <>
-
-<Box
-    display={'flex'}
-    justifyContent={'space-between'}
-    flexWrap={'wrap'}
-    gap={2}
-    alignItems={'end'}
->
-    <Box
-        display={'flex'}
-        alignItems={'end'}
-        width={'400px'}
-        gap={2}
-    >
-        <TextField 
-            sx={{
-                width: '100%',
-            }}
-            id="search"
-            type="text"
-            name='search' 
-            label="Buscar llave" 
-            autoComplete='off'
-            variant="standard" />
-        <Button
-            variant='outlined'
-            color='primary'
+        <Box
+            display={'flex'}
+            justifyContent={'space-between'}
+            flexWrap={'wrap'}
+            marginTop={2}
+            borderRadius={2}
+            gap={2}
+            alignItems={'end'}
         >
-            <SearchIcon />
-        </Button>
-    </Box>
-    
-    <ButtonCreateKey />
+            <Box
+                display={'flex'}
+                alignItems={'end'}
+                width={'100%'}
+                flexWrap={'wrap'}
+                p={2}
+                gap={2}
+                sx={{
+                    backgroundColor: mode === 'dark' ? '#1E1E1E' : '#FFFFFF',
+                }}
+            >
+                <Box
+                    display={'flex'}
+                    gap={2}
+                    alignItems={'center'}
+                    flexGrow={1}
+                >
+                    <ButtonCreateKey />
+                </Box>
+                <Box
+                    display={'flex'}
+                    gap={2}
+                    alignItems={'end'}
+                    flexGrow={1}
+                >
+                    <TextField 
+                        sx={{
+                            width: '100%',
+                        }}
+                        type="text"
+                        id='search'
+                        name='search'
+                        value={search}
+                        onChange={handleSearch} 
+                        label="Buscar llave" 
+                        autoComplete='off'
+                        variant="standard" />
+                    <Button
+                        variant='contained'
+                    >
+                        <SearchIcon />
+                    </Button>
+                </Box>
+            </Box>
 
-</Box>
+        </Box>
 
-<StickyTableContainer>
-    <TableHeaderRow 
-        columns={columns}
-    />
-        <TableBody>
-            {
-                keys.map((key: IKey) => (
-                    <KeyTableRowItem
-                        key={key.keyId}
-                        item={key}
-                        // handleOpenModal={handleOpenModal}
-                    />
-               ))
-            }
-        </TableBody>
-</StickyTableContainer>
-<TablePagination
-    rowsPerPageOptions={[5, 10, 25]}
-    component="div"
-    count={count}
-    rowsPerPage={5}
-    page={0}
-    onPageChange={() => {}}
-/>
-</>
+        <StickyTableContainer>
+            <TableHeaderRow 
+                columns={columns}
+            />
+                <TableBody>
+                    {
+                        filterd().map((key: IKey) => (
+                            <KeyTableRowItem
+                                key={key.keyId}
+                                item={key}
+                            />
+                    ))
+                    }
+                </TableBody>
+        </StickyTableContainer>
+        <TablePagination
+            rowsPerPageOptions={[
+                5,
+                10,
+                25,
+            ]}
+            component="div"
+            count={countItems}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+        />
     </>
   )
 }

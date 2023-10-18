@@ -1,122 +1,87 @@
 import { useState, useEffect } from 'react';
 import { transformDate } from '../helpers/transformDate';
 import { IKey } from '../interfaces';
+import { useKeyContext } from '../context/KeyContext';
 
 //Tipado de paginaciones
 interface Paginations {
+    countItems: number;
+    page: number;
+    rowsPerPage: number;
     search: string;
-    currentPage: number;
-    endPage: number;
+    filterd: () => IKey[];
+    handleChangePage: (e: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => void;
+    handleChangeRowsPerPage: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    // filterd: () => any;
-    Pagination: () => JSX.Element;
 }
 
-//Tipado de llaves
-type Keys = IKey[];
+export const usePaginations = (): Paginations => {
 
-//Filtrado de llaves
-const keyFiltrado = (items: IKey[], search: String) => {
-    return items.filter((item) => 
-        item.keyName.toLowerCase().includes(search.toLowerCase())
-        || item.keyDescription.toLowerCase().includes(search.toLowerCase())
-        || transformDate(item.createdAt).toLowerCase().includes(search.toLowerCase())
-        || item.createBy.toLowerCase().includes(search.toLowerCase())
-        || transformDate(item.updatedAt).toLowerCase().includes(search.toLowerCase())
-    );
-}
-
-//Filtrado de llaves prestadas
-// const borrowedKeyFiltrado = (items, search: String) => {
-//     return items.filter((item) => (
-//         item.operator.toLowerCase().includes(search.toLowerCase())
-//         || item.key.name.toLowerCase().includes(search.toLowerCase())
-//         || transformDate(item.createdAt).toLowerCase().includes(search.toLowerCase())
-//         || transformDate(item.updatedAt).toLowerCase().includes(search.toLowerCase())
-//         || item.requestedBy.toLowerCase().includes(search.toLowerCase())
-//         || item.service.toLowerCase().includes(search.toLowerCase())
-//     ));
-// }
-
-export const usePaginations = (keys : Keys): Paginations => {
-
+    const { stateKeys } = useKeyContext();
+    const { keys, count } = stateKeys;
+    
     const [search, setSearch] = useState('');
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [endPage, setEndPage] = useState(10);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [countItems, setCountItems] = useState(count);
 
-    //Captura el valor del input
+    useEffect(() => {
+        setCountItems(count);
+    }, [count]);
+    
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
     }
 
-    //Filtra los datos
-    // const filterd = (): Keys => {
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+      ) => {
+        setPage(newPage);
+      };
 
-    //     if (search === '') return keys;
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      ) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+      };
 
+    const filterd = (): IKey[] => {
+        if (search.length === 0) return keys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+        const items = keys.filter((item) => 
+        item.keyName.toLowerCase().includes(search.toLowerCase())
+        || item.keyDescription.toLowerCase().includes(search.toLowerCase())
+        || item.createBy.toLowerCase().includes(search.toLowerCase())
+        || item.deliveredBy.toLowerCase().includes(search.toLowerCase())
+        || transformDate(item.createdAt).toLowerCase().includes(search.toLowerCase())
+        || item.createBy.toLowerCase().includes(search.toLowerCase())
+        || transformDate(item.updatedAt).toLowerCase().includes(search.toLowerCase())
+        );
 
-    //     if (keys[0].hasOwnProperty('operator')) return borrowedKeyFiltrado(keys as BorrowedKey[], search as string);
-
-    //     return keyFiltrado(keys as Key[], search)
-
-    // }
-
-
-    // useEffect(() => {
-    //     setTotalPages(Math.ceil(filterd().length / 10));
-    //     setPage(1);
-    // }, [filterd()])
-
-    //Componente que renderiza los botones
-    const Pagination = () => {
-        return (
-            <div className={`
-                gap-2 justify-center items-center transition-all duration-500
-                ${totalPages === 0 ? 'hidden' : 'flex'}
-            `}>
-                <button
-                    onClick={() => {
-                        setPage(page - 1);
-                        setCurrentPage(currentPage - 10);
-                        setEndPage(endPage - 10);
-                    }}
-                    disabled={page === 1}
-                    className='bg-indigo-600 py-2 px-4 rounded-md text-white  hover:bg-indigo-700'>
-                    <i className='fas fa-arrow-left'></i>
-                </button>
-
-                <p className='text-lg'>Pagina {page} de {totalPages}</p>
-
-
-                <button
-                    onClick={() => {
-                        setPage(page + 1);
-                        setCurrentPage(currentPage + 10);
-                        setEndPage(endPage + 10);
-                    }}
-                    disabled={page === totalPages}
-                    className='bg-indigo-600 py-2 px-4 rounded-md text-white  hover:bg-indigo-700'>
-                    <i className='fas fa-arrow-right'></i>
-                </button>
-            </div>
-        )
+        return items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     }
+
+    useEffect(() => {
+        setCountItems(filterd().length);
+    }, [search]);
+    
+
 
     return {
         //Estado
         search,
-        currentPage,
-        endPage,
+        countItems,
+        page,
 
         //Funciones
         handleSearch,
+        handleChangeRowsPerPage,
+        handleChangePage,
         // filterd,
-
-        //Componente
-        Pagination,
+        filterd,
+        rowsPerPage,
     }
 
 

@@ -14,9 +14,6 @@ export const ButtonCreateKey = () => {
               variant='contained'
               sx={{
                   gap: 0.5,
-                  position: 'absolute',
-                  top: 20,
-                  right: 0,
               }}
           >
               <AddIcon />
