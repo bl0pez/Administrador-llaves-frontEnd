@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import { Sidebar } from '../components';
-import { Container } from '@mui/material';
+import { Sidebar } from '../components/sidebar';
+import { Container, Box } from '@mui/material';
 
 const AppLayout = () => {
   return (
@@ -13,7 +13,13 @@ const AppLayout = () => {
           }}
         >
           <Sidebar />
-          <Outlet />
+
+        <Box
+          component={'main'}
+          marginTop={2}
+        >
+          <Outlet />  
+        </Box>  
         </Container>
 
     </>

@@ -8,6 +8,7 @@ const Login = lazy(() => import('@/auth/pages/Login'));
 const PrivateRouter = lazy(() => import('./PrivateRouter'));
 // const Keys = lazy(() => import('@/keys/pages/Keys'));
 const KeyListPage = lazy(() => import('@/app/pages/KeyList'));
+const BorrowedKeysPage = lazy(() => import('@/app/pages/BorrowedKeys'));
 // const KeyHistory = lazy(() => import('@/keys/pages/KeyHistory'));
 
 
@@ -36,15 +37,15 @@ export const router = createBrowserRouter([
             </Suspense>
         ),
         children: [
-            // {
-            //     path: '/',
-            //     element: 
-            //         (
-            //             <Suspense fallback={<Spinner />}>
-            //                 <Keys />
-            //             </Suspense>
-            //         )
-            // },
+            {
+                path: '/',
+                element: 
+                    (
+                        <Suspense fallback={<Spinner />}>
+                            <BorrowedKeysPage />
+                        </Suspense>
+                    )
+            },
             {
                 path: 'keyList',
                 element: 

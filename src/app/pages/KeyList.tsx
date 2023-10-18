@@ -1,11 +1,10 @@
-import { Box, Button, TableBody, TablePagination, TextField } from "@mui/material"
-import { ButtonCreateKey } from "../components/button/ButtonCreateKey"
+import { Box, Button, TableBody, TablePagination, TextField } from '@mui/material'
+import { ButtonCreateKey } from '../components/button/ButtonCreateKey'
 import SearchIcon from '@mui/icons-material/Search';
-import { KeyTableRowItem, StickyTableContainer, TableHeaderRow } from "../components/table";
-import { IKey } from "../interfaces";
-import { useKeyContext } from "../context/KeyContext";
-import { usePaginations } from "../hooks/usePaginations";
-import { useThemeContext } from "@/theme/ThemeContextProvider";
+import { KeyTableRowItem, StickyTableContainer, TableHeaderRow } from '../components/table';
+import { IKey } from '../interfaces';
+import { usePaginations } from '../hooks/usePaginations';
+import { useThemeContext } from '@/theme/ThemeContextProvider';
 
 const columns = [
     'Imagen',
@@ -26,60 +25,48 @@ const KeyList = () => {
     <>
         <Box
             display={'flex'}
-            justifyContent={'space-between'}
-            flexWrap={'wrap'}
-            marginTop={2}
-            borderRadius={2}
-            gap={2}
             alignItems={'end'}
+            width={'100%'}
+            flexWrap={'wrap'}
+            p={2}
+            gap={2}
+            sx={{
+                backgroundColor: mode === 'dark' ? '#1E1E1E' : '#FFFFFF',
+            }}
         >
             <Box
                 display={'flex'}
-                alignItems={'end'}
-                width={'100%'}
-                flexWrap={'wrap'}
-                p={2}
                 gap={2}
-                sx={{
-                    backgroundColor: mode === 'dark' ? '#1E1E1E' : '#FFFFFF',
-                }}
+                alignItems={'center'}
+                flexGrow={1}
             >
-                <Box
-                    display={'flex'}
-                    gap={2}
-                    alignItems={'center'}
-                    flexGrow={1}
-                >
-                    <ButtonCreateKey />
-                </Box>
-                <Box
-                    display={'flex'}
-                    gap={2}
-                    alignItems={'end'}
-                    flexGrow={1}
-                >
-                    <TextField 
-                        sx={{
-                            width: '100%',
-                        }}
-                        type="text"
-                        id='search'
-                        name='search'
-                        value={search}
-                        onChange={handleSearch} 
-                        label="Buscar llave" 
-                        autoComplete='off'
-                        variant="standard" />
-                    <Button
-                        variant='contained'
-                    >
-                        <SearchIcon />
-                    </Button>
-                </Box>
+                <ButtonCreateKey />
             </Box>
-
+            <Box
+                display={'flex'}
+                gap={2}
+                alignItems={'end'}
+                flexGrow={1}
+            >
+                <TextField 
+                    sx={{
+                        width: '100%',
+                    }}
+                    type="text"
+                    id='search'
+                    name='search'
+                    value={search}
+                    onChange={handleSearch} 
+                    label="Buscar llave" 
+                    autoComplete='off'
+                    variant="standard" />
+                <Button
+                    variant='contained'
+                >
+                    <SearchIcon />
+                </Button>
+            </Box>
         </Box>
-
         <StickyTableContainer>
             <TableHeaderRow 
                 columns={columns}

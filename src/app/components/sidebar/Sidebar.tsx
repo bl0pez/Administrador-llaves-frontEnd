@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import KeyIcon from '@mui/icons-material/Key';
-import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import MenuIcon from '@mui/icons-material/Menu';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 import { useAuth } from '@/auth/context';
+import { Link, useLocation } from 'react-router-dom';
+import { sidebarMenu } from './items';
 
 export const Sidebar = () => {
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { pathname } = useLocation();
   const { authstate } = useAuth();
 
   return (
@@ -49,27 +50,33 @@ export const Sidebar = () => {
             <Divider />
 
             <List>
-              <ListItemButton>
-                <ListItemIcon>
-                  <PlaylistAddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Llaves Prestadas" />
-              </ListItemButton>
-
-              <ListItemButton>
-                <ListItemIcon>
-                  <KeyIcon />
-                </ListItemIcon>
-                <ListItemText primary="Lista de Llaves" />
-              </ListItemButton>
-
-              <ListItemButton>
-                <ListItemIcon>
-                  <QueryBuilderIcon />
-                </ListItemIcon>
-                <ListItemText primary="Historial" />
-              </ListItemButton>
-
+              {
+                sidebarMenu.map((item) => (
+                  <ListItem
+                    key={item.text}
+                    sx={{ 
+                      paddingX: 0,
+                      paddingY: 0.5,
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => setIsDrawerOpen(false)}
+                      component={Link}
+                      to={item.path}
+                    >
+                      <ListItemIcon>
+                        { item.icon }
+                      </ListItemIcon>
+                      <ListItemText primary={item.text} />
+                      {
+                        (item.path === pathname) && (
+                          <ArrowRightIcon />
+                        )
+                      }
+                    </ListItemButton>
+                  </ListItem>
+                ))
+              }
             </List>
 
 
