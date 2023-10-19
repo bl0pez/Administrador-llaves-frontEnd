@@ -41,3 +41,14 @@ export interface IGetAllKeys {
   keys: IKey[];
   count: number;
 }
+
+export interface IBorrowKey {
+  keyId: string;
+  borrowerName: string;
+  borrowerServiceOrCompany: string;
+}
+
+export interface IvalidateKeyAvailability {
+  keyId: string;
+  keyName: string;
+}
