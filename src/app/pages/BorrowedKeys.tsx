@@ -1,9 +1,11 @@
-import { Box, Button, TableBody, TextField } from '@mui/material';
+import { Box, Button, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { useThemeContext } from '@/theme/ThemeContextProvider';
 import { StickyTableContainer, TableHeaderRow } from '../components/table';
 import { ButtonCreateBorrowedKey } from '../components/button/ButtonCreateBorrowedKey';
+import { useState, useEffect } from 'react';
+import { getAllBorrowedKeys } from '../services/borrowedKeys/getAllBorrowedKeys';
 
 const columns = [
   'Nombre llave',
@@ -17,6 +19,16 @@ const columns = [
 const BorrowedKeys = () => {
 
   const {mode} = useThemeContext();
+  const [borrowedKeys, setBorrowedKeys] = useState([]);
+
+  const items = async () => {
+    const response = await getAllBorrowedKeys();
+    setBorrowedKeys(response);
+  }
+    
+  useEffect(() => {
+    items();
+  }, [])
 
   return (
     <>
@@ -69,14 +81,25 @@ const BorrowedKeys = () => {
                 columns={columns}
             />
                 <TableBody>
-                    {/* {
-                        filterd().map((key: IKey) => (
-                            <KeyTableRowItem
-                                key={key.keyId}
-                                item={key}
-                            />
-                    ))
-                    } */}
+                    {
+                        borrowedKeys.map((item, index) => (
+                            <TableRow
+                                key={index}
+                                sx={{
+                                    '&:last-child td, &:last-child th': { border: 0 },
+                                }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    a
+                                </TableCell>
+                                {/* <TableCell align="right">{item.operatorDelivered}</TableCell>
+                                <TableCell align="right">{item.deliveryTime}</TableCell>
+                                <TableCell align="right">{item.operatorReceived}</TableCell>
+                                <TableCell align="right">{item.returnTime}</TableCell> */}
+                            </TableRow>
+                        )
+                        )
+                    }
                 </TableBody>
         </StickyTableContainer>
         {/* <TablePagination

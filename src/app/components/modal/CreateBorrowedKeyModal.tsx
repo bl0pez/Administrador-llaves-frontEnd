@@ -6,7 +6,8 @@ import { MainModal } from './MainModal';
 import { Autocomplete, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { ErrorAlert } from '../alert/ErrorAlert';
-import { getBorrowedKeys } from '../../services/getBorrowedKeys';
+import { getBorrowedKeys } from '../../services/borrowedKeys/getBorrowedKeys';
+import { postBorrowedKeys } from '@/app/services/borrowedKeys/postBorrowedKeys';
 
 interface Props {
     isOpen: boolean;
@@ -27,9 +28,7 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
     const [autocompleteOptions, setAutocompleteOptions] = useState<IvalidateKeyAvailability[]>([]);
 
     const getKeysIsBorrowed = async () => {
-        const keys = await getBorrowedKeys();
-        console.log(keys);
-        
+        const keys = await getBorrowedKeys();        
         setAutocompleteOptions(keys ? keys : []);
     }
 
@@ -46,12 +45,14 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
 
 
 
-    const { values, handleSubmit, errors, getFieldProps, touched, handleChange, setValues  } = useFormik<IBorrowKey>({
+    const { values, handleSubmit, errors, getFieldProps, touched, handleChange } = useFormik<IBorrowKey>({
         initialValues: initialFormValues,
         onSubmit: async (values, { resetForm }) => {      
           setIsLoading(true);
     
           try {
+            
+            const BorrowedKey = await postBorrowedKeys(values);
             
             
             
@@ -75,11 +76,13 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
                         .min(3, 'Este campo debe tener al menos 3 caracteres')
                         .max(40, 'Este campo debe tener menos de 40 caracteres')
                         .required('Este campo es requerido'),
-          deliveredBy: Yup.string()
-                        .min(3, 'La entrega debe tener al menos 3 caracteres')
-                        .max(30, 'La entrega debe tener menos de 20 caracteres')
-                        .required('Este campo es requerido'),
-          file: Yup.mixed().required('Agrega una imagen')
+            keyId: Yup.string()
+                        .uuid('Campo invalido')
+                        .required('Este campo es requerido')
+                        .test('is-key-available', 'Llave no valida', (value) => {
+                          const isKeyAvailable = keysOptions.find((key) => key.id === value);
+                          return !!isKeyAvailable;
+                        })
         })
       });
 
@@ -98,7 +101,47 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
         gap={2}
         borderRadius={2}
     >
-        <Typography variant={'h5'} textAlign={'center'}>Crear llave</Typography>
+        <Typography variant={'h5'} textAlign={'center'}>Crear prestamo de llave</Typography>
+
+        <TextField
+            label='solictado por'
+            variant='outlined'
+            {...getFieldProps('borrowerName')}
+            error={touched.borrowerName && Boolean(errors.borrowerName)}
+            helperText={touched.borrowerName && errors.borrowerName}
+        />
+
+        <TextField
+            label='servicio o empresa'
+            variant='outlined'
+            {...getFieldProps('borrowerServiceOrCompany')}
+            error={touched.borrowerServiceOrCompany && Boolean(errors.borrowerServiceOrCompany)}
+            helperText={touched.borrowerServiceOrCompany && errors.borrowerServiceOrCompany}
+        />
+
+        <Autocomplete
+            disablePortal
+            id="autocomplete-key"
+            options={keysOptions}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            sx={{ width: 300 }}
+            open={isOpenAutocomplete}
+            onOpen={() => setIsOpenAutocomplete(true)}
+            onClose={() => setIsOpenAutocomplete(false)}
+            getOptionLabel={(option) => option.label}
+
+            renderInput={(params) => <TextField {...params} label="Llave" helperText={touched.keyId && errors.keyId} value={values.keyId} />}
+            onChange={(event, value) => {
+                if(value) {
+                  handleChange({
+                    target: {
+                      name: 'keyId',
+                      value: value.id
+                    }
+                  })
+                }
+            }}
+        />
 
         <Box>
           

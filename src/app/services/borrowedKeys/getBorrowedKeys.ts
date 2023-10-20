@@ -1,5 +1,5 @@
 import { keyApi } from '@/api/keyApi';
-import { IvalidateKeyAvailability } from '../interfaces';
+import { IvalidateKeyAvailability } from '../../interfaces';
 
 export const getBorrowedKeys = async (): Promise<IvalidateKeyAvailability[]> => {
     try {

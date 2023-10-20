@@ -48,6 +48,15 @@ export interface IBorrowKey {
   borrowerServiceOrCompany: string;
 }
 
+export interface IPostBorrowedKeys {
+  borrowerName: string;
+  borrowerServiceOrCompany: string;
+  createdAt: Date;
+  key: string;
+  operador: string;
+  updatedAt: Date | null;
+}
+
 export interface IvalidateKeyAvailability {
   keyId: string;
   keyName: string;
