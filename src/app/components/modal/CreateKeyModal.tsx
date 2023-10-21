@@ -9,6 +9,7 @@ import { keyCreationService } from '@/app/services/keyCreationService';
 import { ErrorAlert } from '../alert/ErrorAlert';
 import { ICreeateKey } from '@/app/interfaces';
 import { useKeyContext } from '@/app/context/KeyContext';
+import { ButtonForm } from '@/components/button/ButtonForm';
 
 interface Props {
   isOpen: boolean;
@@ -144,32 +145,13 @@ export const CreateKeyModal: FC<Props> = ({ isOpen, handleClose }) => {
           handleImageReset={ handleImageReset }    
         />
 
-        <Button
-            variant='contained'
-            color='primary'
-            type='submit'
-            sx={{
-                gap: 1,
-                height: '40px',
-            }}
-            disabled={isLoading}
-        >
-              {
-                  isLoading
-                      ?  (<>
-                            <CircularProgress  
-                              size={20}
-                            />
-                          Creando llave
-                      
-                          </>
-                        ) 
-                      : (<>
-                          <AddIcon fontSize='small' />
-                          Crear llave
-                      </>)
-              }
-        </Button>
+        <ButtonForm
+          type='submit'
+          title='Crear'
+          isLoading={isLoading}
+          icon={AddIcon}
+        />
+
       </Box>
       <ErrorAlert 
         isError={Boolean(errorMessage)}

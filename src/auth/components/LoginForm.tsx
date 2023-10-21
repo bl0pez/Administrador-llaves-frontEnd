@@ -7,6 +7,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useAuth } from '../context/AuthContext';
 import { ILoginUser } from '../interfaces';
 import { loginService } from '../services';
+import { ButtonForm } from '@/components/button/ButtonForm';
 
 const initialState: ILoginUser = {
     email: '',
@@ -118,24 +119,12 @@ export const LoginForm = () => {
             required
         />
 
-        <Button
-            variant='contained'
-            color='primary'
+        <ButtonForm
             type='submit'
-            sx={{
-                gap: 1,
-                height: '40px',
-            }}
-            disabled={isLoading}
-            >
-                {
-                    isLoading 
-                        ?  <CircularProgress  
-                            size={20}
-                        /> : <LoginIcon  fontSize='small' />
-                }
-                    Iniciar sesión
-        </Button>
+            title='Iniciar sesión'
+            isLoading={isLoading}
+            icon={LoginIcon}
+        />
     </Box>
   )
 }

@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { ErrorAlert } from '../alert/ErrorAlert';
 import { getBorrowedKeys } from '../../services/borrowedKeys/getBorrowedKeys';
 import { postBorrowedKeys } from '@/app/services/borrowedKeys/postBorrowedKeys';
+import { ButtonForm } from '@/components/button/ButtonForm';
 
 interface Props {
     isOpen: boolean;
@@ -146,33 +147,13 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
         <Box>
           
         
-    
-        <Button
-            variant='contained'
-            color='primary'
+        <ButtonForm
             type='submit'
-            sx={{
-                gap: 1,
-                height: '40px',
-            }}
-            disabled={isLoading}
-        >
-              {
-                  isLoading
-                      ?  (<>
-                            <CircularProgress  
-                              size={20}
-                            />
-                          Creando prestamo de llave
-                      
-                          </>
-                        ) 
-                      : (<>
-                          <AddIcon fontSize='small' />
-                          Crear prestamo de llave
-                      </>)
-              }
-        </Button>
+            title='Crear'
+            isLoading={isLoading}
+            icon={AddIcon}
+        />
+        
       </Box>
       <ErrorAlert 
         isError={Boolean(errorMessage)}
