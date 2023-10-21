@@ -131,7 +131,7 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
             onClose={() => setIsOpenAutocomplete(false)}
             getOptionLabel={(option) => option.label}
 
-            renderInput={(params) => <TextField {...params} label="Llave" helperText={touched.keyId && errors.keyId} value={values.keyId} />}
+            renderInput={(params) => <TextField {...params} label="Llave" helperText={touched.keyId && errors.keyId} value={values.keyId} error={Boolean(touched.keyId) && Boolean(errors.keyId)} />}
             onChange={(event, value) => {
                 if(value) {
                   handleChange({

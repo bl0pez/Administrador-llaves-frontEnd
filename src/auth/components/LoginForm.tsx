@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import { ILoginUser } from '../interfaces';
 import { loginService } from '../services';
 import { ButtonForm } from '@/components/button/ButtonForm';
+import { InputForm } from '@/components/input/InputForm';
 
 const initialState: ILoginUser = {
     email: '',
@@ -97,26 +98,20 @@ export const LoginForm = () => {
                 Iniciar sesión
         </Typography>
 
-        <TextField
-            color='primary'
-            autoComplete='off'
-            variant='outlined'
+        <InputForm
             label='Email'
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
+            type='email'
             { ...getFieldProps('email') }
-            required
+            isError={Boolean(touched.email) && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
         />
 
-        <TextField
-            color='primary'
-            variant='outlined'
+        <InputForm
             label='Contraseña'
             type='password'
             { ...getFieldProps('password') }
-            error={touched.password && Boolean(errors.password)}
+            isError={Boolean(touched.password) && Boolean(errors.password)}
             helperText={touched.password && errors.password}
-            required
         />
 
         <ButtonForm

@@ -10,6 +10,7 @@ import { ErrorAlert } from '../alert/ErrorAlert';
 import { ICreeateKey } from '@/app/interfaces';
 import { useKeyContext } from '@/app/context/KeyContext';
 import { ButtonForm } from '@/components/button/ButtonForm';
+import { InputForm } from '@/components/input/InputForm';
 
 interface Props {
   isOpen: boolean;
@@ -95,45 +96,37 @@ export const CreateKeyModal: FC<Props> = ({ isOpen, handleClose }) => {
           flexWrap={'wrap'}
           gap={2}
         >
-          <TextField
-              color='primary'
-              autoComplete='off'
-              variant='outlined'
-              label='Nombre de la llave'
-              sx={{
-                  flexGrow: 1
-              }}
-              { ...getFieldProps('keyName') }
-              error={touched.keyName && Boolean(errors.keyName)}
-              helperText={touched.keyName && errors.keyName}
-              required
+
+          <InputForm
+            label='Nombre de la llave'
+            type='text'
+            isError={Boolean(touched.keyName) && Boolean(errors.keyName)}
+            sx={{
+              flexGrow: 1
+            }}
+            helperText={touched.keyName && errors.keyName}
+            { ...getFieldProps('keyName') }
           />
 
-          <TextField
-              color='primary'
-              autoComplete='off'
-              variant='outlined'
-              label='Entrega por'
-              sx={{
-                flexGrow: 1
-              }}
-              { ...getFieldProps('deliveredBy') }
-              error={touched.deliveredBy && Boolean(errors.deliveredBy)}
-              helperText={touched.deliveredBy && errors.deliveredBy}
-              required
+          <InputForm
+            label='Entrega por'
+            type='text'
+            isError={Boolean(touched.deliveredBy) && Boolean(errors.deliveredBy)}
+            sx={{
+              flexGrow: 1
+            }}
+            helperText={touched.deliveredBy && errors.deliveredBy}
+            { ...getFieldProps('deliveredBy') }
           />
         </Box>
 
-        <TextField
-            color='primary'
-            autoComplete='off'
-            variant='outlined'
-            label='Descripción de la llave'
-            multiline
-            { ...getFieldProps('keyDescription') }
-            error={touched.keyDescription && Boolean(errors.keyDescription)}
-            helperText={touched.keyDescription && errors.keyDescription}
-            required
+        <InputForm
+          label='Descripción'
+          type='text'
+          multiline
+          isError={Boolean(touched.keyDescription) && Boolean(errors.keyDescription)}
+          helperText={touched.keyDescription && errors.keyDescription}
+          { ...getFieldProps('keyDescription') }
         />
 
 
