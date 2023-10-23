@@ -1,15 +1,7 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../auth/context/AuthContext";
-import AppLayout from "@/app/layouts/AppLayout";
-import { KeyProvider } from "@/app/context/KeyContext";
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../auth/context/AuthContext';
+import AppLayout from '@/app/layouts/AppLayout';
 
-{/* <KeyProvider>
-<BorrowedKeyProvider>
-  <KeyHistoryProvider>
-    <AppLayout />
-  </KeyHistoryProvider>
-</BorrowedKeyProvider>
-</KeyProvider> */}
 
 const PrivateRouter = () => {
 
@@ -17,9 +9,7 @@ const PrivateRouter = () => {
 
   return authstate?.status === 'authenticated'
     ? (
-      <KeyProvider>
         <AppLayout />
-      </KeyProvider>
     )
     : (<Navigate to="/auth/login" />)
 }

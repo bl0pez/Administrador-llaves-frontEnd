@@ -1,7 +1,7 @@
 import { useAuth } from '@/auth/context'
 import { RouterProvider } from 'react-router-dom';
 import { router } from '.';
-import { Spiner } from '@/keys/components';
+import { Spinner } from '@/components/spinner/Spinner';
 
 export const MainRouter = () => {
 
@@ -10,7 +10,7 @@ export const MainRouter = () => {
     if (authstate.status === 'checking') {
         return (
             <div className='h-screen flex items-center justify-center'>
-                <Spiner />
+                <Spinner />
             </div>
         )
     }

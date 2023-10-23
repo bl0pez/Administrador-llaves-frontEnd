@@ -3,12 +3,13 @@ import { lazy, Suspense } from 'react';
 
 import PublicRouter from './PublicRouter';
 import { Spinner } from '@/components/spinner/Spinner';
+import { KeyProvider } from '@/app/context/KeyContext';
 
 const Login = lazy(() => import('@/auth/pages/Login'));
 const PrivateRouter = lazy(() => import('./PrivateRouter'));
 // const Keys = lazy(() => import('@/keys/pages/Keys'));
-const KeyListPage = lazy(() => import('@/app/pages/KeyList'));
-const BorrowedKeysPage = lazy(() => import('@/app/pages/BorrowedKeys'));
+const KeyPage = lazy(() => import('@/app/pages/KeyPage'));
+const LoanRecordPage = lazy(() => import('@/app/pages/LoanRecordPage'));
 // const KeyHistory = lazy(() => import('@/keys/pages/KeyHistory'));
 
 
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
                 element: 
                     (
                         <Suspense fallback={<Spinner />}>
-                            <BorrowedKeysPage />
+                            <LoanRecordPage />
                         </Suspense>
                     )
             },
@@ -51,7 +52,9 @@ export const router = createBrowserRouter([
                 element: 
                     (
                         <Suspense fallback={<Spinner />}>
-                            <KeyListPage />
+                            <KeyProvider>
+                                <KeyPage />
+                            </KeyProvider>
                         </Suspense>
                     )
             },

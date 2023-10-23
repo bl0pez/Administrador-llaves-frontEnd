@@ -24,6 +24,7 @@ export const ButtonForm:FC<ButtonFormProps> = ({ icon, isLoading, title, type, .
         width: '100%',
     }}
     disabled={isLoading}
+    {...props}
     >
         {
             isLoading 

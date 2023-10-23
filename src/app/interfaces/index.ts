@@ -23,18 +23,22 @@ export interface IChildrenProps {
 }
 
 export enum EReducerTypes {
-  LOAD_KEYS = "LOAD_KEYS",
   ADD_KEY = "ADD_KEY",
-  DELETE_KEY = "DELETE_KEY",
-  UPDATE_KEY = "UPDATE_KEY",
-  SET_LOADING = "SET_LOADING",
-  SET_ERROR = "SET_ERROR",
+  CHANGE_LIMIT = "CHANGE_LIMIT",
+  CHANGE_PAGE = "CHANGE_PAGE",
+  LOAD_KEYS = "LOAD_KEYS",
+  SEARCH_KEY = "SEARCH_KEY",
+  START_LOADING = "START_LOADING",
 }
 
 export interface IKeyStateReducer {
   keys: IKey[];
   isLoading: boolean;
   count: number;
+  limit: number;
+  offset: number;
+  page: number;
+  search: string;
 }
 
 export interface IGetAllKeys {
@@ -60,4 +64,21 @@ export interface IPostBorrowedKeys {
 export interface IvalidateKeyAvailability {
   keyId: string;
   keyName: string;
+}
+
+export interface IGetLoanRecord {
+  borrowed: boolean;
+  borrowerName: string;
+  borrowerServiceOrCompany: string;
+  createdAt: Date;
+  keyName: string;
+  loanRecordId: string;
+  operator: string;
+  updatedAt: Date;
+}
+
+export interface IPagination {
+  limit?: number;
+  offset?: number;
+  search?: string;
 }

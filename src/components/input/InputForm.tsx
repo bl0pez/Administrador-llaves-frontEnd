@@ -16,7 +16,7 @@ export const InputForm:FC<InputFormProps> = ({ isError, helperText, label, type,
       color='primary'
       autoComplete='off'
       variant='outlined'
-      label='Nombre de la llave'
+      label={label}
       error={isError}
       helperText={helperText}
       { ...props }

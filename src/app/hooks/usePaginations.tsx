@@ -1,91 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { transformDate } from '../helpers/transformDate';
-import { IKey } from '../interfaces';
-import { useKeyContext } from '../context/KeyContext';
+import { string } from 'yup';
 
-//Tipado de paginaciones
-interface Paginations {
-    countItems: number;
-    page: number;
-    rowsPerPage: number;
-    search: string;
-    filterd: () => IKey[];
-    handleChangePage: (e: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => void;
-    handleChangeRowsPerPage: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+export const usePaginations = <T extends {}>(data: T[]) => {
 
-export const usePaginations = (): Paginations => {
+  const [search, setSearch] = useState<string>('');
+  const [items, setItems] = useState<T[]>([]);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [page, setPage] = useState<number>(0);
+  const [countItems, setCountItems] = useState<number>(0);
 
-    const { stateKeys } = useKeyContext();
-    const { keys } = stateKeys;
-    
-    const [search, setSearch] = useState('');
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [countItems, setCountItems] = useState(0);
-
-    console.log('countItems', countItems);
-
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number,
-      ) => {
-        setPage(newPage);
-      };
-
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-      ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-      };
-
-    const filterdItems = (): IKey[] => {
-        if (search.length === 0) return keys;
-        const items = keys.filter((item) => 
-        item.keyName.toLowerCase().includes(search.toLowerCase())
-        || item.keyDescription.toLowerCase().includes(search.toLowerCase())
-        || item.createBy.toLowerCase().includes(search.toLowerCase())
-        || item.deliveredBy.toLowerCase().includes(search.toLowerCase())
-        || transformDate(item.createdAt).toLowerCase().includes(search.toLowerCase())
-        || item.createBy.toLowerCase().includes(search.toLowerCase())
-        || transformDate(item.updatedAt).toLowerCase().includes(search.toLowerCase())
-        );
-
-        return items;
-    }
-
-    const filterd = (): IKey[] => {
-        return filterdItems().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-    }
-    
-    useEffect(() => {
-        setCountItems(filterdItems().length);
-    }, [filterdItems, keys]);
-
-
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.target.value);
+  useEffect(() => {
+    setItems(data);
+    setPage(0);
+  }, [data])
+  
+  
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
   }
+
+  const itemsFiltered = () => {
+    if (search === '') return items;
+
+    const searchLowerCase = search.toLowerCase();
+
     
 
+  }
 
-    return {
-        //Estado
-        search,
-        countItems,
-        page,
+  const ItemsSliced = () => {
+    return itemsFiltered().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  }
 
-        //Funciones
-        handleSearch,
-        handleChangeRowsPerPage,
-        handleChangePage,
-        // filterd,
-        filterd,
-        rowsPerPage,
-    }
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }
 
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  }
 
+  useEffect(() => {
+    setCountItems(itemsFiltered().length);
+  }, [items, search])
+  
 
-}
+  return {
+    handleChangeInput,
+    search,
+    rowsPerPage,
+    countItems,
+    page,
+    handleChangeRowsPerPage,
+    ItemsSliced,
+    handleChangePage,
+  }
+
+};

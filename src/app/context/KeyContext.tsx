@@ -6,80 +6,72 @@ import { findAllKeysService } from '../services/keyCreationService';
 
 export type KeyContextProps = {
     stateKeys: IKeyStateReducer;
+    loadKeys: (data: IGetAllKeys) => void;
+    handleChangePage: (newPage: number) => void;
+    handleChangeLimit: (newLimit: number) => void;
     createKey: (key: IKey) => void;
-    loadKeys: ({count, keys}: IGetAllKeys) => void;
-    onSelectKey: (key: IKey) => void;
-    deleteKey: (id: string) => void;
-    onDeselectKey: () => void;
-    updateKey: (key: IKey) => void;
-    changeStateKey: (id: string) => void;
+    handleSearch: (value: string) => void;
 }
 
 export const KeyContext = createContext({} as KeyContextProps);
 
 const INITIAL_STATE: IKeyStateReducer = {
     keys: [],
-    isLoading: false,
+    isLoading: true,
     count: 0,
+    limit: 5,
+    offset: 0,
+    page: 0,
+    search: '',
 }
 
 export const KeyProvider = ({ children }: IChildrenProps) => {
 
     const [stateKeys, dispatch] = useReducer(keyReducer, INITIAL_STATE);
-
+    const { count, limit, offset, page, search } = stateKeys;
     
-    
-    const getKeys = async() => {
-        const data = await findAllKeysService();
-        loadKeys(data);
+    const loadKeys = async(data: IGetAllKeys) => {
+        dispatch({ type: EReducerTypes.LOAD_KEYS, payload: data });
     }
-    
-    
-    useEffect(() => {
-        getKeys();
-    }, []);
 
-    const loadKeys = async({count, keys}: IGetAllKeys) => {
-        dispatch({ type: EReducerTypes.LOAD_KEYS, payload: {count, keys} });
+    const startLoading = () => {
+        dispatch({ type: EReducerTypes.START_LOADING });
+    }
+
+    const handleChangePage = (newPage: number) => {
+        dispatch({ type: EReducerTypes.CHANGE_PAGE, payload: newPage });
+    }
+
+    const handleChangeLimit = (newLimit: number) => {
+        dispatch({ type: EReducerTypes.CHANGE_LIMIT, payload: newLimit });
     }
 
     const createKey = (key: IKey) => {
         dispatch({type: EReducerTypes.ADD_KEY, payload: key });
     }
 
-    //Elimina una key
-    const deleteKey = (id: string) => {
-        dispatch({type: 'deleteKey', payload: {id} });
+    const handleSearch = (value: string) => {
+        dispatch({type: EReducerTypes.SEARCH_KEY, payload: value });
     }
 
-    //Selecciona una llave
-    const onSelectKey = (key: IKey) => {
-        dispatch({ type: 'onSetActiveKey', payload: key });
+    const findAllKeys = async () => {
+        startLoading();
+        const data = await findAllKeysService({ limit, offset, search }); 
+        loadKeys(data);
     }
 
-    //Deseclecciona una llave
-    const onDeselectKey = () => {
-        dispatch({ type: 'onSetInactiveKey' });
-    }
-
-    const updateKey = (key: IKey) => {
-        dispatch({type: 'updateKey', payload: key });
-    }
-
-    const changeStateKey = (id: string) =>  {
-        dispatch({type:'changeStatus', payload: id });
-    }
+    useEffect(() => {
+      findAllKeys();
+    }, [limit, offset, page, count, search])
 
     return (
         <KeyContext.Provider value={{
             stateKeys,
-            createKey,
-            deleteKey,
-            onSelectKey,
-            onDeselectKey,
-            updateKey,
-            changeStateKey,
             loadKeys,
+            handleChangePage,
+            handleChangeLimit,
+            createKey,
+            handleSearch,
         }}>
             {children}
         </KeyContext.Provider>

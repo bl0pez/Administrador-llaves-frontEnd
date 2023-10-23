@@ -1,5 +1,5 @@
 import { keyApi } from "@/api/keyApi";
-import { ICreeateKey, IGetAllKeys, IKey } from "../interfaces";
+import { ICreeateKey, IGetAllKeys, IKey, IPagination } from "../interfaces";
 
 export const keyCreationService = async (key: ICreeateKey): Promise<IKey> => {
   try {
@@ -15,9 +15,18 @@ export const keyCreationService = async (key: ICreeateKey): Promise<IKey> => {
   }
 };
 
-export const findAllKeysService = async (): Promise<IGetAllKeys> => {
+export const findAllKeysService = async ({
+  limit,
+  offset,
+  search,
+}: IPagination): Promise<IGetAllKeys> => {
   try {
-    const { data } = await keyApi.get<IGetAllKeys>("/keys");
+    const isSearch = search ? `&search=${search}` : "";
+
+    const { data } = await keyApi.get<IGetAllKeys>(
+      `/keys?limit=${limit}&offset=${offset}${isSearch}`
+    );
+
     return data;
   } catch (error: any) {
     throw new Error(error.response.data.message);
