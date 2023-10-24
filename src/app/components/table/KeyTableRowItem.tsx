@@ -1,5 +1,5 @@
-import { FC, useState, lazy } from 'react';
-import { Button, CardMedia, IconButton, TableCell, TableRow, Typography, styled } from '@mui/material';
+import { FC, useState } from 'react';
+import { Button, CardMedia, Chip, TableCell, TableRow, Typography, styled } from '@mui/material';
 import { IKey } from '@/app/interfaces';
 import { ImageModal } from '../modal';
 import { transformDate } from '@/app/helpers/transformDate';
@@ -30,11 +30,8 @@ interface Props {
 export const KeyTableRowItem: FC<Props> = ({ item }) => {
 
     const [openModal, setOpenModal] = useState(false);
-    const [urlImage, setUrlImage] = useState('');
-
     const handleOpenModal = (url: string) => {
         setOpenModal(true);
-        setUrlImage(url);
     }
 
   return (
@@ -62,35 +59,22 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
                 { transformDate(item.createdAt) }
             </TableCell>
             <TableCell>
-                { item.isLoaned
+                { item.isBorrowed
                     ? (
-                        <Typography
-                                fontSize={12} 
-                                color='green'
-                                whiteSpace={'nowrap'} 
-                                sx={{ fontWeight: 'light' }}
-                                border={1}
-                                borderRadius={1}
-                                padding={1}
-                                display={'inline-block'}
-                            >
-                                Disponible
-                            </Typography>
-                    ) 
+                            <Chip
+                                label="Prestada"
+                                color="warning"
+                                variant='outlined'
+                            />
+                    )
                     : (
-                            <Typography
-                            fontSize={12}
-                                whiteSpace={'nowrap'} 
-                                color='red'
-                                sx={{ fontWeight: 'light' }}
-                                border={1}
-                                borderRadius={1}
-                                padding={1}
-                                display={'inline-block'}
-                            >
-                                No disponible
-                            </Typography>
-                    ) }
+                            <Chip
+                                label="Disponible"
+                                color="success"
+                                variant='outlined'
+                            />
+                    )
+                }
             </TableCell>
             <TableCell>
                 { item.deliveredBy }

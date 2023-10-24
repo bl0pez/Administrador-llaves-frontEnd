@@ -11,7 +11,7 @@ export interface IKey {
   deletedAt: Date | null;
   deliveredBy: string;
   image: string;
-  isLoaned: boolean;
+  isBorrowed: boolean;
   keyDescription: string;
   keyId: string;
   keyName: string;

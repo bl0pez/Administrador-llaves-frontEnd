@@ -50,6 +50,7 @@ export const keyReducer = (
         ...stateKeys,
         limit: action.payload,
         isLoading: false,
+        page: 0,
       };
     }
     case EReducerTypes.ADD_KEY: {
