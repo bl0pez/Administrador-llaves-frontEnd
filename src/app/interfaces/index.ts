@@ -46,7 +46,7 @@ export interface IGetAllKeys {
   count: number;
 }
 
-export interface IBorrowKey {
+export interface ICreateBorrowdKey {
   keyId: string;
   borrowerName: string;
   borrowerServiceOrCompany: string;
@@ -66,14 +66,19 @@ export interface IvalidateKeyAvailability {
   keyName: string;
 }
 
-export interface IGetLoanRecord {
-  borrowed: boolean;
+export interface IGetKeyRecord {
+  count: number;
+  borrowedKeys: IBorrowedKey[];
+}
+
+export interface IBorrowedKey {
+  borrowedKeyId: string;
   borrowerName: string;
   borrowerServiceOrCompany: string;
-  createdAt: Date;
-  keyName: string;
-  loanRecordId: string;
+  isOpened: boolean;
   operator: string;
+  keyName: string;
+  createdAt: Date;
   updatedAt: Date;
 }
 
@@ -81,4 +86,14 @@ export interface IPagination {
   limit?: number;
   offset?: number;
   search?: string;
+}
+
+export enum EBorrowedKeyTypes {
+  START_LOADING = "START_LOADING",
+  LOAD_BORROWED_KEYS = "LOAD_BORROWED_KEYS",
+  CHANGE_PAGE = "CHANGE_PAGE",
+  CHANGE_LIMIT = "CHANGE_LIMIT",
+  ADD_BORROWED_KEY = "ADD_BORROWED_KEY",
+  SEARCH_BORROWED_KEY = "SEARCH_BORROWED_KEY",
+  CLOSE_BORROWED_KEY = "CLOSE_BORROWED_KEY",
 }

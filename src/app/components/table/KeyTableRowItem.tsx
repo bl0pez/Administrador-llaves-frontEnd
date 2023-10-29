@@ -30,7 +30,7 @@ interface Props {
 export const KeyTableRowItem: FC<Props> = ({ item }) => {
 
     const [openModal, setOpenModal] = useState(false);
-    const handleOpenModal = (url: string) => {
+    const handleOpenModal = () => {
         setOpenModal(true);
     }
 
@@ -39,7 +39,7 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
         <StyledTableRow>
             <TableCell>
                 <ImagenButton
-                    onClick={() => handleOpenModal(item.image)}
+                    onClick={() => handleOpenModal()}
                 >
                     <CardMedia
                         component="img"

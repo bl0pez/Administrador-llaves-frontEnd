@@ -21,10 +21,15 @@ export const findAllKeysService = async ({
   search,
 }: IPagination): Promise<IGetAllKeys> => {
   try {
-    const isSearch = search ? `&search=${search}` : "";
+    if (search) {
+      const { data } = await keyApi.get<IGetAllKeys>(
+        `/keys/filter?limit=${limit}&offset=${offset}&search=${search}`
+      );
+      return data;
+    }
 
     const { data } = await keyApi.get<IGetAllKeys>(
-      `/keys?limit=${limit}&offset=${offset}${isSearch}`
+      `/keys?limit=${limit}&offset=${offset}`
     );
 
     return data;

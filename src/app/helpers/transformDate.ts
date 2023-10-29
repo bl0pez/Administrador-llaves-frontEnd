@@ -11,5 +11,6 @@ export const transformDate = (fecha: Date): string => {
   const hora = ("0" + date.getHours()).slice(-2);
   const minutos = ("0" + date.getMinutes()).slice(-2);
 
-  return `📅 ${dia}-${mes}-${año} ⏰ ${hora}:${minutos}`;
+  return `📅 ${dia}-${mes}-${año}      
+          ⏰ ${hora}:${minutos}`;
 };

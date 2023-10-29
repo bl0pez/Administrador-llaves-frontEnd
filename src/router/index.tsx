@@ -9,7 +9,7 @@ const Login = lazy(() => import('@/auth/pages/Login'));
 const PrivateRouter = lazy(() => import('./PrivateRouter'));
 // const Keys = lazy(() => import('@/keys/pages/Keys'));
 const KeyPage = lazy(() => import('@/app/pages/KeyPage'));
-const LoanRecordPage = lazy(() => import('@/app/pages/LoanRecordPage'));
+const BorrowedKeyPage = lazy(() => import('@/app/pages/BorrowrdKeyPage'));
 // const KeyHistory = lazy(() => import('@/keys/pages/KeyHistory'));
 
 
@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
                 element: 
                     (
                         <Suspense fallback={<Spinner />}>
-                            <LoanRecordPage />
+                            <BorrowedKeyPage />
                         </Suspense>
                     )
             },

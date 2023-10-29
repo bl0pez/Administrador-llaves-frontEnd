@@ -1,62 +1,58 @@
-import { FC, useEffect, useState } from 'react';
-import { IBorrowKey, IKey, IvalidateKeyAvailability } from '@/app/interfaces';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { ICreateBorrowdKey, IvalidateKeyAvailability } from '@/app/interfaces';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { MainModal } from './MainModal';
-import { Autocomplete, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, CircularProgress, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { ErrorAlert } from '../alert/ErrorAlert';
 import { getBorrowedKeys } from '../../services/borrowedKeys/getBorrowedKeys';
-import { postBorrowedKeys } from '@/app/services/borrowedKeys/postBorrowedKeys';
 import { ButtonForm } from '@/components/button/ButtonForm';
+import { useBorrowedKeyContext } from '@/app/context/BorrowedKeyContext';
+import { createBorrowedKeyService } from '@/app/services/borrowedKeys/createBorrowedKeyService';
 
 interface Props {
     isOpen: boolean;
     handleClose: () => void;
 }
 
-const initialFormValues: IBorrowKey = {
+const initialFormValues: ICreateBorrowdKey = {
     borrowerName: '',
     borrowerServiceOrCompany: '',
     keyId: '',
 }
 
 export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
+
+    const { createBorrowedKey } = useBorrowedKeyContext();
+
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
-    const [isOpenAutocomplete, setIsOpenAutocomplete] = useState<boolean>(false);
-    const [autocompleteOptions, setAutocompleteOptions] = useState<IvalidateKeyAvailability[]>([]);
+    const [keyOptions, setKeyOptions] = useState<IvalidateKeyAvailability[]>([]);
+    const [keyLoading, setKeyLoading] = useState<boolean>(false);
+    
+    const isOpenAutocompleteHandler = async() => {
+      
+      setKeyLoading(true);
+      const keys = await getBorrowedKeys();
+      setKeyOptions(keys);
+      setKeyLoading(false);
 
-    const getKeysIsBorrowed = async () => {
-        const keys = await getBorrowedKeys();        
-        setAutocompleteOptions(keys ? keys : []);
     }
 
-    useEffect(() => {
-        getKeysIsBorrowed();
-    }, [isOpenAutocomplete])
-
-    const keysOptions = autocompleteOptions.map((key) => ({
-        id: key.keyId,
-        label: key.keyName,
-    }))
 
 
 
-
-
-    const { values, handleSubmit, errors, getFieldProps, touched, handleChange } = useFormik<IBorrowKey>({
+    const { handleSubmit, errors, getFieldProps, touched, handleChange } = useFormik<ICreateBorrowdKey>({
         initialValues: initialFormValues,
         onSubmit: async (values, { resetForm }) => {      
           setIsLoading(true);
     
           try {
             
-            const BorrowedKey = await postBorrowedKeys(values);
-            
-            
-            
+            const BorrowedKey = await createBorrowedKeyService(values);
+            createBorrowedKey(BorrowedKey);
     
             resetForm();
             handleClose();
@@ -80,12 +76,14 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
             keyId: Yup.string()
                         .uuid('Campo invalido')
                         .required('Este campo es requerido')
-                        .test('is-key-available', 'Llave no valida', (value) => {
-                          const isKeyAvailable = keysOptions.find((key) => key.id === value);
+                        .test('is-key-available', 'Llave no valida', (value) => {                          
+                          const isKeyAvailable = keyOptions.find((key) => {
+                            return key.keyId === value;
+                          });
                           return !!isKeyAvailable;
                         })
         })
-      });
+      });      
 
   return (
     <MainModal
@@ -121,26 +119,30 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
         />
 
         <Autocomplete
-            disablePortal
-            id="autocomplete-key"
-            options={keysOptions}
-            isOptionEqualToValue={(option, value) => option.id === value.id}
-            sx={{ width: 300 }}
-            open={isOpenAutocomplete}
-            onOpen={() => setIsOpenAutocomplete(true)}
-            onClose={() => setIsOpenAutocomplete(false)}
-            getOptionLabel={(option) => option.label}
-
-            renderInput={(params) => <TextField {...params} label="Llave" helperText={touched.keyId && errors.keyId} value={values.keyId} error={Boolean(touched.keyId) && Boolean(errors.keyId)} />}
+            id="keyId"
+            onOpen={isOpenAutocompleteHandler}
+            options={keyOptions}
+            getOptionLabel={(option) => option.keyName}
+            isOptionEqualToValue={(option, value) => option.keyName === value.keyName}
+            loading={keyLoading}
             onChange={(event, value) => {
-                if(value) {
-                  handleChange({
-                    target: {
-                      name: 'keyId',
-                      value: value.id
-                    }
-                  })
+              handleChange({
+                target: {
+                  name: 'keyId',
+                  value: value?.keyId
                 }
+              })
+            }}
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  label="Llave"
+                  variant="outlined"
+                  error={touched.keyId && Boolean(errors.keyId)}
+                  helperText={touched.keyId && errors.keyId}
+                />
+              )
             }}
         />
 

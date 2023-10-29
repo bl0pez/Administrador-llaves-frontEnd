@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { TableCell, TableHead, TableRow } from '@mui/material'
+import { TableCell, TableHead, TableRow } from '@mui/material';
+
 import { useThemeContext } from '@/theme/ThemeContextProvider';
 
 interface Props {
