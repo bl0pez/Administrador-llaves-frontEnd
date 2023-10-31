@@ -1,5 +1,10 @@
 import { keyApi } from "@/api/keyApi";
-import { ICreeateKey, IGetAllKeys, IKey, IPagination } from "../interfaces";
+import {
+  ICreeateKey,
+  IGetAllKeys,
+  IKey,
+  IPagination,
+} from "../borrowedKey/interfaces";
 
 export const keyCreationService = async (key: ICreeateKey): Promise<IKey> => {
   try {

@@ -1,7 +1,8 @@
-import { useAuth } from '@/auth/context'
 import { RouterProvider } from 'react-router-dom';
+
+import { useAuth } from '@/auth/context'
+import { Spinner } from '@/common/components/ui';
 import { router } from '.';
-import { Spinner } from '@/components/spinner/Spinner';
 
 export const MainRouter = () => {
 

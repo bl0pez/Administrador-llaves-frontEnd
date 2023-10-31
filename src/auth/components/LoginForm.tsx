@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { Box, Typography, TextField, Button, CircularProgress, Alert, Snackbar, SlideProps, Slide} from '@mui/material';
+import { Box, Typography, Alert, Snackbar, SlideProps, Slide} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import { useAuth } from '../context/AuthContext';
 import { ILoginUser } from '../interfaces';
 import { loginService } from '../services';
-import { ButtonForm } from '@/components/button/ButtonForm';
-import { InputForm } from '@/components/input/InputForm';
+
+import { ButtonForm } from '@/common/components/button';
+import { InputForm } from '@/common/components/input';
 
 const initialState: ILoginUser = {
     email: '',

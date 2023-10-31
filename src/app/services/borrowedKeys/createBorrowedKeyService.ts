@@ -1,5 +1,5 @@
 import { keyApi } from "@/api/keyApi";
-import { IBorrowedKey, ICreateBorrowdKey } from "@/app/interfaces";
+import { IBorrowedKey, ICreateBorrowdKey } from "@/app/borrowedKey/interfaces";
 
 export const createBorrowedKeyService = async (
   keys: ICreateBorrowdKey

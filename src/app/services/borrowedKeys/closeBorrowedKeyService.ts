@@ -1,5 +1,5 @@
 import { keyApi } from "@/api/keyApi";
-import { IBorrowedKey } from "@/app/interfaces";
+import { IBorrowedKey } from "@/app/borrowedKey/interfaces";
 
 export const closeBorrowedKeyService = async (borrowedKeyId: string) => {
   try {

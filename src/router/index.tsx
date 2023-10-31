@@ -2,15 +2,13 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
 import PublicRouter from './PublicRouter';
-import { Spinner } from '@/components/spinner/Spinner';
-import { KeyProvider } from '@/app/context/KeyContext';
+import { Spinner } from '@/common/components/ui';
 
 const Login = lazy(() => import('@/auth/pages/Login'));
 const PrivateRouter = lazy(() => import('./PrivateRouter'));
-// const Keys = lazy(() => import('@/keys/pages/Keys'));
-const KeyPage = lazy(() => import('@/app/pages/KeyPage'));
-const BorrowedKeyPage = lazy(() => import('@/app/pages/BorrowrdKeyPage'));
-// const KeyHistory = lazy(() => import('@/keys/pages/KeyHistory'));
+const KeyPage = lazy(() => import('@/key/pages/KeyPage'));
+const BorrowedKeyPage = lazy(() => import('@/borrowedKey/pages/BorrowrdKeyPage'));
+const KeyHistoryPage = lazy(() => import('@/keyHistory/page/KeyHistoryPage'));
 
 
 export const router = createBrowserRouter([
@@ -43,7 +41,7 @@ export const router = createBrowserRouter([
                 element: 
                     (
                         <Suspense fallback={<Spinner />}>
-                            <BorrowedKeyPage />
+                                <BorrowedKeyPage />
                         </Suspense>
                     )
             },
@@ -52,21 +50,19 @@ export const router = createBrowserRouter([
                 element: 
                     (
                         <Suspense fallback={<Spinner />}>
-                            <KeyProvider>
                                 <KeyPage />
-                            </KeyProvider>
                         </Suspense>
                     )
             },
-            // {
-            //     path: 'history',
-            //     element: 
-            //         (
-            //             <Suspense fallback={<Spinner />}>
-            //                 <KeyHistory />
-            //             </Suspense>
-            //         )
-            // },
+            {
+                path: 'history',
+                element: 
+                    (
+                        <Suspense fallback={<Spinner />}>
+                            <KeyHistoryPage />
+                        </Suspense>
+                    )
+            },
              {
                 path: '*',
                 element: <Navigate to="/" />
