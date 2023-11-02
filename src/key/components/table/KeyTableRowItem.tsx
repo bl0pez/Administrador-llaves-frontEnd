@@ -44,7 +44,7 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
                     <CardMedia
                         component="img"
                         height="40px"
-                        image={ item.image }
+                        image={`${import.meta.env.VITE_URL_FRONTEND}${item.image}`}
                         alt={ item.keyName }
                     />
                 </ImagenButton>
@@ -84,7 +84,7 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
             </TableCell>  
         </StyledTableRow>
         <ImageModal 
-        url={item.image}
+        url={`${import.meta.env.VITE_URL_FRONTEND}${item.image}`}
         isOpen={openModal}
         handleClose={() => setOpenModal(false)}
         />

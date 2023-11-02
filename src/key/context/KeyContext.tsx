@@ -21,7 +21,7 @@ const INITIAL_STATE: KeyState = {
 export const KeyProvider = ({ children }: ChildrenProps) => {
 
     const [stateKeys, dispatch] = useReducer(keyReducer, INITIAL_STATE);
-    const { limit, offset, search, page } = stateKeys;
+    const { limit, offset, search, page, itemCount } = stateKeys;
     
     const loadKeys = async(data: GetKeys) => {
         dispatch({ type: KeyTypes.LOAD_KEYS, payload: data });
@@ -50,7 +50,7 @@ export const KeyProvider = ({ children }: ChildrenProps) => {
 
     useEffect(() => {
       findAllKeys();
-    }, [search, page, limit])
+    }, [search, page, limit, itemCount])
 
     return (
         <KeyContext.Provider value={{
