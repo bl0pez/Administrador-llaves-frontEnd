@@ -18,7 +18,7 @@ export const Sidebar = () => {
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { pathname } = useLocation();
-  const { authstate } = useAuth();
+  const { authstate, handleLogout } = useAuth();
 
   return (
     <>
@@ -118,6 +118,7 @@ export const Sidebar = () => {
                   />
                 </ListItemButton>
                 <ListItemButton
+                  onClick={() => handleLogout()}
                   color='error'
                 >
                   <ListItemIcon
