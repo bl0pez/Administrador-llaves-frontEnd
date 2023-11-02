@@ -11,7 +11,7 @@ import { MainModal } from '@/common/components/modal';
 import { InputForm } from '@/common/components/input';
 import { ButtonForm } from '@/common/components/button';
 import { ErrorAlert } from '@/common/components/alert';
-import { keyCreationService } from '@/app/services/keyCreationService';
+import { addKeyService } from '@/key/services/key.service';
 
 interface Props {
   isOpen: boolean;
@@ -37,7 +37,7 @@ export const CreateKeyModal: FC<Props> = ({ isOpen, handleClose }) => {
 
       try {
         
-        const newKey = await keyCreationService(values);
+        const newKey = await addKeyService(values);
 
         createKey(newKey);
         

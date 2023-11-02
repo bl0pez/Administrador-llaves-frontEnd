@@ -4,7 +4,7 @@ import { Box, TextField } from '@mui/material'
 import { useThemeContext } from '@/theme/ThemeContextProvider';
 
 type Props = {
-    children: JSX.Element | JSX.Element[];
+    children?: JSX.Element | JSX.Element[];
     label: string;
     handleSearch: (search: string) => void;
 }

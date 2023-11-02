@@ -5,8 +5,7 @@ import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { useBorrowedKeyContext } from '@/borrowedKey/context/BorrowedKeyContext';
-import { createBorrowedKeyService } from '@/app/services/borrowedKeys/createBorrowedKeyService';
-import { getKeysAvailableService } from '@/borrowedKey/services/borrowdKey.service';
+import { addBorrowedKeyService, getKeysAvailableService } from '@/borrowedKey/services/borrowdKey.service';
 import { CreateBorrowedKey, keyAvailable } from '../../interfaces';
 import { MainModal } from '@/common/components/modal';
 import { ButtonForm } from '@/common/components/button';
@@ -52,7 +51,7 @@ export const CreateBorrowedKeyModal:FC<Props> = ({ handleClose, isOpen }) => {
     
           try {
             
-            const BorrowedKey = await createBorrowedKeyService(values);
+            const BorrowedKey = await addBorrowedKeyService(values);
             createBorrowedKey(BorrowedKey);
     
             resetForm();

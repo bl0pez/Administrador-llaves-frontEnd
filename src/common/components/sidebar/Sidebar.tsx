@@ -3,12 +3,18 @@ import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemI
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { useAuth } from '@/auth/context';
 import { Link, useLocation } from 'react-router-dom';
 import { sidebarMenu } from './items';
+import { useThemeContext } from '@/theme/ThemeContextProvider';
 
 export const Sidebar = () => {
+
+  const { colorMode, mode, theme } =  useThemeContext();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { pathname } = useLocation();
@@ -30,7 +36,12 @@ export const Sidebar = () => {
             sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
         >
           <Box
-            sx={{ width: 250 }}
+            sx={{ 
+                width: 250,
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+             }}
           >
             <Box
               sx={{ 
@@ -49,7 +60,11 @@ export const Sidebar = () => {
             </Box>
             <Divider />
 
-            <List>
+            <List
+              sx={{
+                flex: 1
+              }}
+            >
               {
                 sidebarMenu.map((item) => (
                   <ListItem
@@ -79,7 +94,46 @@ export const Sidebar = () => {
               }
             </List>
 
-
+             <List
+                sx={{
+                  flexBasis: 'end'
+                }}
+             >
+                <ListItemButton
+                  onClick={() => colorMode.toggleColorMode()}
+                >
+                  <ListItemIcon
+                    sx={{
+                      color: 'text.secondary'
+                    }}
+                  >
+                    {
+                        mode === 'dark' 
+                          ? <Brightness7Icon /> 
+                          : <Brightness4Icon />
+                    }
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={`${theme.palette.mode} Theme `}
+                  />
+                </ListItemButton>
+                <ListItemButton
+                  color='error'
+                >
+                  <ListItemIcon
+                  >
+                    <LogoutIcon 
+                      color='error'
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Logout"
+                    sx={{
+                      color: 'error.main'
+                    }} 
+                  />
+                </ListItemButton>
+             </List>
           </Box>
         </Drawer>
     

@@ -1,5 +1,6 @@
 import { keyApi } from "@/api/keyApi";
 import { Pagination } from "@/common/interfaces";
+import { CreateKey } from "../interfaces";
 
 export const getKeysService = async (pagination: Pagination) => {
   try {
@@ -22,6 +23,20 @@ export const getKeysService = async (pagination: Pagination) => {
         signal: controller.signal,
       }
     );
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const addKeyService = async (key: CreateKey) => {
+  try {
+    const { data } = await keyApi.post("/keys/create", key, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     return data;
   } catch (error: any) {
     throw new Error(error.response.data.message);

@@ -21,34 +21,26 @@ const INITIAL_STATE: KeyState = {
 export const KeyProvider = ({ children }: ChildrenProps) => {
 
     const [stateKeys, dispatch] = useReducer(keyReducer, INITIAL_STATE);
-    const { limit, offset, search } = stateKeys;
+    const { limit, offset, search, page } = stateKeys;
     
     const loadKeys = async(data: GetKeys) => {
         dispatch({ type: KeyTypes.LOAD_KEYS, payload: data });
     }
 
-    const startLoading = () => {
-        dispatch({ type: KeyTypes.START_LOADING });
-    }
-
     const handleChangePage = (newPage: number) => {
         dispatch({ type: KeyTypes.CHANGE_PAGE, payload: newPage });
-        findAllKeys()
     }
 
     const handleChangeLimit = (newLimit: number) => {
         dispatch({ type: KeyTypes.CHANGE_LIMIT, payload: newLimit });
-        findAllKeys()
     }
 
     const createKey = (key: Key) => {
         dispatch({type: KeyTypes.ADD_KEY, payload: key });
-        findAllKeys()
     }
 
     const handleSearch = (value: string) => {
         dispatch({type: KeyTypes.SEARCH_KEY, payload: value });
-        findAllKeys()
     }
 
     const findAllKeys = async () => {
@@ -58,7 +50,7 @@ export const KeyProvider = ({ children }: ChildrenProps) => {
 
     useEffect(() => {
       findAllKeys();
-    }, [search])
+    }, [search, page, limit])
 
     return (
         <KeyContext.Provider value={{

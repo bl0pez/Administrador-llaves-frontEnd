@@ -6,8 +6,8 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 
 import { MainModal } from '@/common/components/modal';
-import { closeBorrowedKeyService } from '@/app/services/borrowedKeys';
 import { useBorrowedKeyContext } from '@/borrowedKey/context/BorrowedKeyContext';
+import { closeBorrowedKeyService } from '@/borrowedKey/services/borrowdKey.service';
 
 type Props = {
     open: boolean;
