@@ -6,6 +6,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 import { useAuth } from '@/auth/context';
 import { Link, useLocation } from 'react-router-dom';
@@ -92,6 +93,33 @@ export const Sidebar = () => {
                   </ListItem>
                 ))
               }
+              {
+                authstate.roles.includes('admin') && (
+                  <ListItem
+                    sx={{ 
+                      paddingX: 0,
+                      paddingY: 0.5,
+                    }}
+                  >
+                    <ListItemButton
+                      onClick={() => setIsDrawerOpen(false)}
+                      component={Link}
+                      to='/dashboard'
+                    >
+                      <ListItemIcon>
+                        <AdminPanelSettingsIcon />
+                      </ListItemIcon>
+                      <ListItemText primary='Dashboard' />
+                      {
+                        (pathname.includes('dashboard')) && (
+                          <ArrowRightIcon />
+                        )
+                      }
+                    </ListItemButton>
+                  </ListItem>
+                )
+              }
+
             </List>
 
              <List
