@@ -1,6 +1,7 @@
 import { useAuth } from '@/auth/context';
 import { Navigate } from 'react-router-dom';
 import { UserTable } from '../components/table/UserTable';
+import UserProvider from '../context/UserContext';
 
 const Dashboard = () => {
 
@@ -12,7 +13,9 @@ const Dashboard = () => {
 
 
   return (
-    <UserTable />
+    <UserProvider>
+      <UserTable />
+    </UserProvider>
   )
 }
 

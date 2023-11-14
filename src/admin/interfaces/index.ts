@@ -1,11 +1,11 @@
-export interface CreateUserState {
+export interface CreateUser {
   fullName: string;
   email: string;
   password: string;
   roles: string[];
 }
 
-export interface UpdateUserState {
+export interface UpdateUser {
   fullName: string;
   email: string;
   roles: string[];

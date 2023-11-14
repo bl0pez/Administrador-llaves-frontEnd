@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { MainModal } from '@/common/components/modal';
 import { useFormik } from 'formik';
-import { UpdateUserState } from '@/admin/interfaces';
 import { InputForm } from '@/common/components/input';
 import { Typography } from '@mui/material';
 import { ButtonForm } from '@/common/components/button';
@@ -9,14 +8,17 @@ import { userFormValid } from '@/admin/helpers';
 import { Form } from '@/common/components/form/Form';
 import { SelectRoles } from '../select/SelectRoles';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { UpdateUser, User } from '@/admin/interfaces';
+import { userServiceApi } from '@/admin/service/userService';
+import { useUserContext } from '@/admin/hooks';
 
 interface Props {
     isOpen: boolean;
     handleClose: () => void;
-    user: UpdateUserState;
+    user: User;
 }
 
-const initialFormValues: UpdateUserState = {
+const initialFormValues: UpdateUser = {
     fullName: '',
     email: '',
     roles: [],
@@ -27,6 +29,7 @@ export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
+    const { updateUser } = useUserContext();
 
     const { 
             values, 
@@ -38,11 +41,22 @@ export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
         } = useFormik({
             initialValues: initialFormValues,
             onSubmit: async (values) => {
+                setIsLoading(true);
+                try {
+                    
+                    const data = await userServiceApi.update(user.id, values);
+                    updateUser(data);
+                    handleClose();
 
+                } catch (error: any) {
+                    setErrorMessage(error.message);
+                } finally {
+                    setIsLoading(false);
+                }
 
-              console.log(values);
+              
             },
-            validationSchema: userFormValid,
+            validationSchema: userFormValid(user),
     })
 
     useEffect(() => {
@@ -85,10 +99,10 @@ export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
             />
 
             <ButtonForm
-            type='submit'
-            title='Editar'
-            isLoading={isLoading}
-            icon={PersonAddIcon}
+                type='submit'
+                title='Editar'
+                isLoading={isLoading}
+                icon={PersonAddIcon}
             />            
         </Form>
     </MainModal>

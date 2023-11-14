@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { MainModal } from '@/common/components/modal';
 import { useFormik } from 'formik';
-import { CreateUserState } from '@/admin/interfaces';
 import { InputForm } from '@/common/components/input';
 import { Typography } from '@mui/material';
 import { ButtonForm } from '@/common/components/button';
@@ -9,13 +8,16 @@ import { userFormValid } from '@/admin/helpers';
 import { Form } from '@/common/components/form/Form';
 import { SelectRoles } from '../select/SelectRoles';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { CreateUser } from '@/admin/interfaces';
+import { userServiceApi } from '@/admin/service/userService';
+import { useUserContext } from '@/admin/hooks';
 
 interface Props {
     isOpen: boolean;
     handleClose: () => void;
 }
 
-const initialFormValues: CreateUserState = {
+const initialFormValues: CreateUser = {
     fullName: '',
     email: '',
     password: '',
@@ -27,6 +29,8 @@ export const CreateUserModal:FC<Props> = ({isOpen, handleClose}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
+    const { saveUsers } = useUserContext();
+
     const { 
             values, 
             handleSubmit, 
@@ -37,9 +41,17 @@ export const CreateUserModal:FC<Props> = ({isOpen, handleClose}) => {
         } = useFormik({
             initialValues: initialFormValues,
             onSubmit: async (values) => {
-
-
-              console.log(values);
+                setIsLoading(true);
+                setErrorMessage('');
+                try {
+                    await userServiceApi.create(values);
+                    saveUsers();
+                } catch (error: any) {
+                    setErrorMessage(error.message);
+                } finally {
+                    setIsLoading(false);
+                    handleClose();
+                }
             },
             validationSchema: userFormValid,
     })
