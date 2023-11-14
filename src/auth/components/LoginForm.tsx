@@ -5,13 +5,13 @@ import { Box, Typography, Alert, Snackbar, SlideProps, Slide} from '@mui/materia
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import { useAuth } from '../context/AuthContext';
-import { ILoginUser } from '../interfaces';
+import { LoginUser } from '../interfaces';
 import { loginService } from '../services';
 
 import { ButtonForm } from '@/common/components/button';
 import { InputForm } from '@/common/components/input';
 
-const initialState: ILoginUser = {
+const initialState: LoginUser = {
     email: '',
     password: ''
 }
@@ -26,7 +26,7 @@ export const LoginForm = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
 
-        const { handleSubmit, errors, getFieldProps, touched } = useFormik<ILoginUser>({
+        const { handleSubmit, errors, getFieldProps, touched } = useFormik<LoginUser>({
             initialValues: initialState,
             onSubmit: async (values) => {
               

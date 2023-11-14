@@ -80,7 +80,11 @@ export const Sidebar = () => {
                       component={Link}
                       to={item.path}
                     >
-                      <ListItemIcon>
+                      <ListItemIcon
+                        sx={{
+                          color: 'text.light'
+                        }}
+                      >
                         { item.icon }
                       </ListItemIcon>
                       <ListItemText primary={item.text} />
@@ -107,7 +111,7 @@ export const Sidebar = () => {
                       to='/dashboard'
                     >
                       <ListItemIcon>
-                        <AdminPanelSettingsIcon />
+                        <AdminPanelSettingsIcon color='secondary' />
                       </ListItemIcon>
                       <ListItemText primary='Dashboard' />
                       {
@@ -132,7 +136,7 @@ export const Sidebar = () => {
                 >
                   <ListItemIcon
                     sx={{
-                      color: 'text.secondary'
+                      color: mode === 'dark' ? 'text.light' : 'text.dark'
                     }}
                   >
                     {
@@ -142,7 +146,10 @@ export const Sidebar = () => {
                     }
                   </ListItemIcon>
                   <ListItemText
-                    primary={`${theme.palette.mode} Theme `}
+                    primary={mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                    sx={{
+                      color: mode === 'dark' ? 'text.light' : 'text.dark'
+                    }}
                   />
                 </ListItemButton>
                 <ListItemButton

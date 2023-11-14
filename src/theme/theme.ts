@@ -6,13 +6,17 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       main: "#666CFF",
     },
     secondary: {
-      main: "#6D788D",
+      main: "#FFFFFF",
     },
     error: {
       main: "#FF4D49",
     },
     success: {
       main: "#1BC5BD",
+    },
+    text: {
+      light: "#FFFFFF",
+      dark: "#1E1E1E",
     },
     mode,
     ...(mode === "light"
@@ -33,7 +37,8 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: mode === "light" ? "#FFFFFF" : "#666CFF",
+          backgroundColor: "#666CFF",
+          color: "#FFFFFF",
         },
       },
     },
@@ -52,6 +57,18 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       styleOverrides: {
         root: {
           backgroundColor: mode === "light" ? "#FFFFFF" : "#1E1E1E",
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          "&:nth-of-type(odd)": {
+            backgroundColor: mode === "light" ? "#EFF1F3" : "#303030",
+          },
+          "&:last-child td, &:last-child th": {
+            border: 0,
+          },
         },
       },
     },

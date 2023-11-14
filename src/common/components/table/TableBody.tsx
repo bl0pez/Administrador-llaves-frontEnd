@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CircularProgress, TableBody as Body, TableCell } from '@mui/material';
+import { CircularProgress, TableBody as Body, TableCell, TableRow } from '@mui/material';
 
 type Props = {
   children: JSX.Element | JSX.Element[];
@@ -28,11 +28,11 @@ export const TableBody:FC<Props> = ({ children, colSpan, isLoading, itemCount, t
           itemCount === 0 
           ? 
           (
-              <tr>
+              <TableRow>
               <TableCell colSpan={7} style={{ textAlign: 'center' }}>
                 { text }
               </TableCell>
-              </tr>
+              </TableRow>
           )
           : children 
         }

@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
-import { Button, CardMedia, Chip, TableCell, TableRow, Typography, styled } from '@mui/material';
+import { Button, CardMedia, Chip, TableCell, TableRow, styled } from '@mui/material';
+
+import { ImageModal } from '../modal/ImageModal';
 import { Key } from '../../interfaces';
 import { transformDate } from '@/common/helpers';
-import { ImageModal } from '../modal/ImageModal';
 
 const ImagenButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText('#FFFFFF'),
@@ -12,16 +13,6 @@ const ImagenButton = styled(Button)(({ theme }) => ({
       backgroundColor: '#FFFFFF',
     },
     }));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-}));
-
 
 interface Props {
     item: Key;
@@ -36,7 +27,7 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
 
   return (
     <>
-        <StyledTableRow>
+        <TableRow>
             <TableCell>
                 <ImagenButton
                     onClick={() => handleOpenModal()}
@@ -82,7 +73,7 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
             <TableCell>
                 { item.createBy }
             </TableCell>  
-        </StyledTableRow>
+        </TableRow>
         <ImageModal 
         url={`${import.meta.env.VITE_URL_BACKEND_PUBLIC_URL}${item.image}`}
         isOpen={openModal}

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Button, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
+import { CreateUserModal } from '../modal/CreateUserModal';
 
 export const CreateUser = () => {
 
     const [ isOpenModal, setIsOpenModal ] = useState<boolean>(false);
-
+    const handleClose = () => setIsOpenModal(false);
   return (
     <>
     <Button
@@ -23,12 +24,12 @@ export const CreateUser = () => {
 
     {
         isOpenModal && (
-            <></>
+            <CreateUserModal 
+                isOpen={isOpenModal}
+                handleClose={handleClose}
+            />
         )
     }
-
-    
-  
   </>
   )
 }

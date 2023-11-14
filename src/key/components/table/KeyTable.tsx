@@ -76,7 +76,6 @@ export const KeyTable = () => {
             page={page}
             handleChangePage={handleChangePage}
         />
-    
     </>
   )
 }
