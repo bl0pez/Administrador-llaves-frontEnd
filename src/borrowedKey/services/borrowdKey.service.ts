@@ -51,9 +51,7 @@ export const addBorrowedKeyService = async (
   velus: CreateBorrowedKey
 ): Promise<BorrowedKey> => {
   try {
-    const { data } = await keyApi.post<BorrowedKey>("/borrowed-keys", {
-      velus,
-    });
+    const { data } = await keyApi.post<BorrowedKey>("/borrowed-keys", velus);
 
     return data;
   } catch (error: any) {

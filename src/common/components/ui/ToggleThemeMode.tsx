@@ -20,7 +20,7 @@ export const ToggleThemeMode = () => {
                 gap: 1
             }}>
       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-        Theme {theme.palette.mode}
+        { mode === 'dark' ? 'Modo claro' : 'Modo oscuro' }
       </Typography>
       <IconButton
         onClick={() => colorMode.toggleColorMode()}

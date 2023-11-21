@@ -10,6 +10,7 @@ import { loginService } from '../services';
 
 import { ButtonForm } from '@/common/components/button';
 import { InputForm } from '@/common/components/input';
+import { yupValidation } from '@/admin/helpers';
 
 const initialState: LoginUser = {
     email: '',
@@ -46,14 +47,8 @@ export const LoginForm = () => {
         
             },
             validationSchema: Yup.object({
-              email: Yup.string()
-                        .email('El email no es valido')
-                        .required('Este campo es requerido'),
-              password: 
-                Yup.string()
-                    .min(8, 'La contraseña debe tener al menos 8 caracteres')
-                    .max(20, 'La contraseña debe tener menos de 20 caracteres')
-                    .matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, 'La contraseña debe contener al menos una letra mayúscula, una minúscula y un número')
+              email: yupValidation.email(),
+              password: yupValidation.password()
             })
           });
 

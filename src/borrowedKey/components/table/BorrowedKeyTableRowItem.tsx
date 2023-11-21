@@ -3,7 +3,7 @@ import { Chip, TableCell, TableRow } from '@mui/material';
 
 import { RemoveBorrowrdKeyModal } from '../modal/RemoveBorrowrdKeyModal';
 import { BorrowedKey } from '@/borrowedKey/interfaces';
-import { transformDate } from '@/common/helpers';
+import { DateTransformed } from '@/common/components/ui/DateTransformed';
 interface Props {
     item: BorrowedKey;
 }
@@ -32,7 +32,7 @@ export const BorrowedKeyTableRowItem: FC<Props> = ({ item }) => {
                 {item.borrowerServiceOrCompany}
             </TableCell>
             <TableCell>
-                {transformDate(item.createdAt)}
+                <DateTransformed date={item.createdAt} />
             </TableCell>
             <TableCell>
                 <Chip

@@ -3,7 +3,7 @@ import { Button, CardMedia, Chip, TableCell, TableRow, styled } from '@mui/mater
 
 import { ImageModal } from '../modal/ImageModal';
 import { Key } from '../../interfaces';
-import { transformDate } from '@/common/helpers';
+import { DateTransformed } from '@/common/components/ui/DateTransformed';
 
 const ImagenButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText('#FFFFFF'),
@@ -47,7 +47,7 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
                     { item.keyDescription }
             </TableCell>
             <TableCell>
-                { transformDate(item.createdAt) }
+                <DateTransformed date={item.createdAt} />
             </TableCell>
             <TableCell>
                 { item.isBorrowed

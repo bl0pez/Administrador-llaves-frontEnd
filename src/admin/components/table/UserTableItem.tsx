@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { User } from '@/admin/interfaces';
 import { UpdateUserModal } from '../modal/UpdateUserModal';
-import { transformDate } from '@/common/helpers';
+import { DateTransformed } from '@/common/components/ui/DateTransformed';
 
 export const UserTableItem:FC<User> = (user) => {
 
@@ -34,7 +34,7 @@ export const UserTableItem:FC<User> = (user) => {
             ))}
         </TableCell> 
         <TableCell>
-            { transformDate(user.created_at) }
+            <DateTransformed date={user.created_at} />
         </TableCell>
         <TableCell>
             <IconButton

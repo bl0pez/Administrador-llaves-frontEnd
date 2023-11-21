@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { User } from "../interfaces";
 
-const yupValidation = {
+export const yupValidation = {
   fullName: () => {
     return Yup.string()
       .required("El nombre completo es requerido")

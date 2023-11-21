@@ -1,7 +1,6 @@
 import { HeaderTableContent, StickyTableContainer, TableBody, TableHeaderRow, TablePagination } from "@/common/components/table"
 import { CreateUser } from "../button/CreateUser"
 import { useEffect } from "react"
-import { userServiceApi } from "@/admin/service/userService"
 import { UserTableItem } from "./UserTableItem"
 import { useUserContext } from "@/admin/hooks"
 
@@ -9,6 +8,7 @@ const columns = [
     'Nombre',
     'Email',
     'Roles',
+    'Fecha de creación',
     'Acciones'
 ]
 
