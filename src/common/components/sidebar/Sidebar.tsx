@@ -15,7 +15,7 @@ import { useThemeContext } from '@/theme/ThemeContextProvider';
 
 export const Sidebar = () => {
 
-  const { colorMode, mode, theme } =  useThemeContext();
+  const { colorMode, mode } =  useThemeContext();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { pathname } = useLocation();
@@ -82,7 +82,7 @@ export const Sidebar = () => {
                     >
                       <ListItemIcon
                         sx={{
-                          color: 'text.light'
+                          color: 'white'
                         }}
                       >
                         { item.icon }

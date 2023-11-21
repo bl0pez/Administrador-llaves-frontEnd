@@ -58,7 +58,9 @@ export const RemoveBorrowrdKeyModal:FC<Props> = ({open, handleClose, borrowedKey
                     {
                         isLoading 
                         ? <CircularProgress size={20} /> 
-                        : <TaskAltIcon  color='action' /> 
+                        : <TaskAltIcon 
+                            sx={{color: 'white'}}
+                        /> 
                     }
                 </Button>
                 <Button

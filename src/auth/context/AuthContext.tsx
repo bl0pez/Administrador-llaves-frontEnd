@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { AuthReducer } from '../reducers';
-import { AuthState, User } from '../interfaces';
+import { AuthState } from '../interfaces';
 import { checkAuthStatusService } from '../services';
+import { User } from '@/admin/interfaces';
 
 interface AuthContextProps {
     authstate: AuthState;
