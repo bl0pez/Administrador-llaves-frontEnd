@@ -7,3 +7,9 @@ export interface Pagination {
   offset: number;
   search?: string;
 }
+
+export enum Roles {
+  ADMIN = "ADMIN",
+  OPERATOR = "OPERATOR",
+  USER = "USER",
+}

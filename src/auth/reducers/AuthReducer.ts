@@ -4,7 +4,7 @@ type User = {
   uid: string;
   name: string;
   email: string;
-  roles: string[];
+  role: string;
 };
 
 type AuthAction =
@@ -21,7 +21,7 @@ export const AuthReducer = (
       return {
         status: "checking",
         uid: "",
-        roles: [],
+        role: "",
         name: "",
         email: "",
       };
@@ -29,7 +29,7 @@ export const AuthReducer = (
     case "logout": {
       return {
         uid: "",
-        roles: [],
+        role: "",
         name: "",
         email: "",
         status: "not-authenticated",
@@ -42,7 +42,7 @@ export const AuthReducer = (
         uid: action.payload.uid,
         name: action.payload.name,
         email: action.payload.email,
-        roles: action.payload.roles,
+        role: action.payload.role,
       };
     }
     default:

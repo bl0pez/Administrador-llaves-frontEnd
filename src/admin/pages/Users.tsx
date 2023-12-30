@@ -2,12 +2,13 @@ import { useAuth } from '@/auth/context';
 import { Navigate } from 'react-router-dom';
 import { UserTable } from '../components/table/UserTable';
 import UserProvider from '../context/UserContext';
+import { Roles } from '@/common/interfaces';
 
-const Dashboard = () => {
+const UsersPage = () => {
 
     const { authstate } = useAuth();
 
-  if ( !authstate.roles.includes('admin') ) {
+  if ( authstate.role !== Roles.ADMIN ) {
     return <Navigate to='/' />
   }
 
@@ -19,4 +20,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default UsersPage;

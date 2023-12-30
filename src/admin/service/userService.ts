@@ -32,4 +32,13 @@ export const userServiceApi = {
       throw new Error(error.response.data.message);
     }
   },
+
+  delete: async (id: string) => {
+    try {
+      const { data } = await keyApi.delete(`/users/${id}`);
+      return data;
+    } catch (error: any) {
+      throw new Error(error.response.data.message);
+    }
+  },
 };

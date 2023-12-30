@@ -1,14 +1,16 @@
+import { Roles } from "@/common/interfaces";
+
 export interface CreateUser {
   fullName: string;
   email: string;
   password: string;
-  roles: string[];
+  role: string;
 }
 
 export interface UpdateUser {
   fullName: string;
   email: string;
-  roles: string[];
+  role: string;
 }
 
 export interface User {
@@ -16,7 +18,7 @@ export interface User {
   email: string;
   updated_at: Date | null;
   id: string;
-  roles: string[];
+  role: Roles;
   created_at: Date;
 }
 

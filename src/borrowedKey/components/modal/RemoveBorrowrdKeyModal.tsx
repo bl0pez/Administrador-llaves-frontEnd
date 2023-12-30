@@ -23,8 +23,8 @@ export const RemoveBorrowrdKeyModal:FC<Props> = ({open, handleClose, borrowedKey
     const handleRemoveBorrowedKey = async () => {
         try {
             setIsLoading(true);
-            await closeBorrowedKeyService(borrowedKeyId);
-            closeBorrowedKey(borrowedKeyId);
+            const borrowedKey = await closeBorrowedKeyService(borrowedKeyId);
+            closeBorrowedKey(borrowedKey.borrowedKeyId);
             handleClose();
         } catch (error: any) {
             throw new Error(error);

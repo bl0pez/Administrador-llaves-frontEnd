@@ -13,6 +13,7 @@ type UserContextType = {
     handleChangePage: (newPage: number) => void;
     handleChangeLimit: (newLimit: number) => void;
     updateUser: (user: User) => void;
+    deleteUser: (id: string) => void;
 }
 
 type UserState = {
@@ -81,6 +82,14 @@ const UserProvider:FC<ChildrenProps> = ({ children }) => {
             limit: newLimit,
         })
     }
+
+    const deleteUser = async (id: string) => {
+        const user = data.users.filter((item) => item.id !== id);
+        setData({
+            ...data,
+            users: user,
+        })
+    }
     
     return (
         <UserContext.Provider
@@ -89,7 +98,8 @@ const UserProvider:FC<ChildrenProps> = ({ children }) => {
                 saveUsers,
                 handleChangePage,
                 handleChangeLimit,
-                updateUser,            
+                updateUser,
+                deleteUser,            
             }}
         >
             {children}

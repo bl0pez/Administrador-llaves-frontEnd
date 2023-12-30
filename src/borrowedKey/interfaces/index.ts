@@ -9,6 +9,10 @@ export interface BorrowedKey {
   updatedAt: Date;
 }
 
+export interface UpdateBorrowedKey {
+  borrowedKeyId: string;
+}
+
 export enum BorrowedKeyTypes {
   START_LOADING = "START_LOADING",
   LOAD_BORROWED_KEYS = "LOAD_BORROWED_KEYS",

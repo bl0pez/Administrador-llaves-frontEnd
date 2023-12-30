@@ -23,10 +23,8 @@ export const yupValidation = {
         "La contraseña debe contener al menos una letra mayúscula, una minúscula y un número"
       );
   },
-  roles: () => {
-    return Yup.array()
-      .required("Debes seleccionar al menos un rol")
-      .min(1, "Debes seleccionar al menos un rol");
+  role: () => {
+    return Yup.string().required("Este campo es requerido");
   },
 };
 
@@ -35,7 +33,7 @@ export const userFormValid = (user: User | undefined) => {
     return Yup.object({
       fullName: yupValidation.fullName(),
       email: yupValidation.email(),
-      roles: yupValidation.roles(),
+      role: yupValidation.role(),
     });
   }
 
@@ -43,6 +41,6 @@ export const userFormValid = (user: User | undefined) => {
     fullName: yupValidation.fullName(),
     email: yupValidation.email(),
     password: yupValidation.password(),
-    roles: yupValidation.roles(),
+    role: yupValidation.role(),
   });
 };

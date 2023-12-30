@@ -5,6 +5,7 @@ import {
   CreateBorrowedKey,
   GetBorrowedKey,
   keyAvailable,
+  UpdateBorrowedKey,
 } from "../interfaces";
 
 export const getBorrowedKeysService = async (
@@ -59,9 +60,15 @@ export const addBorrowedKeyService = async (
   }
 };
 
-export const closeBorrowedKeyService = async (borrowedKeyId: string) => {
+export const closeBorrowedKeyService = async (
+  borrowedKeyId: string
+): Promise<UpdateBorrowedKey> => {
   try {
-    await keyApi.put(`/borrowed-keys/close/${borrowedKeyId}`);
+    await keyApi.patch<UpdateBorrowedKey>(
+      `/borrowed-keys/close/${borrowedKeyId}`
+    );
+
+    return { borrowedKeyId };
   } catch (error: any) {
     throw new Error(error.response.data.message);
   }

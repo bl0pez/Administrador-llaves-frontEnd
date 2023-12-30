@@ -7,11 +7,14 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import GroupIcon from '@mui/icons-material/Group';
+import { ProtectiveRoles } from '@/common/components/roles/ProtectiveRoles';
 
 import { useAuth } from '@/auth/context';
 import { Link, useLocation } from 'react-router-dom';
 import { sidebarMenu } from './items';
 import { useThemeContext } from '@/theme/ThemeContextProvider';
+import { Roles } from '@/common/interfaces';
 
 export const Sidebar = () => {
 
@@ -97,9 +100,10 @@ export const Sidebar = () => {
                   </ListItem>
                 ))
               }
-              {
-                authstate.roles.includes('admin') && (
-                  <ListItem
+              <ProtectiveRoles
+                roles={[Roles.ADMIN]}
+              >
+              <ListItem
                     sx={{ 
                       paddingX: 0,
                       paddingY: 0.5,
@@ -108,21 +112,20 @@ export const Sidebar = () => {
                     <ListItemButton
                       onClick={() => setIsDrawerOpen(false)}
                       component={Link}
-                      to='/dashboard'
+                      to='/users'
                     >
                       <ListItemIcon>
-                        <AdminPanelSettingsIcon color='secondary' />
+                        <GroupIcon color='secondary' />
                       </ListItemIcon>
-                      <ListItemText primary='Dashboard' />
+                      <ListItemText primary='Users' />
                       {
-                        (pathname.includes('dashboard')) && (
+                        (pathname.includes('users')) && (
                           <ArrowRightIcon />
                         )
                       }
                     </ListItemButton>
                   </ListItem>
-                )
-              }
+              </ProtectiveRoles>
 
             </List>
 

@@ -23,7 +23,7 @@ const INITIAL_STATE: AuthState = {
     uid: "",
     name: "",
     email: "",
-    roles: [],
+    role: "",
 }
 
 export const AuthProvider = ({ children }: Props) => {
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: Props) => {
                 uid: user.id,
                 name: user.fullName,
                 email: user.email,
-                roles: user.roles
+                role: user.role
             }});
     }
 
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: Props) => {
                 uid: user.id,
                 name: user.fullName,
                 email: user.email,
-                roles: user.roles
+                role: user.role
             }});
 
             

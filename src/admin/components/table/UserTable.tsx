@@ -7,7 +7,7 @@ import { useUserContext } from "@/admin/hooks"
 const columns = [
     'Nombre',
     'Email',
-    'Roles',
+    'Role',
     'Fecha de creación',
     'Acciones'
 ]

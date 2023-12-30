@@ -6,11 +6,12 @@ import { Typography } from '@mui/material';
 import { ButtonForm } from '@/common/components/button';
 import { userFormValid } from '@/admin/helpers';
 import { Form } from '@/common/components/form/Form';
-import { SelectRoles } from '../select/SelectRoles';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { UpdateUser, User } from '@/admin/interfaces';
 import { userServiceApi } from '@/admin/service/userService';
 import { useUserContext } from '@/admin/hooks';
+import { SelectRole } from '../select/SelectRole';
+import { ErrorAlert } from '@/common/components/alert';
 
 interface Props {
     isOpen: boolean;
@@ -21,7 +22,7 @@ interface Props {
 const initialFormValues: UpdateUser = {
     fullName: '',
     email: '',
-    roles: [],
+    role: ''
 }
 
 export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
@@ -43,11 +44,9 @@ export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
             onSubmit: async (values) => {
                 setIsLoading(true);
                 try {
-                    
                     const data = await userServiceApi.update(user.id, values);
                     updateUser(data);
                     handleClose();
-
                 } catch (error: any) {
                     setErrorMessage(error.message);
                 } finally {
@@ -62,7 +61,7 @@ export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
     useEffect(() => {
         setFieldValue('fullName', user.fullName);
         setFieldValue('email', user.email);
-        setFieldValue('roles', user.roles);
+        setFieldValue('role', user.role);
     }, [])
 
   return (
@@ -73,6 +72,11 @@ export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
         <Form
             handleSubmit={handleSubmit}
         >
+            <ErrorAlert
+                isError={Boolean(errorMessage)}
+                setIsError={() => setErrorMessage('')}
+                message={errorMessage}
+            />
             <Typography variant={'h5'} textAlign={'center'}>
                 Editar Usuario
             </Typography>
@@ -93,8 +97,8 @@ export const UpdateUserModal:FC<Props> = ({isOpen, handleClose, user}) => {
                 {...getFieldProps('email')}
             />
 
-            <SelectRoles 
-                roles={values.roles}
+            <SelectRole 
+                role={values.role}
                 setFieldValue={setFieldValue}
             />
 

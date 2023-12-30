@@ -11,6 +11,7 @@ import { loginService } from '../services';
 import { ButtonForm } from '@/common/components/button';
 import { InputForm } from '@/common/components/input';
 import { yupValidation } from '@/admin/helpers';
+import { ErrorAlert } from '@/common/components/alert';
 
 const initialState: LoginUser = {
     email: '',
@@ -67,19 +68,12 @@ export const LoginForm = () => {
         width={'400px'}
     >
 
-        <Snackbar
-            sx={{
-                position: 'absolute',
-            }}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} 
-            open={isError}
-            TransitionComponent={SlideTransition}
-            autoHideDuration={4000} 
-            onClose={() => setIsError(false)}>
-            <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
-                Email o contraseña incorrectos
-            </Alert>
-        </Snackbar>
+        <ErrorAlert
+            isError={isError}
+            setIsError={setIsError}
+            message='Credenciales incorrectas'
+        />
+
 
         <Typography 
             variant='h1' 

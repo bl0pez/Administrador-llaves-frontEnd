@@ -9,7 +9,7 @@ const PrivateRouter = lazy(() => import('./PrivateRouter'));
 const KeyPage = lazy(() => import('@/key/pages/KeyPage'));
 const BorrowedKeyPage = lazy(() => import('@/borrowedKey/pages/BorrowrdKeyPage'));
 const KeyHistoryPage = lazy(() => import('@/keyHistory/page/KeyHistoryPage'));
-const DashboardPage = lazy(() => import('@/admin/pages/Dashboard'));
+const UserPage = lazy(() => import('@/admin/pages/Users'));
 
 
 export const router = createBrowserRouter([
@@ -65,11 +65,11 @@ export const router = createBrowserRouter([
                     )
             },
             {
-                path: 'dashboard',
+                path: 'users',
                 element: 
                     (
                         <Suspense fallback={<Spinner />}>
-                            <DashboardPage />
+                            <UserPage />
                         </Suspense>
                     )
             },

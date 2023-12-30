@@ -3,7 +3,7 @@ import { User } from "@/admin/interfaces";
 export interface AuthState {
   status: "checking" | "authenticated" | "not-authenticated";
   uid: string;
-  roles: string[];
+  role: string;
   name: string;
   email: string;
 }
