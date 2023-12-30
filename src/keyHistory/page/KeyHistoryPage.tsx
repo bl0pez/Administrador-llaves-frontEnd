@@ -5,11 +5,12 @@ import { BorrowedKey, GetBorrowedKey } from '@/borrowedKey/interfaces'
 import { keyHistoryService } from "../services/keyHistory.service";
 
 const columns = [
-  'Nombre llave',
-  'Operador',
-  'Solicitado por',
-  'Servicio o Empresa',
+  'Llave',
+  'Operador que Entrega',
+  'Solicitado Por',
+  'Servicio/Empresa Asociada',
   'Fecha de Préstamo',
+  'Operador que Recibe',
   'Fecha de Devolución',
 ]
 

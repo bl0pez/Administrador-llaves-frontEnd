@@ -42,6 +42,8 @@ export const MainModal: FC<Props> = ({ children, handleClose, isOpen}) => {
         <Fade in={isOpen}>
             <Box 
                 borderRadius={2}
+                boxShadow={4}
+                border={1}
                 sx={style}
             >
             {children}

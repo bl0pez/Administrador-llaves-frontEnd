@@ -4,6 +4,7 @@ import { MainModal } from '@/common/components/modal';
 
 interface Props {
     url: string;
+    alt: string;
     isOpen: boolean;
     handleClose: () => void;
 }
@@ -11,6 +12,7 @@ interface Props {
 
 export const ImageModal:FC<Props> = ({
     url,
+    alt,
     isOpen,
     handleClose
 }) => {
@@ -26,13 +28,13 @@ export const ImageModal:FC<Props> = ({
         >
                 <CardMedia
                     component="img"
-                 
                     sx={{
                         objectFit: 'contain',
                         width: '100%',
+                        backgroundColor: '#424242',
                     }}
                     image={url}
-                    alt="green iguana"
+                    alt={alt}
                 />
         </Card>
     </MainModal>

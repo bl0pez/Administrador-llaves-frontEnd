@@ -59,7 +59,7 @@ export const CreateKeyModal: FC<Props> = ({ isOpen, handleClose }) => {
                     .required('Este campo es requerido'),
       keyDescription: Yup.string()
                     .min(3, 'La descripción debe tener al menos 3 caracteres')
-                    .max(50, 'La descripción debe tener menos de 20 caracteres')
+                    .max(100, 'La descripción debe tener menos de 100 caracteres')
                     .required('Este campo es requerido'),
       deliveredBy: Yup.string()
                     .min(3, 'La entrega debe tener al menos 3 caracteres')

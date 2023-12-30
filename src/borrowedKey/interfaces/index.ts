@@ -7,6 +7,7 @@ export interface BorrowedKey {
   keyName: string;
   createdAt: Date;
   updatedAt: Date;
+  receiverName: string;
 }
 
 export interface UpdateBorrowedKey {

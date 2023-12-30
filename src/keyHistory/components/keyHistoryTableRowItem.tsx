@@ -27,6 +27,9 @@ export const KeyHistoryTableRowItem: FC<Props> = ({ item }) => {
                 <DateTransformed date={item.createdAt} />
             </TableCell>
             <TableCell>
+                {item.receiverName}
+            </TableCell>
+            <TableCell>
                 <DateTransformed date={item.updatedAt} />
             </TableCell>
         </TableRow>

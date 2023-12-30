@@ -76,6 +76,7 @@ export const KeyTableRowItem: FC<Props> = ({ item }) => {
         </TableRow>
         <ImageModal 
         url={`${import.meta.env.VITE_URL_BACKEND_PUBLIC_URL}${item.image}`}
+        alt={ item.keyName }
         isOpen={openModal}
         handleClose={() => setOpenModal(false)}
         />
