@@ -1,6 +1,6 @@
+import { useEffect } from "react"
 import { HeaderTableContent, StickyTableContainer, TableBody, TableHeaderRow, TablePagination } from "@/common/components/table"
 import { CreateUser } from "../button/CreateUser"
-import { useEffect } from "react"
 import { UserTableItem } from "./UserTableItem"
 import { useUserContext } from "@/admin/hooks"
 
@@ -14,17 +14,17 @@ const columns = [
 
 export const UserTable = () => {
 
-    const { users, count, saveUsers, limit, offset, isLoading, handleChangePage, handleChangeLimit } = useUserContext();
+    const { users, count, getUsers, limit, offset, isLoading, handleChangePage, handleChangeLimit } = useUserContext();
 
     useEffect(() => {
-        saveUsers();
+        getUsers();
     }, [offset, limit])
     
   return (
     <>
         <HeaderTableContent 
             label="Buscar usuario"
-            handleSearch={() => {}}
+            handleSearch={getUsers}
         >
             <CreateUser />
         </HeaderTableContent>

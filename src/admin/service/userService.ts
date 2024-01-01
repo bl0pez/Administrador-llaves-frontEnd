@@ -3,7 +3,7 @@ import { Pagination } from "@/common/interfaces";
 import { CreateUser, GetUsers, UpdateUser, User } from "../interfaces";
 
 export const userServiceApi = {
-  gets: async (pagination: Pagination): Promise<GetUsers> => {
+  getAll: async (pagination: Pagination): Promise<GetUsers> => {
     try {
       const { data } = await keyApi.get<GetUsers>(
         `/users?limit=${pagination.limit}&offset=${pagination.offset}`
@@ -14,7 +14,16 @@ export const userServiceApi = {
       throw new Error(error.response.data.message);
     }
   },
-
+  search: async (paginationDto: Pagination): Promise<GetUsers> => {
+    try {
+      const { data } = await keyApi.get<GetUsers>(
+        `/users/search?limit=${paginationDto.limit}&offset=${paginationDto.offset}&search=${paginationDto.search}`
+      );
+      return data;
+    } catch (error: any) {
+      throw new Error(error.response.data.message);
+    }
+  },
   create: async (createUser: CreateUser): Promise<User> => {
     try {
       const { data } = await keyApi.post<User>("/users", createUser);

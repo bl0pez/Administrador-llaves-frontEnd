@@ -1,5 +1,5 @@
 import { FC, createContext, useState } from 'react';
-import { GetUsers, User } from '../interfaces';
+import { User } from '../interfaces';
 import { ChildrenProps, Pagination } from '@/common/interfaces';
 import { userServiceApi } from '../service/userService';
 
@@ -9,7 +9,7 @@ type UserContextType = {
     count: number;
     limit: number;
     offset: number;
-    saveUsers: () => void;
+    getUsers: () => void;
     handleChangePage: (newPage: number) => void;
     handleChangeLimit: (newLimit: number) => void;
     updateUser: (user: User) => void;
@@ -36,7 +36,7 @@ const UserProvider:FC<ChildrenProps> = ({ children }) => {
         offset: 0,
     });
 
-    const saveUsers = async () => {
+    const getUsers = async (search?: string) => {
 
         setData({
             ...data,
@@ -44,7 +44,19 @@ const UserProvider:FC<ChildrenProps> = ({ children }) => {
         })
 
         try {
-            const { users, count } = await userServiceApi.gets({ limit: data.limit, offset: data.offset });            
+            if ( search ) {
+                const { users, count } = await userServiceApi.search({ limit: data.limit, offset: data.offset, search });            
+                setData({
+                    ...data,
+                    users: users,
+                    count: count,
+                    limit: data.limit,
+                    offset: data.offset,
+                })
+                return;
+            }
+
+            const { users, count } = await userServiceApi.getAll({ limit: data.limit, offset: data.offset });            
             setData({
                 ...data,
                 users: users,
@@ -61,6 +73,7 @@ const UserProvider:FC<ChildrenProps> = ({ children }) => {
             }))
         }
     }
+
 
     const updateUser = (user: User) => {
         setData((prevState) => ({
@@ -95,11 +108,11 @@ const UserProvider:FC<ChildrenProps> = ({ children }) => {
         <UserContext.Provider
             value={{
                 ...data,
-                saveUsers,
-                handleChangePage,
+                deleteUser,
                 handleChangeLimit,
+                handleChangePage,
+                getUsers,         
                 updateUser,
-                deleteUser,            
             }}
         >
             {children}
