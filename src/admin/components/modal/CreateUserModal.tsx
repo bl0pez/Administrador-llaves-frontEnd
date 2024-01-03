@@ -29,7 +29,7 @@ export const CreateUserModal: FC<Props> = ({ isOpen, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const { saveUsers } = useUserContext();
+  const { getUsers } = useUserContext();
 
   const {
     values,
@@ -46,7 +46,7 @@ export const CreateUserModal: FC<Props> = ({ isOpen, handleClose }) => {
       try {
         await userServiceApi.create(values);
         handleClose();
-        saveUsers();
+        getUsers();
       } catch (error: any) {
         setErrorMessage(error.message);
       } finally {
