@@ -1,13 +1,18 @@
-# Administrador de llaves
+# Administrador de llaves frontend
 
 ## Descripción
 
-Este proyecto es un administrador de llaves, el cual permite a los usuarios iniciar sesión, crear llaves, editar llaves, eliminar llaves y llevar un control de las llaves que se han prestado y devuelto.
+Este proyecto es un administrador de llaves, el cual cuenta con las siguientes características:
 
-URL del proyecto: https://administrador-llaves-front-end.vercel.app/
-
-Usuario de prueba: prueba@gmail.com  
-contraseña: 123456
+- ✅ Sistema de autenticación
+- ✅ Creación de usuarios
+- ✅ Edición de usuarios
+- ✅ Eliminación de usuarios
+- ✅ Sistema de roles
+- ✅ Creación de llaves
+- ✅ Edición de llaves
+- ✅ Creación de prestamos de llaves
+- ✅ Historial de prestamos de llaves
 
 ## Instalación
 
@@ -16,8 +21,3 @@ contraseña: 123456
 3. Renombrar el archivo `.env.example` a `.env`
 4. Llenar las variables de entorno en el archivo `.env`
 5. Ejecutar el comando `npm run dev` para correr el proyecto en modo desarrollo
-
-## Compledo
-
-- ✅ Iniciar sesión
-- ✅ Crear llaves
