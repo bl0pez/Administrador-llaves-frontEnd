@@ -9,7 +9,7 @@ type Props = {
   children?: JSX.Element | JSX.Element[];
   label: string;
   handleSearch: (search: string) => void;
-  roles: Roles[];
+  roles?: Roles[];
 };
 
 export const HeaderTableContent: FC<Props> = ({
@@ -32,11 +32,13 @@ export const HeaderTableContent: FC<Props> = ({
         backgroundColor: mode === "dark" ? "#1E1E1E" : "#FFFFFF",
       }}
     >
-      <ProtectiveRoles roles={[...roles]}>
-        <Box display={"flex"} gap={2} alignItems={"center"} flexGrow={1}>
-          {children}
-        </Box>
-      </ProtectiveRoles>
+      <Box display={"flex"} gap={2} alignItems={"center"} flexGrow={1}>
+        {roles ? (
+          <ProtectiveRoles roles={[...roles]}>{children}</ProtectiveRoles>
+        ) : (
+          children
+        )}
+      </Box>
       <Box display={"flex"} gap={2} alignItems={"end"} flexGrow={1}>
         <TextField
           sx={{
