@@ -3,6 +3,7 @@ import { ButtonCreateBorrowedKey } from "../button/ButtonCreateBorrowedKey";
 import { StickyTableContainer, TableBody, TableHeaderRow, TablePagination, HeaderTableContent } from "@/common/components/table";
 import { BorrowedKey } from "../../interfaces";
 import { BorrowedKeyTableRowItem } from "./BorrowedKeyTableRowItem";
+import { Roles } from "@/common/interfaces";
 
 const columns = [
   'Nombre llave',
@@ -31,6 +32,7 @@ export const BorrowedKeyTable = () => {
     <>
         {/* Buscador y boton crear llave */}
         <HeaderTableContent
+            roles={[Roles.ADMIN, Roles.OPERATOR]}
             label={'Buscar llave prestada'}
             handleSearch={searchBorrowedKey}
         >

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { KeyHistoryTableRowItem } from "../components/keyHistoryTableRowItem";
 import { BorrowedKey, GetBorrowedKey } from '@/borrowedKey/interfaces'
 import { keyHistoryService } from "../services/keyHistory.service";
+import { Roles } from "@/common/interfaces";
 
 const columns = [
   'Llave',
@@ -62,6 +63,7 @@ const KeyHistoryPage = () => {
         <HeaderTableContent
           label={'Buscar llave prestada'}
           handleSearch={handleSearch}
+          roles={[Roles.ADMIN, Roles.OPERATOR]}
         />
 
         <StickyTableContainer>

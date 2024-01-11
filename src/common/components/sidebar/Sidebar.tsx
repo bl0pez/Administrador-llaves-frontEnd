@@ -29,7 +29,6 @@ export const Sidebar = () => {
             anchor="left"
             open={isDrawerOpen}
             onClose={() => setIsDrawerOpen(false)}
-            sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
         >
           <Box
             sx={{ 

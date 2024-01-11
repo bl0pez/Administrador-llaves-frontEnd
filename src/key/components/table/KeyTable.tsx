@@ -9,6 +9,7 @@ import {
   TableHeaderRow, 
   TablePagination
 } from "@/common/components/table";
+import { Roles } from "@/common/interfaces";
 
 const columns = [
     'Imagen',
@@ -40,6 +41,7 @@ export const KeyTable = () => {
         <HeaderTableContent
             label={'Buscar llave'}
             handleSearch={handleSearch}
+            roles={[Roles.ADMIN, Roles.OPERATOR]}
         >
             <ButtonCreateKey />
         </HeaderTableContent>
