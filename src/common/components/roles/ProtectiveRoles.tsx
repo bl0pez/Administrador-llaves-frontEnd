@@ -1,3 +1,4 @@
+import { useAuth } from "@/auth/context";
 import { Roles } from "@/common/interfaces"
 
 interface Props {
@@ -6,7 +7,8 @@ interface Props {
 }
 
 export const ProtectiveRoles = ({ roles, children }: Props) => {
-    const isAuthorized = roles.some((role) => Object.values(Roles).includes(role));
+    const { authstate } = useAuth();
+    const isAuthorized = roles.some((role) => authstate.role.includes(role));
     if (!isAuthorized) return null;
-    return (<>{ children}</>)
+    return (<>{ children }</>)
 }

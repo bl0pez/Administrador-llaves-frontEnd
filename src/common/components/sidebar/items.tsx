@@ -10,17 +10,17 @@ type SidebarMenu = {
 
 export const sidebarMenu: SidebarMenu[] = [
     {   
-        icon:  <PlaylistAddIcon />, 
+        icon:  <PlaylistAddIcon  color='secondary' />, 
         path: '/', 
         text: 'Llaves Prestadas', 
     },
     {
-        icon: <KeyIcon />, 
+        icon: <KeyIcon color='secondary' />, 
         path: '/keyList', 
         text: 'Llaves',
     },
     {
-        icon: <HistoryIcon />,
+        icon: <HistoryIcon color='secondary' />,
         path: '/history',
         text: 'Historial',
     }

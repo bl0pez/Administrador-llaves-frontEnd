@@ -1,27 +1,19 @@
 import { useState } from 'react';
-import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { Box, Button, Divider, Drawer, List, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import GroupIcon from '@mui/icons-material/Group';
 import { ProtectiveRoles } from '@/common/components/roles/ProtectiveRoles';
 
 import { useAuth } from '@/auth/context';
-import { Link, useLocation } from 'react-router-dom';
 import { sidebarMenu } from './items';
-import { useThemeContext } from '@/theme/ThemeContextProvider';
 import { Roles } from '@/common/interfaces';
+import { ItemSidebar } from './ItemSidebar';
+import { ItemToggleMode } from './ItemToggleMode';
+import { ItemLoagout } from './ItemLoagout';
 
 export const Sidebar = () => {
-
-  const { colorMode, mode } =  useThemeContext();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { pathname } = useLocation();
   const { authstate, handleLogout } = useAuth();
 
   return (
@@ -71,60 +63,24 @@ export const Sidebar = () => {
             >
               {
                 sidebarMenu.map((item) => (
-                  <ListItem
+                  <ItemSidebar
                     key={item.text}
-                    sx={{ 
-                      paddingX: 0,
-                      paddingY: 0.5,
-                    }}
-                  >
-                    <ListItemButton
-                      onClick={() => setIsDrawerOpen(false)}
-                      component={Link}
-                      to={item.path}
-                    >
-                      <ListItemIcon
-                        sx={{
-                          color: 'white'
-                        }}
-                      >
-                        { item.icon }
-                      </ListItemIcon>
-                      <ListItemText primary={item.text} />
-                      {
-                        (item.path === pathname) && (
-                          <ArrowRightIcon />
-                        )
-                      }
-                    </ListItemButton>
-                  </ListItem>
+                    onClick={() => setIsDrawerOpen(false)}
+                    to={item.path}
+                    icon={item.icon}
+                    title={item.text}
+                  />
                 ))
               }
               <ProtectiveRoles
                 roles={[Roles.ADMIN]}
               >
-              <ListItem
-                    sx={{ 
-                      paddingX: 0,
-                      paddingY: 0.5,
-                    }}
-                  >
-                    <ListItemButton
-                      onClick={() => setIsDrawerOpen(false)}
-                      component={Link}
-                      to='/users'
-                    >
-                      <ListItemIcon>
-                        <GroupIcon color='secondary' />
-                      </ListItemIcon>
-                      <ListItemText primary='Users' />
-                      {
-                        (pathname.includes('users')) && (
-                          <ArrowRightIcon />
-                        )
-                      }
-                    </ListItemButton>
-                  </ListItem>
+                <ItemSidebar
+                  onClick={() => setIsDrawerOpen(false)}
+                  to='/users'
+                  icon={<GroupIcon color='secondary' />}
+                  title='Users'
+                />
               </ProtectiveRoles>
 
             </List>
@@ -134,44 +90,10 @@ export const Sidebar = () => {
                   flexBasis: 'end'
                 }}
              >
-                <ListItemButton
-                  onClick={() => colorMode.toggleColorMode()}
-                >
-                  <ListItemIcon
-                    sx={{
-                      color: mode === 'dark' ? 'text.light' : 'text.dark'
-                    }}
-                  >
-                    {
-                        mode === 'dark' 
-                          ? <Brightness7Icon /> 
-                          : <Brightness4Icon />
-                    }
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={mode === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                    sx={{
-                      color: mode === 'dark' ? 'text.light' : 'text.dark'
-                    }}
-                  />
-                </ListItemButton>
-                <ListItemButton
-                  onClick={() => handleLogout()}
-                  color='error'
-                >
-                  <ListItemIcon
-                  >
-                    <LogoutIcon 
-                      color='error'
-                    />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Logout"
-                    sx={{
-                      color: 'error.main'
-                    }} 
-                  />
-                </ListItemButton>
+                {/* toggle theme mode */}
+                <ItemToggleMode />
+                {/* logout button */}
+                <ItemLoagout handleLogout={handleLogout} />
              </List>
           </Box>
         </Drawer>
