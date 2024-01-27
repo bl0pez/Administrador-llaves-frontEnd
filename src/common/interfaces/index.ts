@@ -8,6 +8,21 @@ export interface Pagination {
   search?: string;
 }
 
+export enum PaginationTypes {
+  CHANGE_PAGE = "CHANGE_PAGE",
+  CHANGE_LIMIT = "CHANGE_LIMIT",
+  CHANGE_SEARCH = "CHANGE_SEARCH",
+  CHANGE_COUNT = "CHANGE_COUNT",
+}
+
+export type StatePagination = {
+  page: number;
+  offset: number;
+  limit: number;
+  search: string;
+  itemCount: number;
+};
+
 export enum Roles {
   ADMIN = "ADMIN",
   OPERATOR = "OPERATOR",
