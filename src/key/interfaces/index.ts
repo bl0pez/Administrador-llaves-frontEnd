@@ -1,3 +1,6 @@
+import { useStoreKey } from "@/key/hooks/useStoreKey";
+import { useStorePagination } from "@/common/hooks/useStorePagination";
+
 export interface Key {
   createBy: string;
   createdAt: Date;
@@ -11,15 +14,11 @@ export interface Key {
   updatedAt: Date;
 }
 
-export interface KeyState {
+export type KeyState = {
   keys: Key[];
+  selectedKey: Key | null;
   isLoading: boolean;
-  itemCount: number;
-  limit: number;
-  offset: number;
-  page: number;
-  search: string;
-}
+};
 
 export interface GetKeys {
   keys: Key[];
@@ -29,30 +28,25 @@ export interface GetKeys {
 export enum KeyTypes {
   START_LOADING = "START_LOADING",
   LOAD_KEYS = "LOAD_KEYS",
-  CHANGE_PAGE = "CHANGE_PAGE",
-  CHANGE_LIMIT = "CHANGE_LIMIT",
-  ADD_KEY = "ADD_KEY",
-  SEARCH_KEY = "SEARCH_KEY",
+  UPDATE_KEY = "UPDATE_KEY",
+  SELECT_KEY = "SELECT_KEY",
 }
 
-export type KeyContextProps = {
-  keys: Key[];
-  isLoading: boolean;
-  itemCount: number;
-  limit: number;
-  offset: number;
-  page: number;
-  search: string;
-  loadKeys: (data: GetKeys) => void;
-  handleChangePage: (newPage: number) => void;
-  handleChangeLimit: (newLimit: number) => void;
-  createKey: (key: Key) => void;
-  handleSearch: (value: string) => void;
-};
+type UseStoreKeyReturnType = ReturnType<typeof useStoreKey>;
+type UseStorePaginationReturnType = ReturnType<typeof useStorePagination>;
 
-export interface CreateKey {
+export type KeyContextProps = UseStoreKeyReturnType &
+  UseStorePaginationReturnType & {
+    onLoadKeys: () => Promise<void>;
+  };
+
+export type CreateKey = {
   keyName: string;
   keyDescription: string;
   deliveredBy: string;
   file: string | null;
-}
+};
+
+export type UpdateKey = Partial<CreateKey> & {
+  image: string;
+};
