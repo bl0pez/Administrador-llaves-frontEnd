@@ -16,7 +16,7 @@ export interface Key {
 
 export type KeyState = {
   keys: Key[];
-  selectedKey: Key | null;
+  selectedKey: Key;
   isLoading: boolean;
 };
 

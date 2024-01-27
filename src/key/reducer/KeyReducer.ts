@@ -1,12 +1,10 @@
-import { GetKeys, Key, KeyState, KeyTypes } from "../interfaces";
+import { Key, KeyState, KeyTypes } from "@/key/interfaces";
 
 type KeyAction =
-  | { type: KeyTypes.LOAD_KEYS; payload: GetKeys }
-  | { type: KeyTypes.ADD_KEY; payload: Key }
-  | { type: KeyTypes.CHANGE_PAGE; payload: number }
-  | { type: KeyTypes.CHANGE_LIMIT; payload: number }
-  | { type: KeyTypes.SEARCH_KEY; payload: string }
-  | { type: KeyTypes.START_LOADING };
+  | { type: KeyTypes.LOAD_KEYS; payload: Key[] }
+  | { type: KeyTypes.START_LOADING }
+  | { type: KeyTypes.UPDATE_KEY; payload: Key }
+  | { type: KeyTypes.SELECT_KEY; payload: Key };
 
 export const keyReducer = (
   stateKeys: KeyState,
@@ -21,45 +19,23 @@ export const keyReducer = (
     }
     case KeyTypes.LOAD_KEYS: {
       return {
-        keys: action.payload.keys,
-        itemCount: action.payload.count,
-        limit: stateKeys.limit,
-        offset: stateKeys.offset,
-        page: stateKeys.page,
-        isLoading: false,
-        search: stateKeys.search,
-      };
-    }
-    case KeyTypes.CHANGE_PAGE: {
-      return {
         ...stateKeys,
-        page: action.payload,
-        offset: action.payload * stateKeys.limit,
+        keys: action.payload,
         isLoading: false,
       };
     }
-    case KeyTypes.CHANGE_LIMIT: {
+    case KeyTypes.UPDATE_KEY: {
       return {
         ...stateKeys,
-        limit: action.payload,
-        isLoading: false,
-        page: 0,
+        keys: stateKeys.keys.map((key) =>
+          key.keyId === action.payload.keyId ? action.payload : key
+        ),
       };
     }
-    case KeyTypes.ADD_KEY: {
+    case KeyTypes.SELECT_KEY: {
       return {
         ...stateKeys,
-        itemCount: stateKeys.itemCount + 1,
-        isLoading: false,
-      };
-    }
-    case KeyTypes.SEARCH_KEY: {
-      return {
-        ...stateKeys,
-        search: action.payload,
-        page: 0,
-        offset: 0,
-        isLoading: false,
+        selectedKey: action.payload,
       };
     }
     default:
