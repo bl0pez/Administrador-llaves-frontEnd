@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 import { UpdateKeyModal } from "../modal/UpdateKeyModal";
 import { RemoveKeyModal } from "../modal/RemoveKeyModal";
+import { ImageModal } from "../modal/ImageModal";
 
 const columns = [
   "Imagen",
@@ -41,6 +42,7 @@ export const KeyTable = () => {
 
   const [editOpenModal, setEditOpenModal] = useState(false);
   const [deleteOpenModal, setDeleteOpenModal] = useState(false);
+  const [imgOpenModal, setImgOpenModal] = useState(false);
 
   const handleUpdateKey = (item: Key) => {
     onSelectKey(item);
@@ -50,6 +52,11 @@ export const KeyTable = () => {
   const handleDeleteKey = (item: Key) => {
     onSelectKey(item);
     setDeleteOpenModal(true);
+  };
+
+  const handleImageKey = (item: Key) => {
+    onSelectKey(item);
+    setImgOpenModal(true);
   };
 
   return (
@@ -81,6 +88,7 @@ export const KeyTable = () => {
               item={item}
               handleUpdateKey={handleUpdateKey}
               handleDeleteKey={handleDeleteKey}
+              handleImageKey={handleImageKey}
               roles={[Roles.ADMIN, Roles.OPERATOR]}
             />
           ))}
@@ -106,6 +114,13 @@ export const KeyTable = () => {
       <RemoveKeyModal
         isOpen={deleteOpenModal}
         handleClose={() => setDeleteOpenModal(false)}
+      />
+
+      {/* Image Key Modal */}
+      <ImageModal
+        isOpen={imgOpenModal}
+        handleOpen={() => setImgOpenModal(true)}
+        handleClose={() => setImgOpenModal(false)}
       />
     </>
   );

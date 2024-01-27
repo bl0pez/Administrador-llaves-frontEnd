@@ -12,7 +12,6 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { ImageModal } from "../modal/ImageModal";
 import { Key } from "@/key/interfaces";
 import { DateTransformed } from "@/common/components/ui/DateTransformed";
 import { Roles } from "@/common/interfaces";
@@ -29,6 +28,7 @@ const ImagenButton = styled(Button)(({ theme }) => ({
 
 interface Props {
   item: Key;
+  handleImageKey: (item: Key) => void;
   handleUpdateKey: (item: Key) => void;
   handleDeleteKey: (item: Key) => void;
   roles?: Roles[];
@@ -37,20 +37,15 @@ interface Props {
 export const KeyTableRowItem: FC<Props> = ({
   item,
   roles,
+  handleImageKey,
   handleUpdateKey,
   handleDeleteKey,
 }) => {
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
   return (
     <>
       <TableRow>
         <TableCell>
-          <ImagenButton onClick={() => handleOpenModal()}>
+          <ImagenButton onClick={() => handleImageKey(item)}>
             <CardMedia
               component="img"
               height="40px"
@@ -93,13 +88,6 @@ export const KeyTableRowItem: FC<Props> = ({
           </ProtectiveRoles>
         )}
       </TableRow>
-
-      <ImageModal
-        url={`${import.meta.env.VITE_BACKEND_PUBLIC_URL}${item.image}`}
-        alt={item.keyName}
-        isOpen={openModal}
-        handleClose={() => setOpenModal(false)}
-      />
     </>
   );
 };
