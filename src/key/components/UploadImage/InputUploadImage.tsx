@@ -29,7 +29,7 @@ export const InputUploadImage: FC<Props> = ({ handleChange, image, error, helper
       inputRef, 
       onDragOver, 
       onDrop, 
-      onHandleChange, 
+      onFileInputChange, 
       previewImage, 
       onRemoveImage 
     } = useImageUpload({
@@ -47,7 +47,7 @@ export const InputUploadImage: FC<Props> = ({ handleChange, image, error, helper
           name='file'
           id='file'
           ref={inputRef}
-          onChange={(e) => onHandleChange(e)}
+          onChange={(e) => onFileInputChange(e)}
           accept='image/png, image/jpeg, image/jpg, image/webp'
         />
 
