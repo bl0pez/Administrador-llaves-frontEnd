@@ -1,26 +1,31 @@
-import { FC } from 'react';
-import { TextField } from '@mui/material';
+import { FC } from "react";
+import { TextField } from "@mui/material";
 
 type InputFormProps = {
   helperText: string | false | undefined;
   isError: boolean;
   label: string;
-  type: 'text' | 'password' | 'email' | 'number';
+  type: "text" | "password" | "email" | "number";
   [x: string]: any;
-}
+};
 
-export const InputForm:FC<InputFormProps> = ({ isError, helperText, label, type, ...props}) => {
+export const InputForm: FC<InputFormProps> = ({
+  isError,
+  helperText,
+  label,
+  type,
+  ...props
+}) => {
   return (
-      <TextField
+    <TextField
       type={type}
-      color='primary'
-      autoComplete='off'
-      variant='outlined'
+      color="primary"
+      variant="outlined"
       label={label}
       error={isError}
       helperText={helperText}
-      { ...props }
+      {...props}
       required
-      />
-  )
-}
+    />
+  );
+};
