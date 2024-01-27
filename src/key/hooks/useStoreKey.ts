@@ -4,7 +4,7 @@ import { Key, KeyState, KeyTypes } from "@/key/interfaces";
 
 const INITIAL_STATE: KeyState = {
   keys: [],
-  selectedKey: null,
+  selectedKey: {} as Key,
   isLoading: true,
 };
 
